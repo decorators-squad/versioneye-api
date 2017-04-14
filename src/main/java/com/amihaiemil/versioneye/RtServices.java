@@ -27,13 +27,44 @@
  */
 package com.amihaiemil.versioneye;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import javax.json.JsonObject;
+import com.jcabi.http.Request;
+import com.jcabi.http.response.JsonResponse;
+import com.jcabi.http.response.RestResponse;
+
 /**
- * VersionEye server.
+ * Services API real implementation.
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
  *
  */
-public interface VersionEye {
-    Services services();
+final class RtServices implements Services {
+
+    /**
+     * HTTP request.
+     */
+    private Request req;
+    
+    /**
+     * Ctor.
+     * @param req HTTP request.
+     */
+    RtServices(final Request req) {
+        this.req = req.uri().path("/services").back();
+    }
+    
+    @Override
+    public JsonObject ping() throws IOException {
+        return this.req.uri().path("/ping").back()
+            .fetch()
+            .as(RestResponse.class)
+            .assertStatus(HttpURLConnection.HTTP_OK)
+            .as(JsonResponse.class)
+            .json()
+            .readObject();
+    }
+
 }

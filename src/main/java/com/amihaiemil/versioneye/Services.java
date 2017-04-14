@@ -27,13 +27,22 @@
  */
 package com.amihaiemil.versioneye;
 
+import java.io.IOException;
+import javax.json.JsonObject;
+
 /**
- * Unit tests for {@link VersionEye}
+ * Services API.
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
  *
  */
-public final class VersionEyeTestCase {
-
+public interface Services {
+	
+	/**
+	 * Ping the Services API.
+	 * @return JsonObject response.
+	 * @throws IOException If something goes wrong.
+	 */
+    JsonObject ping() throws IOException;
 }
