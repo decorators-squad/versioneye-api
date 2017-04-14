@@ -35,5 +35,10 @@ package com.amihaiemil.versioneye;
  *
  */
 public interface VersionEye {
+
+    /**
+     * Services api.
+     * @return Services.
+     */
     Services services();
 }

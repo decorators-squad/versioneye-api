@@ -38,11 +38,11 @@ import javax.json.JsonObject;
  *
  */
 public interface Services {
-	
-	/**
-	 * Ping the Services API.
-	 * @return JsonObject response.
-	 * @throws IOException If something goes wrong.
-	 */
+    
+    /**
+     * Ping the Services API.
+     * @return JsonObject response.
+     * @throws IOException If something goes wrong.
+     */
     JsonObject ping() throws IOException;
 }
