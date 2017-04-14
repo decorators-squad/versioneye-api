@@ -1,5 +1,6 @@
 ## versioneye-api
-[![Build Status](https://travis-ci.org/decorators-squad/versioneye-api.svg?branch=master)](https://travis-ci.org/decorators-squad/versioneye-api)
+[![Build Status](https://travis-ci.org/decorators-squad/versioneye-api.svg?branch=master)](https://travis-ci.org/decorators-squad/versioneye-api) [![Coverage Status](https://coveralls.io/repos/github/decorators-squad/versioneye-api/badge.svg?branch=master)](https://coveralls.io/github/decorators-squad/versioneye-api?branch=master)
+
 Elegant OOP wrapper over the VersionEye API
 
 ## Contribute
