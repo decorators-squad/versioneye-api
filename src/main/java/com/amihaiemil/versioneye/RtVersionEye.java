@@ -48,8 +48,19 @@ public final class RtVersionEye implements VersionEye {
      * Ctor.
      */
     public RtVersionEye() {
+        this("");
+    }
+
+    /**
+     * Ctor.
+     * @param token Api token.
+     */
+    public RtVersionEye(final String token) {
         this.entry = new JdkRequest("https://www.versioneye.com/api/v2")
             .header("Accept", "application/json");
+        if(!token.isEmpty()) {
+            this.entry = this.entry.header("Cookie", "api_key=" + token);
+        }
     }
 
     @Override
