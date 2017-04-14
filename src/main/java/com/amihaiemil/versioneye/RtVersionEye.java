@@ -27,13 +27,34 @@
  */
 package com.amihaiemil.versioneye;
 
+import com.jcabi.http.Request;
+import com.jcabi.http.request.JdkRequest;
+
 /**
- * VersionEye server.
+ * OOP wrapper for the VersionEye API.
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
  *
  */
-public interface VersionEye {
-    Services services();
+public final class RtVersionEye implements VersionEye {
+
+    /**
+     * HTTP request.
+     */
+    private Request entry;
+
+    /**
+     * Ctor.
+     */
+    public RtVersionEye() {
+        this.entry = new JdkRequest("https://www.versioneye.com/api/v2")
+            .header("Accept", "application/json");
+    }
+
+    @Override
+    public Services services() {
+        return new RtServices(this.entry);
+    }
+
 }

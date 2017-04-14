@@ -27,13 +27,33 @@
  */
 package com.amihaiemil.versioneye;
 
+import java.io.IOException;
+import javax.json.JsonObject;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
+
 /**
- * VersionEye server.
+ * Integration tests for {@link RtServices}
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
  *
  */
-public interface VersionEye {
-    Services services();
+public final class RtServicesITCase {
+    
+    /**
+     * RtServices can ping VersionEye's server.
+     * @throws IOException If something goes wrong.
+     */
+    @Test
+    public void pings() throws IOException {
+        final JsonObject json = new RtVersionEye().services().ping();
+        MatcherAssert.assertThat(
+            json.getBoolean("success"), Matchers.is(true)
+        );
+        MatcherAssert.assertThat(
+            json.getString("message"), Matchers.is("pong")
+        );
+    }
 }

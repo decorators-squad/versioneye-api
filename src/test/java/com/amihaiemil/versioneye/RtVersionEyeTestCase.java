@@ -27,13 +27,28 @@
  */
 package com.amihaiemil.versioneye;
 
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
+
 /**
- * VersionEye server.
+ * Unit tests for {@link RtVersionEye}
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
  *
  */
-public interface VersionEye {
-    Services services();
+public final class RtVersionEyeTestCase {
+    
+    /**
+     * RtVersionEye can return the services endpoint.
+     */
+    @Test
+    public void fetchesServicesApi() {
+        final Services services = new RtVersionEye().services();
+        MatcherAssert.assertThat(services, Matchers.notNullValue());
+        MatcherAssert.assertThat(
+            services, Matchers.instanceOf(RtServices.class)
+        );
+    }
 }
