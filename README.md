@@ -8,7 +8,7 @@ Elegant OOP wrapper over the VersionEye API
 
 ## Design
 
-This lirary is 100% object oriented, based on interfaces and final classes. It has one single entry point, [RtVersionEye](), which is the only public class. Everything is encapsulated, wrapped in intuitive interfaces. The main goal is to offer a well organized, [user-friendly](http://www.baeldung.com/design-a-user-friendly-java-library) library that's easy to use.
+This lirary is 100% object oriented, based on interfaces and final classes. It has one single entry point, [RtVersionEye](https://github.com/decorators-squad/versioneye-api/blob/master/src/main/java/com/amihaiemil/versioneye/RtVersionEye.java), which is the only public class. Everything is encapsulated, wrapped in intuitive interfaces. The main goal is to offer a well organized, [user-friendly](http://www.baeldung.com/design-a-user-friendly-java-library) library that's easy to use.
 
 Behind the scenes the [jcabi-http](github.com/jcabi/jcabi-http) client is used, mainly for the convenient and fluent API that it offers.
 Json is manipulated using javax.json API with the Glassfish [implementation](https://mvnrepository.com/artifact/org.glassfish/javax.json).
@@ -21,7 +21,8 @@ Like outlined above, there is one single entry point and the usage is fluent. Ev
 1. Pinging:
 
 ```java
-    JsonObject json = new RtVersionEye().services().ping();
+    VersionEye api = new RtVersionEye();
+    JsonObject json = api.services().ping();
     MatcherAssert.assertThat(
         json.getBoolean("success"), Matchers.is(true)
     );
