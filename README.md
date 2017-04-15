@@ -41,6 +41,7 @@ Like outlined above, there is one single entry point and the usage is fluent. Ev
     );
 ```
 
+@todo #9:15min/DEV Add more examples of usage here
 
 ## Contribute
 
