@@ -8,7 +8,7 @@ Elegant OOP wrapper over the VersionEye API
 
 This lirary is 100% object oriented, based on interfaces and final classes. It has one single entry point, [RtVersionEye](https://github.com/decorators-squad/versioneye-api/blob/master/src/main/java/com/amihaiemil/versioneye/RtVersionEye.java), which is the only public class. Everything is encapsulated, wrapped in intuitive interfaces. The main goal is to offer a well organized, [user-friendly](http://www.baeldung.com/design-a-user-friendly-java-library) library that's easy to use.
 
-Behind the scenes the [jcabi-http](github.com/jcabi/jcabi-http) client is used, mainly for the convenient and fluent API that it offers.
+Behind the scenes the [jcabi-http](https://www.github.com/jcabi/jcabi-http) client is used, mainly for the convenient and fluent API that it offers.
 Json is manipulated using javax.json API with the Glassfish [implementation](https://mvnrepository.com/artifact/org.glassfish/javax.json).
 
 For unit-testing, a [mock version](https://github.com/decorators-squad/versioneye-api/issues/13) is offered, which holds a JsonBuilder behind, instead of making real HTTP requests.
