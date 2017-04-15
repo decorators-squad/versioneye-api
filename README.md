@@ -1,7 +1,5 @@
 ## versioneye-api
-[![Build Status](https://travis-ci.org/decorators-squad/versioneye-api.svg?branch=master)](https://travis-ci.org/decorators-squad/versioneye-api) [![Coverage Status](https://coveralls.io/repos/github/decorators-squad/versioneye-api/badge.svg?branch=master)](https://coveralls.io/github/decorators-squad/versioneye-api?branch=master)
-
-[![DevOps By Rultor.com](http://www.rultor.com/b/decorators-squad/versioneye-api)](http://www.rultor.com/p/decorators-squad/versioneye-api)
+[![Build Status](https://travis-ci.org/decorators-squad/versioneye-api.svg?branch=master)](https://travis-ci.org/decorators-squad/versioneye-api) [![Coverage Status](https://coveralls.io/repos/github/decorators-squad/versioneye-api/badge.svg?branch=master)](https://coveralls.io/github/decorators-squad/versioneye-api?branch=master) [![DevOps By Rultor.com](http://www.rultor.com/b/decorators-squad/versioneye-api)](http://www.rultor.com/p/decorators-squad/versioneye-api)
 [![PDD status](http://www.0pdd.com/svg?name=decorators-squad/versioneye-api)](http://www.0pdd.com/p?name=decorators-squad/versioneye-api)
 
 Elegant OOP wrapper over the VersionEye API
