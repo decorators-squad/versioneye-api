@@ -28,22 +28,33 @@
 package com.amihaiemil.versioneye;
 
 import java.io.IOException;
-import javax.json.JsonObject;
 
 /**
- * Services API.
+ * Me API.
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
  *
  */
-public interface Services {
+public interface Me {
     
     /**
-     * Ping the Services API.
-     * @return JsonObject response.
-     * @throws IOException If something goes wrong when making
-     *  the HTTP call.
+     * Info about me (the authenticated user).
+     * @return Authenticated user's data.
+     * @throws IOException If something goes wrong when
+     *  making the HTTP call.
      */
-    JsonObject ping() throws IOException;
+    Authenticated about() throws IOException;
+    
+    /**
+     * The authenticated user's comments.
+     * @return Comments.
+     */
+    Comments comments();
+
+    /**
+     * The authenticated user's favorites.
+     * @return Favorites
+     */
+    Favorites favorites();
 }

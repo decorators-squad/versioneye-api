@@ -35,7 +35,10 @@ import com.jcabi.http.request.JdkRequest;
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
- *
+ * @todo #11:30min/Dev This class should have more ctors in order to leverage
+ *  unit testing and usage. It should have at least one ctor where it takes a
+ *  Request object (so we can pass Fake requests when unit testing). Also, the
+ *  user might want to configure the original HTTP request.
  */
 public final class RtVersionEye implements VersionEye {
 

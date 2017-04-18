@@ -34,10 +34,9 @@ import javax.json.JsonObject;
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @sinve 1.0.0
- * @todo #14:30min/DEV Implement and unit test JsonNotifications
+ * @todo #14:30min/DEV Implement and unit test RtNotifications
  *  (implements Notifications) and add method notifications() here, to
  *  fetch the authenticated user's notifications info.
-
  */
 public interface Authenticated {
     
