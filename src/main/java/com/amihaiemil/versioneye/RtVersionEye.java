@@ -35,13 +35,16 @@ import com.jcabi.http.request.JdkRequest;
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
- * @todo #11:30min/Dev This class should have more ctors in order to leverage
- *  unit testing and usage. It should have at least one ctor where it takes a
- *  Request object (so we can pass Fake requests when unit testing). Also, the
- *  user might want to configure the original HTTP request.
  */
 public final class RtVersionEye implements VersionEye {
 
+    /**
+     * Default HTTP request.
+     */
+    private static final Request DEFAULT = new JdkRequest(
+        "https://www.versioneye.com/api/v2"
+    ).header("Accept", "application/json");
+    
     /**
      * HTTP request.
      */
@@ -51,7 +54,7 @@ public final class RtVersionEye implements VersionEye {
      * Ctor.
      */
     public RtVersionEye() {
-        this("");
+        this(RtVersionEye.DEFAULT);
     }
 
     /**
@@ -59,13 +62,17 @@ public final class RtVersionEye implements VersionEye {
      * @param token Api token.
      */
     public RtVersionEye(final String token) {
-        this.entry = new JdkRequest("https://www.versioneye.com/api/v2")
-            .header("Accept", "application/json");
-        if(!token.isEmpty()) {
-            this.entry = this.entry.header("Cookie", "api_key=" + token);
-        }
+        this(RtVersionEye.DEFAULT.header("Cookie", "api_key=" + token));
     }
 
+    /**
+     * Ctor.
+     * @param req HTTP Request. (see {@link Request}
+     */
+    public RtVersionEye(final Request req) {
+        this.entry = req;
+    }
+    
     @Override
     public Services services() {
         return new RtServices(this.entry);
