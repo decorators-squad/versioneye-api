@@ -27,6 +27,8 @@
  */
 package com.amihaiemil.versioneye;
 
+import java.io.IOException;
+
 /**
  * VersionEye server.
  * @author Mihai Andronache (amihaiemil@gmail.com)
@@ -47,4 +49,11 @@ public interface VersionEye {
      * @return Users.
      */
     Users users();
+    
+    /**
+     * VersionEye with trusted wire.
+     * @return VersionEye.
+     * @throws IOException 
+     */
+    VersionEye trusted() throws IOException;
 }

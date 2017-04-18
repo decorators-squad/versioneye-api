@@ -48,7 +48,7 @@ public final class RtServicesITCase {
      */
     @Test
     public void pings() throws IOException {
-        final JsonObject json = new RtVersionEye().services().ping();
+        final JsonObject json = new RtVersionEye().trusted().services().ping();
         MatcherAssert.assertThat(
             json.getBoolean("success"), Matchers.is(true)
         );
