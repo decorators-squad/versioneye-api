@@ -27,40 +27,19 @@
  */
 package com.amihaiemil.versioneye;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
-
 /**
- * Unit tests for {@link RtVersionEye}.
+ * Users API.
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
  *
  */
-public final class RtVersionEyeTestCase {
+public interface Users {
     
     /**
-     * RtVersionEye can return the services endpoint.
+     * Fetch a user.
+     * @param username String.
+     * @return A VersionEye user.
      */
-    @Test
-    public void fetchesServicesApi() {
-        final Services services = new RtVersionEye().services();
-        MatcherAssert.assertThat(services, Matchers.notNullValue());
-        MatcherAssert.assertThat(
-            services, Matchers.instanceOf(RtServices.class)
-        );
-    }
-    
-    /**
-     * RtVersionEye can return the users endpoint.
-     */
-    @Test
-    public void fetchesUsersApi() {
-        final Users users = new RtVersionEye().users();
-        MatcherAssert.assertThat(users, Matchers.notNullValue());
-        MatcherAssert.assertThat(
-            users, Matchers.instanceOf(RtUsers.class)
-        );
-    }
+    User user(String username);
 }

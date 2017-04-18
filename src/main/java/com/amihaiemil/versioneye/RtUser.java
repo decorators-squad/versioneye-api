@@ -27,40 +27,55 @@
  */
 package com.amihaiemil.versioneye;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import com.jcabi.http.Request;
+import com.jcabi.http.response.JsonResponse;
+import com.jcabi.http.response.RestResponse;
 
 /**
- * Unit tests for {@link RtVersionEye}.
+ * Real implementation of {@link User}.
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
- * @since 1.0.0
+ * @sinve 1.0.0
  *
  */
-public final class RtVersionEyeTestCase {
+class RtUser implements User {
+
+    /**
+     * HTTP request.
+     */
+    private Request req;
     
     /**
-     * RtVersionEye can return the services endpoint.
+     * Ctor.
+     * @param req HTTP request.
+     * @param username User's login.
      */
-    @Test
-    public void fetchesServicesApi() {
-        final Services services = new RtVersionEye().services();
-        MatcherAssert.assertThat(services, Matchers.notNullValue());
-        MatcherAssert.assertThat(
-            services, Matchers.instanceOf(RtServices.class)
+    RtUser(final Request req, final String username) {
+        this.req = req.uri().path(username).back();
+    }
+    
+    @Override
+    public UserData about() throws IOException {
+        return new JsonUserData(
+            this.req.fetch()
+                .as(RestResponse.class)
+                .assertStatus(HttpURLConnection.HTTP_OK)
+                .as(JsonResponse.class)
+                .json()
+                .readObject()
         );
     }
     
-    /**
-     * RtVersionEye can return the users endpoint.
-     */
-    @Test
-    public void fetchesUsersApi() {
-        final Users users = new RtVersionEye().users();
-        MatcherAssert.assertThat(users, Matchers.notNullValue());
-        MatcherAssert.assertThat(
-            users, Matchers.instanceOf(RtUsers.class)
-        );
+    @Override
+    public Comments comments() {
+        return null;
     }
+
+    @Override
+    public Favorites favorites() {
+        return null;
+    }
+
 }

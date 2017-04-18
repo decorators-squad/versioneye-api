@@ -27,40 +27,33 @@
  */
 package com.amihaiemil.versioneye;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import com.jcabi.http.Request;
 
 /**
- * Unit tests for {@link RtVersionEye}.
+ * Real implementation of {@link Users}.
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
  *
  */
-public final class RtVersionEyeTestCase {
+final class RtUsers implements Users {
+
+    /**
+     * HTTP request.
+     */
+    private Request req;
     
     /**
-     * RtVersionEye can return the services endpoint.
+     * Ctor.
+     * @param req HTTP request.
      */
-    @Test
-    public void fetchesServicesApi() {
-        final Services services = new RtVersionEye().services();
-        MatcherAssert.assertThat(services, Matchers.notNullValue());
-        MatcherAssert.assertThat(
-            services, Matchers.instanceOf(RtServices.class)
-        );
+    RtUsers(final Request req) {
+        this.req = req.uri().path("/users").back();
     }
-    
-    /**
-     * RtVersionEye can return the users endpoint.
-     */
-    @Test
-    public void fetchesUsersApi() {
-        final Users users = new RtVersionEye().users();
-        MatcherAssert.assertThat(users, Matchers.notNullValue());
-        MatcherAssert.assertThat(
-            users, Matchers.instanceOf(RtUsers.class)
-        );
+
+    @Override
+    public User user(final String username) {
+        return new RtUser(this.req, username);
     }
+
 }

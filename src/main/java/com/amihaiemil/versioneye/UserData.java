@@ -27,40 +27,32 @@
  */
 package com.amihaiemil.versioneye;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import javax.json.JsonObject;
 
 /**
- * Unit tests for {@link RtVersionEye}.
+ * Data about a VersionEye user.
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
  *
  */
-public final class RtVersionEyeTestCase {
+public interface UserData {
     
     /**
-     * RtVersionEye can return the services endpoint.
+     * User's full name.
+     * @return String.
      */
-    @Test
-    public void fetchesServicesApi() {
-        final Services services = new RtVersionEye().services();
-        MatcherAssert.assertThat(services, Matchers.notNullValue());
-        MatcherAssert.assertThat(
-            services, Matchers.instanceOf(RtServices.class)
-        );
-    }
+    String fullName();
     
     /**
-     * RtVersionEye can return the users endpoint.
+     * User's login.
+     * @return String.
      */
-    @Test
-    public void fetchesUsersApi() {
-        final Users users = new RtVersionEye().users();
-        MatcherAssert.assertThat(users, Matchers.notNullValue());
-        MatcherAssert.assertThat(
-            users, Matchers.instanceOf(RtUsers.class)
-        );
-    }
+    String username();
+    
+    /**
+     * This user as json.
+     * @return JsonObject.
+     */
+    JsonObject json();
 }

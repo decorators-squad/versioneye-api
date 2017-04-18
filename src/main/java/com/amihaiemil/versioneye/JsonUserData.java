@@ -27,40 +27,43 @@
  */
 package com.amihaiemil.versioneye;
 
-import org.hamcrest.MatcherAssert;
-import org.hamcrest.Matchers;
-import org.junit.Test;
+import javax.json.JsonObject;
 
 /**
- * Unit tests for {@link RtVersionEye}.
+ * VersionEye user represented by a json object.
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
- * @since 1.0.0
+ * @sinve 1.0.0
  *
  */
-public final class RtVersionEyeTestCase {
+final class JsonUserData implements UserData {
+
+    /**
+     * VersionEye user.
+     */
+    private JsonObject user;
     
     /**
-     * RtVersionEye can return the services endpoint.
+     * Ctor.
+     * @param user Given user.
      */
-    @Test
-    public void fetchesServicesApi() {
-        final Services services = new RtVersionEye().services();
-        MatcherAssert.assertThat(services, Matchers.notNullValue());
-        MatcherAssert.assertThat(
-            services, Matchers.instanceOf(RtServices.class)
-        );
+    JsonUserData(final JsonObject user) {
+        this.user = user;
     }
     
-    /**
-     * RtVersionEye can return the users endpoint.
-     */
-    @Test
-    public void fetchesUsersApi() {
-        final Users users = new RtVersionEye().users();
-        MatcherAssert.assertThat(users, Matchers.notNullValue());
-        MatcherAssert.assertThat(
-            users, Matchers.instanceOf(RtUsers.class)
-        );
+    @Override
+    public String fullName() {
+        return this.user.getString("fullname");
     }
+
+    @Override
+    public String username() {
+        return this.user.getString("username");
+    }
+
+    @Override
+    public JsonObject json() {
+        return this.user;
+    }
+
 }

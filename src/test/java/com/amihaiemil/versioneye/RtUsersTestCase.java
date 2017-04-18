@@ -30,37 +30,29 @@ package com.amihaiemil.versioneye;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+import com.jcabi.http.request.FakeRequest;
 
 /**
- * Unit tests for {@link RtVersionEye}.
+ * Unit tests for {@link RtUsers}.
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
  *
  */
-public final class RtVersionEyeTestCase {
+public final class RtUsersTestCase {
     
     /**
-     * RtVersionEye can return the services endpoint.
+     * RtUsers can fetch a VersinEye user.
      */
     @Test
-    public void fetchesServicesApi() {
-        final Services services = new RtVersionEye().services();
-        MatcherAssert.assertThat(services, Matchers.notNullValue());
+    public void fetchesUser() {
+        final User amihaiemil = new RtUsers(new FakeRequest())
+            .user("amihaiemil");
         MatcherAssert.assertThat(
-            services, Matchers.instanceOf(RtServices.class)
+            amihaiemil, Matchers.notNullValue()
         );
-    }
-    
-    /**
-     * RtVersionEye can return the users endpoint.
-     */
-    @Test
-    public void fetchesUsersApi() {
-        final Users users = new RtVersionEye().users();
-        MatcherAssert.assertThat(users, Matchers.notNullValue());
         MatcherAssert.assertThat(
-            users, Matchers.instanceOf(RtUsers.class)
+            amihaiemil, Matchers.instanceOf(RtUser.class)
         );
     }
 }
