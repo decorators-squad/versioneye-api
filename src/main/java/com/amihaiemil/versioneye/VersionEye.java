@@ -41,4 +41,10 @@ public interface VersionEye {
      * @return Services.
      */
     Services services();
+    
+    /**
+     * Users api.
+     * @return Users.
+     */
+    Users users();
 }

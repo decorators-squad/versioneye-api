@@ -67,7 +67,7 @@ public final class RtVersionEye implements VersionEye {
 
     /**
      * Ctor.
-     * @param req HTTP Request. (see {@link Request}
+     * @param req HTTP Request. (see {@link Request})
      */
     public RtVersionEye(final Request req) {
         this.entry = req;
@@ -76,6 +76,11 @@ public final class RtVersionEye implements VersionEye {
     @Override
     public Services services() {
         return new RtServices(this.entry);
+    }
+
+    @Override
+    public Users users() {
+        return new RtUsers(this.entry);
     }
 
 }
