@@ -27,23 +27,12 @@
  */
 package com.amihaiemil.versioneye;
 
-import java.io.IOException;
-import javax.json.JsonObject;
-
 /**
- * Services API.
+ * Authenticated user's notifications.
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
- *
  */
-public interface Services {
-    
-    /**
-     * Ping the Services API.
-     * @return JsonObject response.
-     * @throws IOException If something goes wrong when making
-     *  the HTTP call.
-     */
-    JsonObject ping() throws IOException;
+public interface Notifications {
+
 }

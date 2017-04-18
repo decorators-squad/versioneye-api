@@ -27,23 +27,15 @@
  */
 package com.amihaiemil.versioneye;
 
-import java.io.IOException;
-import javax.json.JsonObject;
-
 /**
- * Services API.
+ * A user's comments.
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
- *
+ * @todo #11:30min/DEV Provide RtComments implementation and unit tests.
+ *  The class should work with a given request and username or simply fetch
+ *  the authenticated user's comments if no username is given.
  */
-public interface Services {
-    
-    /**
-     * Ping the Services API.
-     * @return JsonObject response.
-     * @throws IOException If something goes wrong when making
-     *  the HTTP call.
-     */
-    JsonObject ping() throws IOException;
+public interface Comments {
+
 }

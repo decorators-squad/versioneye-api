@@ -28,22 +28,63 @@
 package com.amihaiemil.versioneye;
 
 import java.io.IOException;
-import javax.json.JsonObject;
+import java.net.HttpURLConnection;
+import com.jcabi.http.Request;
+import com.jcabi.http.response.JsonResponse;
+import com.jcabi.http.response.RestResponse;
 
 /**
- * Services API.
+ * Me API real implementation.
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
- *
  */
-public interface Services {
+final class RtMe implements Me {
+
+    /**
+     * HTTP request.
+     */
+    private Request req;
     
     /**
-     * Ping the Services API.
-     * @return JsonObject response.
-     * @throws IOException If something goes wrong when making
-     *  the HTTP call.
+     * Ctor.
+     * @param req HTTP request.
      */
-    JsonObject ping() throws IOException;
+    RtMe(final Request req) {
+        this.req = req.uri().path("/me").back();
+    }
+
+    @Override
+    public Authenticated about() throws IOException {
+        return new JsonAuthenticated(
+            this.req.fetch()
+                .as(RestResponse.class)
+                .assertStatus(HttpURLConnection.HTTP_OK)
+                .as(JsonResponse.class)
+                .json()
+                .readObject()
+        );
+    }
+
+    /**
+     * Comments.
+     * @todo #11:30min/DEV Implement and unit test this method after we have
+     *  a working implementation of Comments in place.
+     * @return Comments.
+     */
+    @Override
+    public Comments comments() {
+        return null;
+    }
+    
+    /**
+     * Favorites.
+     * @todo #11:30min/DEV Implement and unit test this method after we have
+     *  a working implementation of Favorites in place.
+     * @return Favorites.
+     */
+    @Override
+    public Favorites favorites() {
+        return null;
+    }
 }
