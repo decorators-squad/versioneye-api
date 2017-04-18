@@ -32,7 +32,7 @@ Like outlined above, there is one single entry point and the usage is fluent. Ev
 2. Getting information about me (the authenticated used):
 
 ```java
-    Authenticated user = new RtVersionEye("...token...").me();
+    Authenticated user = new RtVersionEye("...token...").me().about();
     MatcherAssert.assertThat(
         user.fullName(), Matchers.is("Mihai Emil Andronache")
     );
