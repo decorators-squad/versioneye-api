@@ -47,7 +47,9 @@ public final class RtUserITCase {
      */
     @Test
     public void knowsAbout() throws IOException {
-        final User amihaiemil = new RtVersionEye().users().user("amihaiemil");
+        final User amihaiemil = new RtVersionEye(
+            System.getProperty("api_key")
+        ).users().user("amihaiemil");
         final UserData about = amihaiemil.about();
         MatcherAssert.assertThat(
             about.fullName(), Matchers.equalTo("Mihai Emil Andronache")
