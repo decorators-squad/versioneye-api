@@ -27,6 +27,8 @@
  */
 package com.amihaiemil.versioneye;
 
+import java.io.IOException;
+
 /**
  * VersionEye server.
  * @author Mihai Andronache (amihaiemil@gmail.com)
@@ -47,4 +49,13 @@ public interface VersionEye {
      * @return Users.
      */
     Users users();
+    
+    /**
+     * VersionEye with trusted wire.
+     * @return VersionEye.
+     * @throws IOException If something goes wrong with the HTTP call.
+     * @see http://http.jcabi.com/pkix-validator.html
+     * @todo #29:30min/DEV Add more tests to check that HTTP reached server.
+     */
+    VersionEye trusted() throws IOException;
 }

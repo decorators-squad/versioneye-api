@@ -49,7 +49,7 @@ public final class RtUserITCase {
     public void knowsAbout() throws IOException {
         final User amihaiemil = new RtVersionEye(
             System.getProperty("api_key")
-        ).users().user("amihaiemil");
+        ).trusted().users().user("amihaiemil");
         final UserData about = amihaiemil.about();
         MatcherAssert.assertThat(
             about.fullName(), Matchers.equalTo("Mihai Emil Andronache")

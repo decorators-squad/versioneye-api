@@ -27,8 +27,11 @@
  */
 package com.amihaiemil.versioneye;
 
+import java.io.IOException;
+
 import com.jcabi.http.Request;
 import com.jcabi.http.request.JdkRequest;
+import com.jcabi.http.wire.TrustedWire;
 
 /**
  * OOP wrapper for the VersionEye API.
@@ -82,5 +85,12 @@ public final class RtVersionEye implements VersionEye {
     public Users users() {
         return new RtUsers(this.entry);
     }
-
+    
+    @Override
+    public VersionEye trusted() throws IOException {
+        return new RtVersionEye(
+            this.entry.through(TrustedWire.class)
+        );
+    }
+   
 }
