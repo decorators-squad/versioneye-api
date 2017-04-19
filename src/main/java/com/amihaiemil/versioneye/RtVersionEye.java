@@ -89,7 +89,7 @@ public final class RtVersionEye implements VersionEye {
     @Override
     public VersionEye trusted() throws IOException {
         return new RtVersionEye(
-            this.entry.method(Request.GET).through(TrustedWire.class)
+            this.entry.through(TrustedWire.class)
         );
     }
    
