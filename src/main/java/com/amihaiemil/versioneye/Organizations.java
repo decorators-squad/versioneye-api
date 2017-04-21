@@ -27,13 +27,30 @@
  */
 package com.amihaiemil.versioneye;
 
+import java.io.IOException;
+import java.util.List;
+
 /**
- * An organisation data.
+ * Organizations API.
  * @author Sherif Waly (sherifwaly95@gmail.com)
  * @version $Id$
  * @since 1.0.0
- * @todo #27:30min/DEV Implement and unit test a class for organisation data.
+ * @todo #27:30min/DEV Provide RtOrganizations and unit tests for it.
  */
-public interface OrganisationData {
-
+public interface Organizations {
+    
+    /**
+     * Info about Organizations (list of organizations you have access to).
+     * @return List of OrganizationData.
+     * @throws IOException If something goes wrong when
+     *  making the HTTP call.
+     */
+    List<OrganizationData> about() throws IOException;
+    
+    /**
+     * Fetch a organization.
+     * @param organizationName String.
+     * @return A VersionEye Organization.
+     */
+    Organization organization(String organizationName);
 }

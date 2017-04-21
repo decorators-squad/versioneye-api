@@ -28,12 +28,12 @@
 package com.amihaiemil.versioneye;
 
 /**
- * An organisation's projects.
+ * An organization's projects.
  * @author Sherif Waly (sherifwaly95@gmail.com)
  * @version $Id$
  * @since 1.0.0
  * @todo #27:30min/DEV Provide RtProjects implementation and unit tests.
- *  The class should work with a given request and organisation name.
+ *  The class should work with a given request and organization name.
  * 
  */
 public interface Projects {

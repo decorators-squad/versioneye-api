@@ -28,12 +28,12 @@
 package com.amihaiemil.versioneye;
 
 /**
- * An organisation's teams.
+ * An organization's teams.
  * @author Sherif Waly (sherifwaly95@gmail.com)
  * @version $Id$
  * @since 1.0.0
  * @todo #27:30min/DEV Provide RtTeams implementation and unit tests.
- *  The class should work with a given request and organisation name.
+ *  The class should work with a given request and organization name.
  */
 public interface Teams {
 

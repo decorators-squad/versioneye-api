@@ -28,24 +28,12 @@
 package com.amihaiemil.versioneye;
 
 /**
- * A VersionEye organisation.
- * @author Sherif waly (sherifwaly95@gmail.com)
+ * An organization data.
+ * @author Sherif Waly (sherifwaly95@gmail.com)
  * @version $Id$
  * @since 1.0.0
- * @todo #27:30min/DEV Provide RtOrganisation as implementation and unit tests.
- *  The class should work with a given request and organisation name.
+ * @todo #27:30min/DEV Implement and unit test a class for organization data.
  */
-public interface Organisation {
-    
-    /**
-     * The organisation's teams.
-     * @return Teams.
-     */
-    Teams teams();
-    
-    /**
-     * The organisation's projects.
-     * @return Projects.
-     */
-    Projects projects();
+public interface OrganizationData {
+
 }
