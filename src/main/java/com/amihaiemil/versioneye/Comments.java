@@ -35,6 +35,9 @@ import java.util.List;
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
+ * @todo #19:30min/DEV Provide a method to return a Paging, which
+ *  should offer information about the current page, number of pages etc.
+ *  See src/test/resources/comments.json to see how paging looks like.
  */
 public interface Comments {
     
