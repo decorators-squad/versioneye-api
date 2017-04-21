@@ -29,53 +29,66 @@ package com.amihaiemil.versioneye;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import com.jcabi.http.Request;
-import com.jcabi.http.response.JsonResponse;
-import com.jcabi.http.response.RestResponse;
+
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
+
+import com.jcabi.http.mock.MkAnswer;
+import com.jcabi.http.mock.MkContainer;
+import com.jcabi.http.mock.MkGrizzlyContainer;
+import com.jcabi.http.request.FakeRequest;
+import com.jcabi.http.request.JdkRequest;
 
 /**
- * Real implementation of {@link User}.
+ * Unit tests for {@link RtUser}.
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
- * @sinve 1.0.0
+ * @since 1.0.0
  *
  */
-class RtUser implements User {
+@SuppressWarnings("resource")
+public final class RtUserTestCase {
 
     /**
-     * HTTP request.
+     * RtUser can fetch data about a certain user.
+     * @throws IOException If something goes wrong.
      */
-    private Request req;
-    
-    /**
-     * Ctor.
-     * @param req HTTP request.
-     * @param username User's login.
-     */
-    RtUser(final Request req, final String username) {
-        this.req = req.uri().path(username).back();
-    }
-    
-    @Override
-    public UserData about() throws IOException {
-        return new JsonUserData(
-            this.req.fetch()
-                .as(RestResponse.class)
-                .assertStatus(HttpURLConnection.HTTP_OK)
-                .as(JsonResponse.class)
-                .json()
-                .readObject()
+    @Test
+    public void knowsAbout() throws IOException {
+        final MkContainer container = new MkGrizzlyContainer().next(
+            new MkAnswer.Simple(
+                HttpURLConnection.HTTP_OK,
+                "{\"fullname\": \"Jon Doe\", \"username\": \"jdoe\"}"
+            )
+        ).start();
+        final User jon = new RtUser(
+            new JdkRequest(container.home()), "jdoe"
+        );
+        UserData about = jon.about();
+        MatcherAssert.assertThat(
+            about.fullName(), Matchers.equalTo("Jon Doe")
+        );
+        MatcherAssert.assertThat(
+            about.username(), Matchers.equalTo("jdoe")
+        );
+        MatcherAssert.assertThat(
+            container.take().uri().toString(),
+            Matchers.equalTo("/jdoe")
         );
     }
     
-    @Override
-    public Comments comments() {
-        return new RtComments(this.req);
+    /**
+     * RtUser can fetch its comments.
+     * @throws IOException If something goes wrong.
+     */
+    @Test
+    public void comments() {
+        final User jon = new RtUser(
+            new FakeRequest(), "jdoe"
+        );
+        MatcherAssert.assertThat(
+            jon.comments(), Matchers.notNullValue()
+        );
     }
-
-    @Override
-    public Favorites favorites() {
-        return null;
-    }
-
 }

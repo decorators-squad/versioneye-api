@@ -29,6 +29,7 @@ package com.amihaiemil.versioneye;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
+
 import com.jcabi.http.Request;
 import com.jcabi.http.response.JsonResponse;
 import com.jcabi.http.response.RestResponse;
@@ -74,7 +75,7 @@ final class RtMe implements Me {
      */
     @Override
     public Comments comments() {
-        return null;
+        return new RtComments(this.req);
     }
     
     /**

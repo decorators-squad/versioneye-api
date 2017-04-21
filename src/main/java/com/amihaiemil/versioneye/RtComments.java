@@ -29,19 +29,22 @@ package com.amihaiemil.versioneye;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.util.ArrayList;
+import java.util.List;
+import javax.json.JsonArray;
 import com.jcabi.http.Request;
 import com.jcabi.http.response.JsonResponse;
 import com.jcabi.http.response.RestResponse;
 
 /**
- * Real implementation of {@link User}.
+ * Comments on VersionEye.
  * @author Mihai Andronache (amihaiemil@gmail.com)
- * @version $Id$
- * @sinve 1.0.0
+ * @version $id$
+ * @since 1.0.0
  *
  */
-class RtUser implements User {
-
+final class RtComments implements Comments {
+    
     /**
      * HTTP request.
      */
@@ -49,33 +52,29 @@ class RtUser implements User {
     
     /**
      * Ctor.
-     * @param req HTTP request.
-     * @param username User's login.
+     * @param entry HTTP Request.
      */
-    RtUser(final Request req, final String username) {
-        this.req = req.uri().path(username).back();
+    RtComments(final Request entry) {
+        this.req = entry.uri().path("/comments").back();
     }
     
     @Override
-    public UserData about() throws IOException {
-        return new JsonUserData(
-            this.req.fetch()
-                .as(RestResponse.class)
-                .assertStatus(HttpURLConnection.HTTP_OK)
-                .as(JsonResponse.class)
-                .json()
-                .readObject()
-        );
-    }
-    
-    @Override
-    public Comments comments() {
-        return new RtComments(this.req);
-    }
-
-    @Override
-    public Favorites favorites() {
-        return null;
+    public List<Comment> fetch(final int page) throws IOException {
+        final JsonArray array = this.req.uri()
+            .queryParam("page", String.valueOf(page)).back().fetch()
+            .as(RestResponse.class)
+            .assertStatus(HttpURLConnection.HTTP_OK)
+            .as(JsonResponse.class)
+            .json()
+            .readObject()
+            .getJsonArray("comments");
+        final List<Comment> comments = new ArrayList<>();
+        for(int idx=0; idx<array.size(); idx++) {
+            comments.add(
+                new RtComment(array.getJsonObject(idx))
+            );
+        }
+        return comments;
     }
 
 }

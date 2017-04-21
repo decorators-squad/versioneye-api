@@ -27,15 +27,25 @@
  */
 package com.amihaiemil.versioneye;
 
+import java.io.IOException;
+import java.util.List;
+
 /**
  * A user's comments.
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
- * @todo #11:30min/DEV Provide RtComments implementation and unit tests.
- *  The class should work with a given request and username or simply fetch
- *  the authenticated user's comments if no username is given.
+ * @todo #19:30min/DEV Provide a method to return a Paging, which
+ *  should offer information about the current page, number of pages etc.
+ *  See src/test/resources/comments.json to see how paging looks like.
  */
 public interface Comments {
-
+    
+    /**
+     * Fetch the comments from a given page.
+     * @param page Page.
+     * @return List of Comment.
+     * @throws IOException If there is something wrong with the HTTP call.
+     */
+    List<Comment> fetch(final int page) throws IOException;
 }
