@@ -27,55 +27,45 @@
  */
 package com.amihaiemil.versioneye;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import com.jcabi.http.Request;
-import com.jcabi.http.response.JsonResponse;
-import com.jcabi.http.response.RestResponse;
+import javax.json.JsonObject;
 
 /**
- * Real implementation of {@link User}.
+ * A user's comment on VersionEye.
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
- * @sinve 1.0.0
+ * @since 1.0.0
  *
  */
-class RtUser implements User {
-
-    /**
-     * HTTP request.
-     */
-    private Request req;
+public interface Comment {
     
     /**
-     * Ctor.
-     * @param req HTTP request.
-     * @param username User's login.
+     * Comment's ID.
+     * @return String
+     * @checkstyle MethodName (3 line)
      */
-    RtUser(final Request req, final String username) {
-        this.req = req.uri().path(username).back();
-    }
+    String id();
     
-    @Override
-    public UserData about() throws IOException {
-        return new JsonUserData(
-            this.req.fetch()
-                .as(RestResponse.class)
-                .assertStatus(HttpURLConnection.HTTP_OK)
-                .as(JsonResponse.class)
-                .json()
-                .readObject()
-        );
-    }
+    /**
+     * Comment's text.
+     * @return String
+     */
+    String text();
     
-    @Override
-    public Comments comments() {
-        return new RtComments(this.req);
-    }
-
-    @Override
-    public Favorites favorites() {
-        return null;
-    }
-
+    /**
+     * Comment's creation date.
+     * @return String
+     */
+    String createdAt();
+    
+    /**
+     * Comment's author.
+     * @return UserData
+     */
+    UserData user();
+    
+    /**
+     * This comment as json.
+     * @return JsonObject
+     */
+    JsonObject json();
 }

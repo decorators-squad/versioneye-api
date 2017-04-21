@@ -27,12 +27,15 @@
  */
 package com.amihaiemil.versioneye;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.HttpURLConnection;
-import javax.json.JsonObject;
+import java.util.List;
+import org.apache.commons.io.IOUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Assert;
 import org.junit.Test;
 import com.jcabi.http.mock.MkAnswer;
 import com.jcabi.http.mock.MkContainer;
@@ -40,76 +43,50 @@ import com.jcabi.http.mock.MkGrizzlyContainer;
 import com.jcabi.http.request.JdkRequest;
 
 /**
- * Unit tests for {@link RtServices}.
- * @author Mihai Andronache (amihaiemil@gmail.com)
+ * Unit tests for {@link RtComments}.
+ * @author Mihai Andronche (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
- *
  */
 @SuppressWarnings("resource")
-public final class RtServicesTestCase {
-
+public final class RtCommentsTestCase {
+    
     /**
-     * RtServices can ping the server successfully.
-     * @throws IOException if something goes wrong,
+     * RtComments can fetch a user's comments.
+     * @throws IOException If something goes wrong.
      */
     @Test
-    public void pingOk() throws IOException {
+    public void fetchesComments() throws IOException {
         final MkContainer container = new MkGrizzlyContainer().next(
             new MkAnswer.Simple(
                 HttpURLConnection.HTTP_OK,
-                "{\"success\":true, \"message\":\"pong\"}"
+                this.readResource("comments.json")
             )
         ).start();
-        final Services services = new RtServices(
+        final Comments comments = new RtComments(
             new JdkRequest(container.home())
         );
-        final JsonObject ping = services.ping();
+        final List<Comment> fetched = comments.fetch(1);
+        MatcherAssert.assertThat(fetched.size(), Matchers.is(2));
         MatcherAssert.assertThat(
-            ping.getBoolean("success"), Matchers.is(true)
-        );
-        MatcherAssert.assertThat(
-            ping.getString("message"), Matchers.is("pong")
+            fetched.get(0).id(), Matchers.equalTo("58f9b08ed797b2000e28d24e")
         );
         MatcherAssert.assertThat(
             container.take().uri().toString(),
-            Matchers.equalTo("/services/ping")
+            Matchers.equalTo("/comments?page=1")
         );
     }
     
     /**
-     * RtServices throws AssertionError when /ping is not found.
-     * @throws IOException if something goes wrong,
+     * Read resource for test.
+     * @param resourceName Name of the file being read.
+     * @return String content of the resource file.
+     * @throws IOException If it goes wrong.
      */
-    @Test(expected = AssertionError.class)
-    public void pingNotFound() throws IOException {
-        final MkContainer container = new MkGrizzlyContainer().next(
-            new MkAnswer.Simple(
-                HttpURLConnection.HTTP_NOT_FOUND
-            )
-        ).start();
-        final Services services = new RtServices(
-            new JdkRequest(container.home())
+    private String readResource(final String resourceName) throws IOException {
+        final InputStream stream = new FileInputStream(
+            new File("src/test/resources/" + resourceName)
         );
-        services.ping();
-        Assert.fail("An exception should have been thrown already");
-    }
-    
-    /**
-     * RtServices throws AssertionError when /ping is results in server error.
-     * @throws IOException if something goes wrong,
-     */
-    @Test(expected = AssertionError.class)
-    public void pingServerError() throws IOException {
-        final MkContainer container = new MkGrizzlyContainer().next(
-            new MkAnswer.Simple(
-                HttpURLConnection.HTTP_INTERNAL_ERROR
-            )
-        ).start();
-        final Services services = new RtServices(
-            new JdkRequest(container.home())
-        );
-        services.ping();
-        Assert.fail("An exception should have been thrown already");
+        return new String(IOUtils.toByteArray(stream));
     }
 }
