@@ -37,18 +37,19 @@ import java.util.List;
  * @since 1.0.0
  * @todo #27:30min/DEV Provide RtOrganizations and unit tests for it.
  */
-public interface Organizations {
+public interface Organizations { 
     
     /**
-     * Info about Organizations (list of organizations you have access to).
+     * Fetch the list of organizations that the authenticated user
+     * has access to.
      * @return List of OrganizationData.
      * @throws IOException If something goes wrong when
      *  making the HTTP call.
      */
-    List<OrganizationData> about() throws IOException;
+    List<Organization> fetch() throws IOException;
     
     /**
-     * Fetch a organization.
+     * Fetch an organization.
      * @param organizationName String.
      * @return A VersionEye Organization.
      */
