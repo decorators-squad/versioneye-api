@@ -27,31 +27,58 @@
  */
 package com.amihaiemil.versioneye;
 
-import java.io.IOException;
-import java.util.List;
+import javax.json.JsonObject;
 
 /**
- * A user's favorites.
- * @author Mihai Andronache (amihaiemil@gmail.com)
+ * VersionEye favorite.
+ * @author Sherif Waly (sherifwaly95@gmail.com)
  * @version $Id$
- * @sinve 1.0.0
- * @todo #20:30min/DEV Provide integration and unit tests for RtFavorites 
- *  and RtFavorite.
+ * @since 1.0.0
+ *
  */
-public interface Favorites {
+final class RtFavorite implements Favorite{
     
     /**
-     * Fetch the list of favorites from a given page.
-     * @param page Page.
-     * @return List of Favorite.
-     * @throws IOException If there is something wrong with the HTTP call.
+     * The favorite as a JsonObject.
      */
-    List<Favorite> fetch(final int page) throws IOException;
+    private JsonObject favorite;
     
     /**
-     * Fetch the user data.
-     * @return User data.
-     * @throws IOException If there is something wrong with the HTTP call.
+     * Ctor.
+     * @param favorite Json favorite as it is returned by the API.
      */
-    UserData userData() throws IOException;
+    RtFavorite(final JsonObject favorite) {
+        this.favorite = favorite;
+    }
+    
+    @Override
+    public String name() {
+        return this.favorite.getString("name");
+    }
+
+    @Override
+    public String language() {
+        return this.favorite.getString("language");
+    }
+
+    @Override
+    public String productKey() {
+        return this.favorite.getString("prod_key");
+    }
+
+    @Override
+    public String version() {
+        return this.favorite.getString("version");
+    }
+
+    @Override
+    public String productType() {
+        return this.favorite.getString("prod_type");
+    }
+
+    @Override
+    public JsonObject json() {
+        return this.favorite;
+    }
+    
 }

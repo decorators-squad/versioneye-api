@@ -27,31 +27,49 @@
  */
 package com.amihaiemil.versioneye;
 
-import java.io.IOException;
-import java.util.List;
+import javax.json.JsonObject;
 
 /**
- * A user's favorites.
- * @author Mihai Andronache (amihaiemil@gmail.com)
+ * A user's favorite on VersionEye.
+ * @author Sherif Waly (sherifwaly95@gmail.com)
  * @version $Id$
- * @sinve 1.0.0
- * @todo #20:30min/DEV Provide integration and unit tests for RtFavorites 
- *  and RtFavorite.
+ * @since 1.0.0
  */
-public interface Favorites {
+public interface Favorite {
     
     /**
-     * Fetch the list of favorites from a given page.
-     * @param page Page.
-     * @return List of Favorite.
-     * @throws IOException If there is something wrong with the HTTP call.
+     * Favorite's name.
+     * @return String
      */
-    List<Favorite> fetch(final int page) throws IOException;
+    String name();
     
     /**
-     * Fetch the user data.
-     * @return User data.
-     * @throws IOException If there is something wrong with the HTTP call.
+     * Favorite's language.
+     * @return String
      */
-    UserData userData() throws IOException;
+    String language();
+    
+    /**
+     * Favorite's product key.
+     * @return String
+     */
+    String productKey();
+    
+    /**
+     * Favorite's version.
+     * @return String
+     */
+    String version();
+    
+    /**
+     * Favorite's product type.
+     * @return String
+     */
+    String productType();
+    
+    /**
+     * The favorite as a json.
+     * @return JsonObject
+     */
+    JsonObject json();
 }

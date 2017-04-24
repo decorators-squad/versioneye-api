@@ -28,30 +28,68 @@
 package com.amihaiemil.versioneye;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.json.JsonArray;
+
+import com.jcabi.http.Request;
+import com.jcabi.http.response.JsonResponse;
+import com.jcabi.http.response.RestResponse;
+
 /**
- * A user's favorites.
- * @author Mihai Andronache (amihaiemil@gmail.com)
+ * Favorites on VersionEye.
+ * @author Sherif Waly (sherifwaly95@gmail.com)
  * @version $Id$
- * @sinve 1.0.0
- * @todo #20:30min/DEV Provide integration and unit tests for RtFavorites 
- *  and RtFavorite.
+ * @since 1.0.0
+ *
  */
-public interface Favorites {
+final class RtFavorites implements Favorites {
     
     /**
-     * Fetch the list of favorites from a given page.
-     * @param page Page.
-     * @return List of Favorite.
-     * @throws IOException If there is something wrong with the HTTP call.
+     * Http request. 
      */
-    List<Favorite> fetch(final int page) throws IOException;
+    private Request req;
     
     /**
-     * Fetch the user data.
-     * @return User data.
-     * @throws IOException If there is something wrong with the HTTP call.
+     * Ctor.
+     * @param entry HTTP Request.
      */
-    UserData userData() throws IOException;
+    RtFavorites(final Request entry) {
+        this.req = entry.uri().path("/favorites").back();
+    }
+    
+    @Override
+    public List<Favorite> fetch(final int page) throws IOException {
+        final JsonArray array = this.req.uri()
+            .queryParam("page", String.valueOf(page)).back().fetch()
+            .as(RestResponse.class)
+            .assertStatus(HttpURLConnection.HTTP_OK)
+            .as(JsonResponse.class)
+            .json()
+            .readObject()
+            .getJsonArray("favorites");
+        final List<Favorite> favorites = new ArrayList<>();
+        for(int idx=0; idx<array.size(); idx++) {
+            favorites.add(
+                new RtFavorite(array.getJsonObject(idx))
+            );
+        }
+        return favorites;
+    }
+
+    @Override
+    public UserData userData() throws IOException {
+        return new JsonUserData(
+            this.req.fetch()
+                .as(RestResponse.class)
+                .assertStatus(HttpURLConnection.HTTP_OK)
+                .as(JsonResponse.class)
+                .json()
+                .readObject()
+                .getJsonObject("user")
+        );
+    }
+
 }
