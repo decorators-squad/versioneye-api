@@ -1,0 +1,28 @@
+{
+  "user": {
+    "fullname": "datamd",
+    "username": "datamd"
+  },
+  "favorites": [
+    {
+      "name": "doctrine/common",
+      "language": "php",
+      "prod_key": "doctrine/common",
+      "version": "2.7.2",
+      "prod_type": "composer"
+    },
+    {
+      "name": "doctrine/doctrine-module",
+      "language": "php",
+      "prod_key": "doctrine/doctrine-module",
+      "version": "2.0.0",
+      "prod_type": "composer"
+    }
+  ],
+  "paging": {
+    "current_page": 1,
+    "per_page": 30,
+    "total_pages": 3,
+    "total_entries": 70
+  }
+}
