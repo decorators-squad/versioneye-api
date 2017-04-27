@@ -29,35 +29,58 @@ package com.amihaiemil.versioneye;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.json.JsonArray;
+
 import com.jcabi.http.Request;
 import com.jcabi.http.response.JsonResponse;
 import com.jcabi.http.response.RestResponse;
 
 /**
- * Real implementation of {@link User}.
- * @author Mihai Andronache (amihaiemil@gmail.com)
+ * Favorites on VersionEye.
+ * @author Sherif Waly (sherifwaly95@gmail.com)
  * @version $Id$
- * @sinve 1.0.0
+ * @since 1.0.0
  *
  */
-class RtUser implements User {
-
+final class RtFavorites implements Favorites {
+    
     /**
-     * HTTP request.
+     * Http request. 
      */
     private Request req;
     
     /**
      * Ctor.
-     * @param req HTTP request.
-     * @param username User's login.
+     * @param entry HTTP Request.
      */
-    RtUser(final Request req, final String username) {
-        this.req = req.uri().path(username).back();
+    RtFavorites(final Request entry) {
+        this.req = entry.uri().path("/favorites").back();
     }
     
     @Override
-    public UserData about() throws IOException {
+    public List<Favorite> fetch(final int page) throws IOException {
+        final JsonArray array = this.req.uri()
+            .queryParam("page", String.valueOf(page)).back().fetch()
+            .as(RestResponse.class)
+            .assertStatus(HttpURLConnection.HTTP_OK)
+            .as(JsonResponse.class)
+            .json()
+            .readObject()
+            .getJsonArray("favorites");
+        final List<Favorite> favorites = new ArrayList<>();
+        for(int idx=0; idx<array.size(); idx++) {
+            favorites.add(
+                new RtFavorite(array.getJsonObject(idx))
+            );
+        }
+        return favorites;
+    }
+
+    @Override
+    public UserData userData() throws IOException {
         return new JsonUserData(
             this.req.fetch()
                 .as(RestResponse.class)
@@ -65,17 +88,8 @@ class RtUser implements User {
                 .as(JsonResponse.class)
                 .json()
                 .readObject()
+                .getJsonObject("user")
         );
-    }
-    
-    @Override
-    public Comments comments() {
-        return new RtComments(this.req);
-    }
-
-    @Override
-    public Favorites favorites() {
-        return new RtFavorites(this.req);
     }
 
 }

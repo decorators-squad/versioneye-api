@@ -27,55 +27,58 @@
  */
 package com.amihaiemil.versioneye;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import com.jcabi.http.Request;
-import com.jcabi.http.response.JsonResponse;
-import com.jcabi.http.response.RestResponse;
+import javax.json.JsonObject;
 
 /**
- * Real implementation of {@link User}.
- * @author Mihai Andronache (amihaiemil@gmail.com)
+ * VersionEye favorite.
+ * @author Sherif Waly (sherifwaly95@gmail.com)
  * @version $Id$
- * @sinve 1.0.0
+ * @since 1.0.0
  *
  */
-class RtUser implements User {
-
+final class RtFavorite implements Favorite{
+    
     /**
-     * HTTP request.
+     * The favorite as a JsonObject.
      */
-    private Request req;
+    private JsonObject favorite;
     
     /**
      * Ctor.
-     * @param req HTTP request.
-     * @param username User's login.
+     * @param favorite Json favorite as it is returned by the API.
      */
-    RtUser(final Request req, final String username) {
-        this.req = req.uri().path(username).back();
+    RtFavorite(final JsonObject favorite) {
+        this.favorite = favorite;
     }
     
     @Override
-    public UserData about() throws IOException {
-        return new JsonUserData(
-            this.req.fetch()
-                .as(RestResponse.class)
-                .assertStatus(HttpURLConnection.HTTP_OK)
-                .as(JsonResponse.class)
-                .json()
-                .readObject()
-        );
+    public String name() {
+        return this.favorite.getString("name");
+    }
+
+    @Override
+    public String language() {
+        return this.favorite.getString("language");
+    }
+
+    @Override
+    public String productKey() {
+        return this.favorite.getString("prod_key");
+    }
+
+    @Override
+    public String version() {
+        return this.favorite.getString("version");
+    }
+
+    @Override
+    public String productType() {
+        return this.favorite.getString("prod_type");
+    }
+
+    @Override
+    public JsonObject json() {
+        return this.favorite;
     }
     
-    @Override
-    public Comments comments() {
-        return new RtComments(this.req);
-    }
-
-    @Override
-    public Favorites favorites() {
-        return new RtFavorites(this.req);
-    }
-
 }

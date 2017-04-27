@@ -27,55 +27,49 @@
  */
 package com.amihaiemil.versioneye;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import com.jcabi.http.Request;
-import com.jcabi.http.response.JsonResponse;
-import com.jcabi.http.response.RestResponse;
+import javax.json.JsonObject;
 
 /**
- * Real implementation of {@link User}.
- * @author Mihai Andronache (amihaiemil@gmail.com)
+ * A user's favorite on VersionEye.
+ * @author Sherif Waly (sherifwaly95@gmail.com)
  * @version $Id$
- * @sinve 1.0.0
- *
+ * @since 1.0.0
  */
-class RtUser implements User {
-
-    /**
-     * HTTP request.
-     */
-    private Request req;
+public interface Favorite {
     
     /**
-     * Ctor.
-     * @param req HTTP request.
-     * @param username User's login.
+     * Favorite's name.
+     * @return String
      */
-    RtUser(final Request req, final String username) {
-        this.req = req.uri().path(username).back();
-    }
+    String name();
     
-    @Override
-    public UserData about() throws IOException {
-        return new JsonUserData(
-            this.req.fetch()
-                .as(RestResponse.class)
-                .assertStatus(HttpURLConnection.HTTP_OK)
-                .as(JsonResponse.class)
-                .json()
-                .readObject()
-        );
-    }
+    /**
+     * Favorite's language.
+     * @return String
+     */
+    String language();
     
-    @Override
-    public Comments comments() {
-        return new RtComments(this.req);
-    }
-
-    @Override
-    public Favorites favorites() {
-        return new RtFavorites(this.req);
-    }
-
+    /**
+     * Favorite's product key.
+     * @return String
+     */
+    String productKey();
+    
+    /**
+     * Favorite's version.
+     * @return String
+     */
+    String version();
+    
+    /**
+     * Favorite's product type.
+     * @return String
+     */
+    String productType();
+    
+    /**
+     * The favorite as a json.
+     * @return JsonObject
+     */
+    JsonObject json();
 }

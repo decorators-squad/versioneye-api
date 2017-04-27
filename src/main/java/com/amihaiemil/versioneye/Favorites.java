@@ -27,16 +27,31 @@
  */
 package com.amihaiemil.versioneye;
 
+import java.io.IOException;
+import java.util.List;
+
 /**
  * A user's favorites.
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @sinve 1.0.0
- * @todo #11:30min/DEV Provide RtFavorites implementation and unit tests.
- *  The class should work with a given request and username or simply fetch
- *  the authenticated user's favorites if no username is given.
- *
+ * @todo #20:30min/DEV Provide integration and unit tests for RtFavorites 
+ *  and RtFavorite.
  */
 public interface Favorites {
-
+    
+    /**
+     * Fetch the list of favorites from a given page.
+     * @param page Page.
+     * @return List of Favorite.
+     * @throws IOException If there is something wrong with the HTTP call.
+     */
+    List<Favorite> fetch(final int page) throws IOException;
+    
+    /**
+     * Fetch the user data.
+     * @return User data.
+     * @throws IOException If there is something wrong with the HTTP call.
+     */
+    UserData userData() throws IOException;
 }
