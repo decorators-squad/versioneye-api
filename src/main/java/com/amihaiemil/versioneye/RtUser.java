@@ -75,7 +75,7 @@ class RtUser implements User {
 
     @Override
     public Favorites favorites() {
-        return null;
+        return new RtFavorites(this.req);
     }
 
 }
