@@ -34,9 +34,7 @@ import java.util.List;
  * A user's favorites.
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
- * @sinve 1.0.0
- * @todo #20:30min/DEV Provide integration and unit tests for RtFavorites 
- *  and RtFavorite.
+ * @since 1.0.0
  */
 public interface Favorites {
     
