@@ -49,6 +49,7 @@ import com.jcabi.http.request.JdkRequest;
  * @author Sherif Waly (sherifwaly95@gmail.com)
  * @version $Id$
  * @since 1.0.0
+ * @todo #40:15min/DEV Add integration tests for RtFavorites.
  */
 
 @SuppressWarnings("resource")
@@ -71,39 +72,42 @@ public final class RtFavoritesTestCase {
         );
         
         final List<Favorite> fetched = favorites.fetch(1);
+        
         MatcherAssert.assertThat(fetched.size(), Matchers.is(2));
         
+        Favorite favorite = fetched.get(0);
         MatcherAssert.assertThat(
-            fetched.get(0).name(), Matchers.equalTo("doctrine/common")
+            favorite.name(), Matchers.equalTo("doctrine/common")
         );
         MatcherAssert.assertThat(
-            fetched.get(0).language(), Matchers.equalTo("php")
+            favorite.language(), Matchers.equalTo("php")
         );
         MatcherAssert.assertThat(
-            fetched.get(0).productKey(), Matchers.equalTo("doctrine/common")
+            favorite.productKey(), Matchers.equalTo("doctrine/common")
         );
         MatcherAssert.assertThat(
-            fetched.get(0).version(), Matchers.equalTo("2.7.2")
+            favorite.version(), Matchers.equalTo("2.7.2")
         );
         MatcherAssert.assertThat(
-            fetched.get(0).productType(), Matchers.equalTo("composer")
+            favorite.productType(), Matchers.equalTo("composer")
         );
         
+        favorite = fetched.get(1);
         MatcherAssert.assertThat(
-            fetched.get(1).name(), Matchers.equalTo("doctrine/doctrine-module")
+            favorite.name(), Matchers.equalTo("doctrine/doctrine-module")
         );
         MatcherAssert.assertThat(
-            fetched.get(1).language(), Matchers.equalTo("php")
+            favorite.language(), Matchers.equalTo("php")
         );
         MatcherAssert.assertThat(
-            fetched.get(1).productKey(),
+            favorite.productKey(),
             Matchers.equalTo("doctrine/doctrine-module")
         );
         MatcherAssert.assertThat(
-            fetched.get(1).version(), Matchers.equalTo("2.0.0")
+            favorite.version(), Matchers.equalTo("2.0.0")
         );
         MatcherAssert.assertThat(
-            fetched.get(1).productType(), Matchers.equalTo("composer")
+            favorite.productType(), Matchers.equalTo("composer")
         );
         
         MatcherAssert.assertThat(
