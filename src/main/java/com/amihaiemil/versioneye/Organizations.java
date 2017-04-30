@@ -42,7 +42,7 @@ public interface Organizations {
     /**
      * Fetch the list of organizations that the authenticated user
      * has access to.
-     * @return List of OrganizationData.
+     * @return List of Organizations.
      * @throws IOException If something goes wrong when
      *  making the HTTP call.
      */
@@ -52,6 +52,8 @@ public interface Organizations {
      * Fetch an organization.
      * @param organizationName String.
      * @return A VersionEye Organization.
+     * @throws IOException If something goes wrong when
+     *  making the HTTP call.
      */
-    Organization organization(String organizationName);
+    Organization organization(String organizationName) throws IOException;
 }
