@@ -30,12 +30,9 @@ package com.amihaiemil.versioneye;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.json.JsonArray;
-import javax.json.JsonObject;
 
 import com.jcabi.http.Request;
 import com.jcabi.http.response.JsonResponse;
@@ -46,6 +43,7 @@ import com.jcabi.http.response.RestResponse;
  * @author Sherif Waly (sherifwaly95@gmail.com)
  * @version $Id$
  * @since 1.0.0
+ * @todo #35:30min/DEV Provide unit tests for this class.
  */
 final class RtOrganizations implements Organizations {
 
@@ -53,12 +51,7 @@ final class RtOrganizations implements Organizations {
      * HTTP request.
      */
     private Request req;
-    
-    /**
-     * Mapping from organization name to an Organization.
-     */
-    private Map<String, Organization> organizationsMapping;
-   
+
     /**
      * Ctor.
      * @param entry HTTP Request.
@@ -69,6 +62,29 @@ final class RtOrganizations implements Organizations {
     
     @Override
     public List<Organization> fetch() throws IOException {
+        return this.fetchOrgs();
+    }
+
+    @Override
+    public Organization organization(final String organizationName)
+        throws IOException {
+        final List<Organization> organizations = this.fetchOrgs();
+        for(final Organization organization: organizations) {
+            if(organization.name().equals(organizationName)) {
+                return organization;
+            }
+        }
+        throw new IOException();
+    }
+
+    /**
+     * Fetches the organizations that the authenticated user
+     * has access to.
+     * @return List of organizations.
+     * @throws IOException If something goes wrong when
+     *  making the HTTP call.
+     */
+    private List<Organization> fetchOrgs() throws IOException {
         final JsonArray array = this.req.fetch()
             .as(RestResponse.class)
             .assertStatus(HttpURLConnection.HTTP_OK)
@@ -79,41 +95,6 @@ final class RtOrganizations implements Organizations {
         for(int idx=0; idx<array.size(); idx++) {
             organizations.add(
                 new RtOrganization(array.getJsonObject(idx), this.req)
-            );
-        }
-        return organizations;
-    }
-
-    @Override
-    public Organization organization(final String organizationName)
-        throws IOException {
-        if(this.organizationsMapping == null) {
-            this.organizationsMapping = this.fetchOrganizationsMapping();
-        }
-        return this.organizationsMapping.get(organizationName);
-    }
-
-    /**
-     * Fetches the organizations that the authenticated user
-     * has access to and construct a mapping from the organization name 
-     * to an organization.
-     * @return Mapping from organization name to an organization.
-     * @throws IOException 
-     */
-    private Map<String, Organization> fetchOrganizationsMapping()
-        throws IOException {
-        JsonArray array = this.req.fetch()
-            .as(RestResponse.class)
-            .assertStatus(HttpURLConnection.HTTP_OK)
-            .as(JsonResponse.class)
-            .json()
-            .readArray();
-        final Map<String, Organization> organizations = new HashMap<>();
-        for(int idx=0; idx<array.size(); idx++) {
-            JsonObject organization = array.getJsonObject(idx);
-            organizations.put(
-                organization.getString("name"),
-                new RtOrganization(organization, this.req)
             );
         }
         return organizations;

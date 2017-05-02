@@ -35,7 +35,6 @@ import java.util.List;
  * @author Sherif Waly (sherifwaly95@gmail.com)
  * @version $Id$
  * @since 1.0.0
- * @todo #27:30min/DEV Provide RtOrganizations and unit tests for it.
  */
 public interface Organizations { 
     

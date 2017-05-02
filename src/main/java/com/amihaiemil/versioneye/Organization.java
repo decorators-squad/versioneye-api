@@ -32,8 +32,6 @@ package com.amihaiemil.versioneye;
  * @author Sherif Waly (sherifwaly95@gmail.com)
  * @version $Id$
  * @since 1.0.0
- * @todo #27:30min/DEV Provide RtOrganization as implementation and unit tests.
- *  The class should work with a given request and organization name.
  */
 public interface Organization {
     
@@ -48,4 +46,10 @@ public interface Organization {
      * @return Projects.
      */
     Projects projects();
+
+    /**
+     * Organization name.
+     * @return String organization name.
+     */
+    String name();
 }

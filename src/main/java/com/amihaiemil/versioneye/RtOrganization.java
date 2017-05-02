@@ -9,6 +9,8 @@ import com.jcabi.http.Request;
  * @author Sherif Waly (sheifwaly95@gmail.com)
  * @version $Id$
  * @since 1.0.0
+ * @todo #35:30min/DEV Implement, unit test this class and add methods
+ *  for the organization attributes as (api_key).
  */
 final class RtOrganization implements Organization {
 
@@ -28,6 +30,11 @@ final class RtOrganization implements Organization {
 
     @Override
     public Projects projects() {
+        return null;
+    }
+
+    @Override
+    public String name() {
         return null;
     }
 }
