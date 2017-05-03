@@ -43,7 +43,6 @@ import com.jcabi.http.response.RestResponse;
  * @author Sherif Waly (sherifwaly95@gmail.com)
  * @version $Id$
  * @since 1.0.0
- * @todo #35:30min/DEV Provide unit tests for this class.
  */
 final class RtOrganizations implements Organizations {
 

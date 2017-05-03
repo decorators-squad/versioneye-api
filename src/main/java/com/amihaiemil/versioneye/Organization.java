@@ -27,6 +27,8 @@
  */
 package com.amihaiemil.versioneye;
 
+import javax.json.JsonObject;
+
 /**
  * A VersionEye organization.
  * @author Sherif Waly (sherifwaly95@gmail.com)
@@ -52,4 +54,34 @@ public interface Organization {
      * @return String organization name.
      */
     String name();
+    
+    /**
+     * Company name of the organization.
+     * @return String company name.
+     */
+    String company();
+    
+    /**
+     * Creation time of the organization.
+     * @return String creation time.
+     */
+    String createdAt();
+    
+    /**
+     * Last update time.
+     * @return String update time.
+     */
+    String updatedAt();
+    
+    /**
+     * API key of the organization.
+     * @return String API key.
+     */
+    String apiKey();
+    
+    /**
+     * The organization as a json.
+     * @return JsonObject.
+     */
+    JsonObject json();
 }
