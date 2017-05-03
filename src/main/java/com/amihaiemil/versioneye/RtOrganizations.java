@@ -75,8 +75,8 @@ final class RtOrganizations implements Organizations {
             }
         }
         throw new IOException(
-            "No Organization found for name " + organizationName
-        );
+            "No Organization found for name: " + organizationName
+        ); 
     }
 
     /**
