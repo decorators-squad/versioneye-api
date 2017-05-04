@@ -77,13 +77,7 @@ final class RtOrganization implements Organization {
 
     @Override
     public String company() {
-        String company;
-        if(this.organization.isNull("company")) {
-            company = null;
-        } else {
-            company = this.organization.getString("company");
-        }
-        return company;   
+        return this.organization.getString("company", "");  
     }
 
     @Override

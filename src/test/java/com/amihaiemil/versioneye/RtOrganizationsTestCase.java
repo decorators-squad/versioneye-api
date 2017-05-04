@@ -88,7 +88,7 @@ public final class RtOrganizationsTestCase {
         );
         MatcherAssert.assertThat(
             organization.company(),
-            Matchers.equalTo(null)
+            Matchers.equalTo("")
         );
         MatcherAssert.assertThat(
             organization.apiKey(),
