@@ -28,22 +28,51 @@
 package com.amihaiemil.versioneye;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.util.ArrayList;
 import java.util.List;
+import javax.json.JsonArray;
+import com.jcabi.http.Request;
+import com.jcabi.http.response.JsonResponse;
+import com.jcabi.http.response.RestResponse;
 
 /**
- * An organization's teams.
- * @author Sherif Waly (sherifwaly95@gmail.com)
+ * Real implementation for {@link Teams}.
+ * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
- * @todo #27:30min/DEV Provide RtTeams implementation and unit tests.
- *  The class should work with a given request and organization name.
  */
-public interface Teams {
+final class RtTeams implements Teams {
+
+    /**
+     * HTTP request.
+     */
+    private Request req;
     
     /**
-     * Fetch the teams.
-     * @return List of {@link Team}
-     * @throws IOException If something goes wrong with the HTTP request.
+     * Ctor.
+     * @param entry HTTP request.
+     * @param orgKey The organization's api_key
      */
-    List<Team> fetch() throws IOException;
+    RtTeams(final Request entry, final String orgKey) {
+        this.req = entry.uri().queryParam("api_key", orgKey).back();
+    }
+    
+    @Override
+    public List<Team> fetch() throws IOException {
+        final JsonArray array = this.req.fetch()
+            .as(RestResponse.class)
+            .assertStatus(HttpURLConnection.HTTP_OK)
+            .as(JsonResponse.class)
+            .json()
+            .readArray();
+        final List<Team> teams = new ArrayList<>();
+        for(int idx=0; idx<array.size(); idx++) {
+            teams.add(
+                new JsonTeam(array.getJsonObject(idx))
+            );
+        }
+        return teams;
+    }
+
 }

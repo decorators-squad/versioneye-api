@@ -119,6 +119,54 @@ public final class RtOrganizationsTestCase {
     }
     
     /**
+     * An Organization's teams can be fetched.
+     * @throws IOException If something goes wrong.
+     */
+    @Test
+    public void teamsAreFetched() throws IOException {
+        final MkContainer container = new MkGrizzlyContainer().next(
+            new MkAnswer.Simple(
+                HttpURLConnection.HTTP_OK,
+                this.readResource("organizations.json")
+            )
+        ).next(
+            new MkAnswer.Simple(
+                HttpURLConnection.HTTP_OK,
+                this.readResource("teams.json")
+            )
+        ).start(); 
+        final Organizations organizations = new RtOrganizations(
+            new JdkRequest(container.home())
+        );
+        final List<Team> teams = organizations.fetch().get(0).teams().fetch();
+        MatcherAssert.assertThat(
+            container.take().uri().toString(),
+            Matchers.equalTo("/organisations")
+        );
+        MatcherAssert.assertThat(
+            container.take().uri().toString(),
+            Matchers.equalTo(
+                "/organisations/sherifwaly_orga?api_key=88870f2710dba853a326"
+            )
+        );
+        MatcherAssert.assertThat(teams.size(), Matchers.is(2));
+        
+        Team team = teams.get(0);
+        MatcherAssert.assertThat(
+            team.name(),
+            Matchers.equalTo("Owners")
+        );
+        MatcherAssert.assertThat(
+            team.createdAt(),
+            Matchers.equalTo("2017-01-11T08:04:13.077Z")
+        );
+        MatcherAssert.assertThat(
+            team.updatedAt(),
+            Matchers.equalTo("2017-01-11T08:15:18.077Z")
+        );
+    }
+    
+    /**
      * RtOrganizations can return an organization with given name.
      * @throws IOException If something goes wrong.
      */

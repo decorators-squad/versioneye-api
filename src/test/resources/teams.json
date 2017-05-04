@@ -1,0 +1,46 @@
+[
+    {
+        "ids": "5875e6fd224dfe001251bef2",
+        "name": "Owners",
+        "version_notifications": true,
+        "license_notifications": true,
+        "security_notifications": true,
+        "monday": true,
+        "tuesday": true,
+        "wednesday": true,
+        "thursday": true,
+        "friday": true,
+        "saturday": false,
+        "sunday": false,
+        "users": [{
+            "id": "5875e6fc224dfe001251bef0",
+            "username": "amihaiemil",
+            "fullname": "amihaiemil"
+        }],
+        "projects": [],
+        "created_at": "2017-01-11T08:04:13.077Z",
+        "updated_at": "2017-01-11T08:15:18.077Z"
+    },
+    {
+        "ids": "590b190ee01eee0016ad2ba5",
+        "name": "amihaiemil_team",
+        "version_notifications": true,
+        "license_notifications": true,
+        "security_notifications": true,
+        "monday": true,
+        "tuesday": true,
+        "wednesday": true,
+        "thursday": true,
+        "friday": true,
+        "saturday": false,
+        "sunday": false,
+        "users": [{
+            "id": "58fcd9c174e93c0017237d99",
+            "username": "SherifWaly",
+            "fullname": "SherifWaly"
+        }],
+        "projects": [],
+        "created_at": "2017-05-04T12:05:34.515Z",
+        "updated_at": "2017-05-04T12:05:34.515Z"
+    }
+]

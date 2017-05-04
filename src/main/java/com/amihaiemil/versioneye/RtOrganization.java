@@ -36,7 +36,7 @@ import com.jcabi.http.Request;
  * @author Sherif Waly (sheifwaly95@gmail.com)
  * @version $Id$
  * @since 1.0.0
- * @todo #45:30min/DEV implement and test `teams()` and `projects()` methods.
+ * @todo #37:30min/DEV implement and test `projects()` method.
  */
 final class RtOrganization implements Organization {
 
@@ -57,12 +57,12 @@ final class RtOrganization implements Organization {
      */
     RtOrganization(final JsonObject organization, final Request entry) {
         this.organization = organization;
-        this.req = entry;
+        this.req = entry.uri().path(organization.getString("name")).back();
     }
 
     @Override
     public Teams teams() {
-        return null;
+        return new RtTeams(this.req, this.organization.getString("api_key"));
     }
 
     @Override
