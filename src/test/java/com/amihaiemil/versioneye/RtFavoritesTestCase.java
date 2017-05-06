@@ -144,6 +144,41 @@ public final class RtFavoritesTestCase {
     }
     
     /**
+     * RtFavorites can return paging.
+     * @throws IOException If something goes wrong.
+     */
+    @Test
+    public void returnsPaging() throws IOException {
+        final MkContainer container = new MkGrizzlyContainer().next(
+            new MkAnswer.Simple(
+                HttpURLConnection.HTTP_OK,
+                this.readResource("favorites.json")
+            )
+        ).start();
+        final Favorites favorites = new RtFavorites(
+            new JdkRequest(container.home())
+        );
+        
+        Paging paging = favorites.paging();
+        MatcherAssert.assertThat(
+            paging.currentPage(),
+            Matchers.is(1)
+        );
+        MatcherAssert.assertThat(
+            paging.itemsPerPage(),
+            Matchers.is(30)
+        );
+        MatcherAssert.assertThat(
+            paging.totalPages(),
+            Matchers.is(3)
+        );
+        MatcherAssert.assertThat(
+            paging.totalEntries(),
+            Matchers.is(70)
+        );
+    }
+    
+    /**
      * Read resource for test.
      * @param resourceName Name of the file being read.
      * @return String content of the resource file.

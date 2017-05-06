@@ -36,7 +36,7 @@ import java.util.List;
  * @version $Id$
  * @since 1.0.0
  */
-public interface Favorites {
+public interface Favorites extends Paginated {
     
     /**
      * Fetch the list of favorites from a given page.

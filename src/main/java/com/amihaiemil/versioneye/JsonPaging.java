@@ -27,66 +27,52 @@
  */
 package com.amihaiemil.versioneye;
 
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.util.ArrayList;
-import java.util.List;
-import javax.json.JsonArray;
-import com.jcabi.http.Request;
-import com.jcabi.http.response.JsonResponse;
-import com.jcabi.http.response.RestResponse;
+import javax.json.JsonObject;
 
 /**
- * Comments on VersionEye.
- * @author Mihai Andronache (amihaiemil@gmail.com)
- * @version $id$
+ * VersionEye Paging represented by a json object.
+ * @author Sherif Waly (sherifwaly95@gmail.com)
+ * @version $Id$
  * @since 1.0.0
- *
  */
-final class RtComments implements Comments {
-    
+final class JsonPaging implements Paging {
+
     /**
-     * HTTP request.
+     * Paging as a JsonObject.
      */
-    private Request req;
+    private JsonObject paging;
     
     /**
      * Ctor.
-     * @param entry HTTP Request.
+     * @param paging Given paging.
      */
-    RtComments(final Request entry) {
-        this.req = entry.uri().path("/comments").back();
+    JsonPaging(final JsonObject paging) {
+        this.paging = paging;
     }
     
     @Override
-    public List<Comment> fetch(final int page) throws IOException {
-        final JsonArray array = this.req.uri()
-            .queryParam("page", String.valueOf(page)).back().fetch()
-            .as(RestResponse.class)
-            .assertStatus(HttpURLConnection.HTTP_OK)
-            .as(JsonResponse.class)
-            .json()
-            .readObject()
-            .getJsonArray("comments");
-        final List<Comment> comments = new ArrayList<>();
-        for(int idx=0; idx<array.size(); idx++) {
-            comments.add(
-                new RtComment(array.getJsonObject(idx))
-            );
-        }
-        return comments;
+    public int currentPage() {
+        return this.paging.getInt("current_page");
     }
 
     @Override
-    public Paging paging() throws IOException {
-        return new JsonPaging(
-            this.req.fetch()
-                .as(RestResponse.class)
-                .assertStatus(HttpURLConnection.HTTP_OK)
-                .as(JsonResponse.class)
-                .json()
-                .readObject()
-                .getJsonObject("paging")
-        );
+    public int itemsPerPage() {
+        return this.paging.getInt("per_page");
     }
+
+    @Override
+    public int totalPages() {
+        return this.paging.getInt("total_pages");
+    }
+
+    @Override
+    public int totalEntries() {
+        return this.paging.getInt("total_entries");
+    }
+
+    @Override
+    public JsonObject json() {
+        return this.paging;
+    }
+
 }

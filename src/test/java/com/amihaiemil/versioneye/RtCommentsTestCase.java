@@ -78,6 +78,41 @@ public final class RtCommentsTestCase {
     }
     
     /**
+     * RtComments can return paging.
+     * @throws IOException If something goes wrong.
+     */
+    @Test
+    public void returnsPaging() throws IOException {
+        final MkContainer container = new MkGrizzlyContainer().next(
+            new MkAnswer.Simple(
+                HttpURLConnection.HTTP_OK,
+                this.readResource("comments.json")
+            )
+        ).start();
+        final Comments comments = new RtComments(
+            new JdkRequest(container.home())
+        );
+        
+        Paging paging = comments.paging();
+        MatcherAssert.assertThat(
+            paging.currentPage(),
+            Matchers.is(1)
+        );
+        MatcherAssert.assertThat(
+            paging.itemsPerPage(),
+            Matchers.is(30)
+        );
+        MatcherAssert.assertThat(
+            paging.totalPages(),
+            Matchers.is(1)
+        );
+        MatcherAssert.assertThat(
+            paging.totalEntries(),
+            Matchers.is(1)
+        );
+    }
+    
+    /**
      * Read resource for test.
      * @param resourceName Name of the file being read.
      * @return String content of the resource file.

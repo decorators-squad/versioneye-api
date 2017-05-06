@@ -28,65 +28,19 @@
 package com.amihaiemil.versioneye;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.util.ArrayList;
-import java.util.List;
-import javax.json.JsonArray;
-import com.jcabi.http.Request;
-import com.jcabi.http.response.JsonResponse;
-import com.jcabi.http.response.RestResponse;
 
 /**
- * Comments on VersionEye.
- * @author Mihai Andronache (amihaiemil@gmail.com)
- * @version $id$
+ * A paginated class consists of one or more pages.
+ * @author Sherif Waly (sherifwaly95@gmail.com)
+ * @version $Id$
  * @since 1.0.0
- *
  */
-final class RtComments implements Comments {
+public interface Paginated {
     
     /**
-     * HTTP request.
+     * A paging.
+     * @return Paging.
+     * @throws IOException If there is something wrong with the HTTP call.
      */
-    private Request req;
-    
-    /**
-     * Ctor.
-     * @param entry HTTP Request.
-     */
-    RtComments(final Request entry) {
-        this.req = entry.uri().path("/comments").back();
-    }
-    
-    @Override
-    public List<Comment> fetch(final int page) throws IOException {
-        final JsonArray array = this.req.uri()
-            .queryParam("page", String.valueOf(page)).back().fetch()
-            .as(RestResponse.class)
-            .assertStatus(HttpURLConnection.HTTP_OK)
-            .as(JsonResponse.class)
-            .json()
-            .readObject()
-            .getJsonArray("comments");
-        final List<Comment> comments = new ArrayList<>();
-        for(int idx=0; idx<array.size(); idx++) {
-            comments.add(
-                new RtComment(array.getJsonObject(idx))
-            );
-        }
-        return comments;
-    }
-
-    @Override
-    public Paging paging() throws IOException {
-        return new JsonPaging(
-            this.req.fetch()
-                .as(RestResponse.class)
-                .assertStatus(HttpURLConnection.HTTP_OK)
-                .as(JsonResponse.class)
-                .json()
-                .readObject()
-                .getJsonObject("paging")
-        );
-    }
+    Paging paging() throws IOException;
 }
