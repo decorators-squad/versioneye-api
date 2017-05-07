@@ -45,136 +45,116 @@ import com.jcabi.http.mock.MkGrizzlyContainer;
 import com.jcabi.http.request.JdkRequest;
 
 /**
- * Unit tests for {@link RtFavorites}.
+ * Unit tests for {@link FavoritesPage}.
  * @author Sherif Waly (sherifwaly95@gmail.com)
  * @version $Id$
  * @since 1.0.0
- * @todo #40:15min/DEV Add integration tests for RtFavorites.
+ *
  */
-
 @SuppressWarnings("resource")
-public final class RtFavoritesTestCase {
+public final class FavoritesPageTestCase {
     
     /**
-     * RtFavorites can fetch a user's favorites.
-     * @throws IOException If something goes wrong.
+     * FavoritesPage can return the first page of favorites.
+     * @throws Exception If something goes wrong.
      */
     @Test
-    public void fetchesFavorites() throws IOException {
-        final MkContainer container = new MkGrizzlyContainer().next(
-            new MkAnswer.Simple(
-                HttpURLConnection.HTTP_OK,
-                this.readResource("favoritespage1.json")
-            )
-        ).start(); 
-        final Favorites favorites = new RtFavorites(
+    public void iteratesOverFirstPage() throws Exception {
+        final MkContainer container = this.mockVersionEyeFavorites().start();
+        final VersionEye versionEye = new RtVersionEye(
             new JdkRequest(container.home())
         );
-        
-        final List<Favorite> fetched = favorites.fetch(1);
-        
-        MatcherAssert.assertThat(fetched.size(), Matchers.is(2));
-        
-        Favorite favorite = fetched.get(0);
+        List<Favorite> first = 
+            versionEye.users().user("SherifWaly").favorites().fetch();
+        MatcherAssert.assertThat(first.size(), Matchers.is(2));
         MatcherAssert.assertThat(
-            favorite.name(), Matchers.equalTo("doctrine/common")
+            first.get(0).name(),
+            Matchers.equalTo("doctrine/common")
         );
         MatcherAssert.assertThat(
-            favorite.language(), Matchers.equalTo("php")
-        );
-        MatcherAssert.assertThat(
-            favorite.productKey(), Matchers.equalTo("doctrine/common")
-        );
-        MatcherAssert.assertThat(
-            favorite.version(), Matchers.equalTo("2.7.2")
-        );
-        MatcherAssert.assertThat(
-            favorite.productType(), Matchers.equalTo("composer")
-        );
-        
-        favorite = fetched.get(1);
-        MatcherAssert.assertThat(
-            favorite.name(), Matchers.equalTo("doctrine/doctrine-module")
-        );
-        MatcherAssert.assertThat(
-            favorite.language(), Matchers.equalTo("php")
-        );
-        MatcherAssert.assertThat(
-            favorite.productKey(),
+            first.get(1).name(),
             Matchers.equalTo("doctrine/doctrine-module")
         );
         MatcherAssert.assertThat(
-            favorite.version(), Matchers.equalTo("2.0.0")
-        );
-        MatcherAssert.assertThat(
-            favorite.productType(), Matchers.equalTo("composer")
+            container.take().uri().toString(),
+            Matchers.equalTo("/users/SherifWaly/favorites?page=1")
         );
         
+    }
+
+    /**
+     * FavoritesPage can iterate over all the favorites.
+     * @throws Exception If something goes wrong.
+     */
+    @Test
+    public void iteratesOverAll() throws Exception {
+        final MkContainer container = this.mockVersionEyeFavorites().start();
+        final VersionEye versionEye = new RtVersionEye(
+            new JdkRequest(container.home())
+        );
+        int pages = 0;
+        for (final Page<Favorite> page
+            : versionEye.users().user("SherifWaly").favorites()
+        ){
+            MatcherAssert.assertThat(
+                page.fetch().size(), Matchers.is(2)
+            );
+            pages++;
+        }
+        MatcherAssert.assertThat(pages, Matchers.is(2));
         MatcherAssert.assertThat(
             container.take().uri().toString(),
-            Matchers.equalTo("/favorites?page=1")
+            Matchers.equalTo("/users/SherifWaly/favorites?page=1")
+        );
+        MatcherAssert.assertThat(
+            container.take().uri().toString(),
+            Matchers.equalTo("/users/SherifWaly/favorites?page=1")
+        );
+        MatcherAssert.assertThat(
+            container.take().uri().toString(),
+            Matchers.equalTo("/users/SherifWaly/favorites?page=2")
+        );
+        MatcherAssert.assertThat(
+            container.take().uri().toString(),
+            Matchers.equalTo("/users/SherifWaly/favorites?page=2")
+        );
+        MatcherAssert.assertThat(
+            container.take().uri().toString(),
+            Matchers.equalTo("/users/SherifWaly/favorites?page=3")
         );
     }
     
     /**
-     * RtFavorites can return user data.
+     * Mock the versioneye server for favorites.
+     * @return MkContainer.
      * @throws IOException If something goes wrong.
      */
-    @Test
-    public void returnsUserData() throws IOException {
-        final MkContainer container = new MkGrizzlyContainer().next(
+    private MkContainer mockVersionEyeFavorites() throws IOException {
+        return new MkGrizzlyContainer().next(
             new MkAnswer.Simple(
                 HttpURLConnection.HTTP_OK,
                 this.readResource("favoritespage1.json")
             )
-        ).start();
-        final Favorites favorites = new RtFavorites(
-            new JdkRequest(container.home())
-        );
-   
-        UserData userData = favorites.userData();
-        MatcherAssert.assertThat(
-            userData.fullName(),
-            Matchers.is("Sherif Waly")
-        );
-        MatcherAssert.assertThat(
-            userData.username(),
-            Matchers.is("SherifWaly")
-        );
-    }
-    
-    /**
-     * RtFavorites can return paging.
-     * @throws IOException If something goes wrong.
-     */
-    @Test
-    public void returnsPaging() throws IOException {
-        final MkContainer container = new MkGrizzlyContainer().next(
+        ).next(
             new MkAnswer.Simple(
                 HttpURLConnection.HTTP_OK,
                 this.readResource("favoritespage1.json")
             )
-        ).start();
-        final Favorites favorites = new RtFavorites(
-            new JdkRequest(container.home())
-        );
-        
-        Paging paging = favorites.paging(1);
-        MatcherAssert.assertThat(
-            paging.currentPage(),
-            Matchers.is(1)
-        );
-        MatcherAssert.assertThat(
-            paging.itemsPerPage(),
-            Matchers.is(2)
-        );
-        MatcherAssert.assertThat(
-            paging.totalPages(),
-            Matchers.is(2)
-        );
-        MatcherAssert.assertThat(
-            paging.totalEntries(),
-            Matchers.is(3)
+        ).next(
+            new MkAnswer.Simple(
+                HttpURLConnection.HTTP_OK,
+                this.readResource("favoritespage2.json")
+            )
+        ).next(
+            new MkAnswer.Simple(
+                HttpURLConnection.HTTP_OK,
+                this.readResource("favoritespage2.json")
+            )
+        ).next(
+            new MkAnswer.Simple(
+                HttpURLConnection.HTTP_OK,
+                this.readResource("favoritespage3.json")
+            )
         );
     }
     
@@ -184,7 +164,8 @@ public final class RtFavoritesTestCase {
      * @return String content of the resource file.
      * @throws IOException If it goes wrong.
      */
-    private String readResource(final String resourceName) throws IOException {
+    private String readResource(final String resourceName)
+        throws IOException {
         final InputStream stream = new FileInputStream(
             new File("src/test/resources/" + resourceName)
         );

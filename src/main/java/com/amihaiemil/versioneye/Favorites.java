@@ -36,8 +36,6 @@ import java.util.List;
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
- * @todo #51:30min/DEV Implement and unit-test FavoritesPage (see how
- *  CommentsPage is done).
  */
 interface Favorites {
     

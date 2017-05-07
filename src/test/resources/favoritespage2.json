@@ -1,0 +1,30 @@
+{
+  "user": {
+    "fullname": "Sherif Waly",
+    "username": "SherifWaly"
+  },
+  "favorites": [
+    {
+      "name": "doctrine/doctrine-mongo-odm-module",
+      "language": "php",
+      "prod_key": "doctrine/doctrine-mongo-odm-module",
+      "version": "0.11.0",
+      "prod_type": "composer"
+    },
+    {
+      "name": "Test",
+      "language": "php",
+      "prod_key": "test",
+      "version": "1.0.0",
+      "prod_type": "composer"
+    }
+  ],
+  "paging": {
+    "current_page": 2,
+    "per_page": 2,
+    "total_pages": 2,
+    "total_entries": 3
+  }
+}
+
+

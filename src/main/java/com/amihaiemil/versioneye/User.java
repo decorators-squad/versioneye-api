@@ -53,7 +53,7 @@ public interface User {
     
     /**
      * This user's favorites.
-     * @return Favorites
+     * @return Page of Favorites.
      */
-    Favorites favorites();
+    Page<Favorite> favorites();
 }

@@ -105,7 +105,7 @@ public final class CommentsPageTestCase {
     /**
      * Mock the versioneye server for comments.
      * @return MkContainer.
-     * @throws IOException If something goes wong.
+     * @throws IOException If something goes wrong.
      */
     private MkContainer mockVersionEyeComments() throws IOException {
         return new MkGrizzlyContainer().next(
@@ -113,8 +113,7 @@ public final class CommentsPageTestCase {
                 HttpURLConnection.HTTP_OK,
                 this.readResource("commentspage1.json")
             )
-        )
-        .next(
+        ).next(
             new MkAnswer.Simple(
                 HttpURLConnection.HTTP_OK,
                 this.readResource("commentspage1.json")
