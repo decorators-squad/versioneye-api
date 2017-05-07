@@ -159,7 +159,7 @@ public final class RtFavoritesTestCase {
             new JdkRequest(container.home())
         );
         
-        Paging paging = favorites.paging();
+        Paging paging = favorites.paging(1);
         MatcherAssert.assertThat(
             paging.currentPage(),
             Matchers.is(1)

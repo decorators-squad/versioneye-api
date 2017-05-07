@@ -40,6 +40,17 @@ Like outlined above, there is one single entry point and the usage is fluent. Ev
         user.username(), Matchers.is("amihaiemil")
     );
 ```
+3. Getting a user's comments:
+
+```java
+    VersionEye versionEye = new RtVersionEye("...token...");
+    Page<Comment> comments = versionEye.users().user("amihaiemil").comments();
+    List<Comment> firstPage = comments.fetch(); //first page of comments
+    for(Page<Comment> page : comments) {
+        //iterate over all the comments pages (including the first one)
+    }
+```
+
 
 @todo #9:15min/DEV Add more examples of usage here
 

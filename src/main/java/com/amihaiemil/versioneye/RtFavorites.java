@@ -93,9 +93,10 @@ final class RtFavorites implements Favorites {
     }
 
     @Override
-    public Paging paging() throws IOException {
+    public Paging paging(final int page) throws IOException {
         return new JsonPaging(
-            this.req.fetch()
+            this.req.uri()
+                .queryParam("page", String.valueOf(page)).back().fetch()
                 .as(RestResponse.class)
                 .assertStatus(HttpURLConnection.HTTP_OK)
                 .as(JsonResponse.class)

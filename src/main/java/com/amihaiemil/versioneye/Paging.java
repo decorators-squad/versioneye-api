@@ -50,13 +50,13 @@ public interface Paging {
     int itemsPerPage();
     
     /**
-     * Total number of pages of a Paginated.
+     * Total number of pages.
      * @return Integer.
      */
     int totalPages();
     
     /**
-     * Total number of entries of a Paginated.
+     * Total number of entries.
      * @return Integer.
      */
     int totalEntries();

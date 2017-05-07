@@ -28,19 +28,28 @@
 package com.amihaiemil.versioneye;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
- * A paginated class consists of one or more pages.
- * @author Sherif Waly (sherifwaly95@gmail.com)
+ * A page of results returned by the API.
+ * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
+ * @param <T> Type of the elements from this page.
  */
-public interface Paginated {
+public interface Page<T> extends Iterable<Page<T>> {
+
+    /**
+     * Fetch the elements from this page.
+     * @return List of T.
+     * @throws IOException If something goes wrong with the HTTP call.
+     */
+    List<T> fetch() throws IOException;
     
     /**
-     * A paging.
+     * Data about this page.
      * @return Paging.
-     * @throws IOException If there is something wrong with the HTTP call.
+     * @throws IOException If something goes wrong with the HTTP call.
      */
     Paging paging() throws IOException;
 }

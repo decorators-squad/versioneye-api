@@ -29,6 +29,7 @@ package com.amihaiemil.versioneye;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
+
 import com.jcabi.http.Request;
 import com.jcabi.http.response.JsonResponse;
 import com.jcabi.http.response.RestResponse;
@@ -69,8 +70,8 @@ class RtUser implements User {
     }
     
     @Override
-    public Comments comments() {
-        return new RtComments(this.req);
+    public Page<Comment> comments() {
+        return new CommentsPage(new RtComments(this.req), 1);
     }
 
     @Override

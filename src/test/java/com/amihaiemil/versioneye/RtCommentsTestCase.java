@@ -60,7 +60,7 @@ public final class RtCommentsTestCase {
         final MkContainer container = new MkGrizzlyContainer().next(
             new MkAnswer.Simple(
                 HttpURLConnection.HTTP_OK,
-                this.readResource("comments.json")
+                this.readResource("commentspage1.json")
             )
         ).start();
         final Comments comments = new RtComments(
@@ -69,7 +69,8 @@ public final class RtCommentsTestCase {
         final List<Comment> fetched = comments.fetch(1);
         MatcherAssert.assertThat(fetched.size(), Matchers.is(2));
         MatcherAssert.assertThat(
-            fetched.get(0).id(), Matchers.equalTo("58f9b08ed797b2000e28d24e")
+            fetched.get(0).id(),
+            Matchers.equalTo("58f9b08ed797b2000e28d24e232323")
         );
         MatcherAssert.assertThat(
             container.take().uri().toString(),
@@ -86,29 +87,29 @@ public final class RtCommentsTestCase {
         final MkContainer container = new MkGrizzlyContainer().next(
             new MkAnswer.Simple(
                 HttpURLConnection.HTTP_OK,
-                this.readResource("comments.json")
+                this.readResource("commentspage1.json")
             )
         ).start();
         final Comments comments = new RtComments(
             new JdkRequest(container.home())
         );
         
-        Paging paging = comments.paging();
+        Paging paging = comments.paging(1);
         MatcherAssert.assertThat(
             paging.currentPage(),
             Matchers.is(1)
         );
         MatcherAssert.assertThat(
             paging.itemsPerPage(),
-            Matchers.is(30)
+            Matchers.is(2)
         );
         MatcherAssert.assertThat(
             paging.totalPages(),
-            Matchers.is(1)
+            Matchers.is(3)
         );
         MatcherAssert.assertThat(
             paging.totalEntries(),
-            Matchers.is(1)
+            Matchers.is(6)
         );
     }
     

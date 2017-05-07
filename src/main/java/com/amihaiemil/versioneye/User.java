@@ -47,9 +47,9 @@ public interface User {
     
     /**
      * This user's comments.
-     * @return Comments
+     * @return Page of Comments
      */
-    Comments comments();
+    Page<Comment> comments();
     
     /**
      * This user's favorites.
