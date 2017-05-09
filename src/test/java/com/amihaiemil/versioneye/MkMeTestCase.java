@@ -29,40 +29,46 @@ package com.amihaiemil.versioneye;
 
 import java.io.IOException;
 
+import javax.json.Json;
 import javax.json.JsonObject;
 
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
+
 /**
- * Me API.
- * @author Mihai Andronache (amihaiemil@gmail.com)
+ * Unit tests for {@link MkMe}.
+ * @author Sherif Waly (sherifwaly95@gmail.com)
  * @version $Id$
  * @since 1.0.0
- *
  */
-public interface Me {
+public final class MkMeTestCase {
     
     /**
-     * Info about me (the authenticated user).
-     * @return Authenticated user's data.
-     * @throws IOException If something goes wrong when
-     *  making the HTTP call.
+     * MkMe can return Authenticated user after posting to server.
+     * @throws IOException if something goes wrong.
      */
-    Authenticated about() throws IOException;
-    
-    /**
-     * The authenticated user's comments.
-     * @return Comments.
-     */
-    Comments comments();
-
-    /**
-     * The authenticated user's favorites.
-     * @return Favorites
-     */
-    Favorites favorites();
-    
-    /**
-     * Post authenticated user to the server.
-     * @param authenticated Authenticated user.
-     */
-    void post(JsonObject authenticated);
+    @Test
+    public void returnsAuthenticatedUser() throws IOException {
+        final Me meApi = new MkVersionEye().meApi();
+        JsonObject authenticated = 
+            Json.createObjectBuilder()
+                .add("fullname", "Sherif Waly")
+                .add("username", "SherifWaly")
+                .add("email", "sherifwaly95@gmail.com")
+                .add("admin", false)
+                .add("deleted_user", false)
+                .add("enterprise_projects", 1)
+                .add("rate_limit", 50)
+                .add("comp_limit", 50)
+                .add("active", true)
+                .build();
+        
+        meApi.post(authenticated);
+        
+        MatcherAssert.assertThat(
+            meApi.about().json(),
+            Matchers.is(authenticated)
+        );
+    }
 }
