@@ -56,7 +56,7 @@ Like outlined above, there is one single entry point and the usage is fluent. Ev
 
 ## Contribute
 
-Contributors are [welcomed](http://www.amihaiemil.com/2016/12/30/becoming-a-contributor.html)
+Contributors are [welcome](http://www.amihaiemil.com/2016/12/30/becoming-a-contributor.html)
 
 1. Open an issue regarding an improvement you thought of, or a bug you noticed, or ask to be assigned to an existing one.
 2. If the issue is confirmed, fork the repository, do the changes on a separate branch and make a Pull Request.
