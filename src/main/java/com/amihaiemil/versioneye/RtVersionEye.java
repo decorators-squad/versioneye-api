@@ -92,5 +92,10 @@ public final class RtVersionEye implements VersionEye {
             this.entry.through(TrustedWire.class)
         );
     }
+
+    @Override
+    public Me meApi() {
+        return new RtMe(this.entry);
+    }
    
 }
