@@ -51,6 +51,12 @@ public interface VersionEye {
     Users users();
     
     /**
+     * Me api.
+     * @return Me.
+     */
+    Me meApi();
+    
+    /**
      * VersionEye with trusted wire.
      * @return VersionEye.
      * @throws IOException If something goes wrong with the HTTP call.

@@ -32,37 +32,48 @@ import java.io.IOException;
 import javax.json.JsonObject;
 
 /**
- * Me API.
- * @author Mihai Andronache (amihaiemil@gmail.com)
+ * Mock Me API for unit testing.
+ * @author Sherif Waly (sherifwaly95@gmail.com)
  * @version $Id$
  * @since 1.0.0
  *
  */
-public interface Me {
-    
-    /**
-     * Info about me (the authenticated user).
-     * @return Authenticated user's data.
-     * @throws IOException If something goes wrong when
-     *  making the HTTP call.
-     */
-    Authenticated about() throws IOException;
-    
-    /**
-     * The authenticated user's comments.
-     * @return Comments.
-     */
-    Comments comments();
+final class MkMe implements Me {
 
     /**
-     * The authenticated user's favorites.
-     * @return Favorites
+     * VersionEye server.
      */
-    Favorites favorites();
+    private MkServer server;
     
     /**
-     * Post authenticated user to the server.
-     * @param authenticated Authenticated user.
+     * Ctor.
+     * @param server VersionEye server storage.
      */
-    void post(JsonObject authenticated);
+    MkMe(final MkServer server) {
+        this.server = server;
+    }
+    
+    @Override
+    public Authenticated about() throws IOException {
+        return new JsonAuthenticated(
+            this.server.storage().build().getJsonObject("me")
+        );
+    }
+
+    @Override
+    public Comments comments() {
+        return null;
+    }
+
+    @Override
+    public Favorites favorites() {
+        return null;
+    }
+
+    @Override
+    public void post(final JsonObject authenticated) {
+        this.server.storage().add(
+            "me", authenticated
+        );
+    }
 }

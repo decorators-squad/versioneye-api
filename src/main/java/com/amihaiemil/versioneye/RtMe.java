@@ -30,6 +30,8 @@ package com.amihaiemil.versioneye;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 
+import javax.json.JsonObject;
+
 import com.jcabi.http.Request;
 import com.jcabi.http.response.JsonResponse;
 import com.jcabi.http.response.RestResponse;
@@ -87,5 +89,12 @@ final class RtMe implements Me {
     @Override
     public Favorites favorites() {
         return null;
+    }
+
+    @Override
+    public void post(final JsonObject authenticated) {
+        throw new UnsupportedOperationException(
+            "Invalid operation for runtime VersionEye"
+        );
     }
 }

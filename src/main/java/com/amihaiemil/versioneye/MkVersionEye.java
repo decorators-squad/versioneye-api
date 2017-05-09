@@ -75,4 +75,9 @@ public final class MkVersionEye implements VersionEye {
         return null;
     }
 
+    @Override
+    public Me meApi() {
+        return new MkMe(this.server);
+    }
+
 }
