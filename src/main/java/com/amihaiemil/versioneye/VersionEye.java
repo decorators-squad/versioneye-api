@@ -53,8 +53,9 @@ public interface VersionEye {
     /**
      * Me api.
      * @return Me.
+     * @checkstyle MethodName (3 lines).
      */
-    Me meApi();
+    Me me();
     
     /**
      * VersionEye with trusted wire.

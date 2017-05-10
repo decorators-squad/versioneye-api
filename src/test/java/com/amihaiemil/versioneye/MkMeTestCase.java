@@ -50,7 +50,7 @@ public final class MkMeTestCase {
      */
     @Test
     public void returnsAuthenticatedUser() throws IOException {
-        final Me meApi = new MkVersionEye().meApi();
+        final Me meApi = new MkVersionEye().me();
         JsonObject authenticated = 
             Json.createObjectBuilder()
                 .add("fullname", "Sherif Waly")

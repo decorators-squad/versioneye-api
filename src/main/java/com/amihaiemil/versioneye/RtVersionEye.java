@@ -94,7 +94,7 @@ public final class RtVersionEye implements VersionEye {
     }
 
     @Override
-    public Me meApi() {
+    public Me me() {
         return new RtMe(this.entry);
     }
    
