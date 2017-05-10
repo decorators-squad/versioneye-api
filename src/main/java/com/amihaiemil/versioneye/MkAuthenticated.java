@@ -27,50 +27,74 @@
  */
 package com.amihaiemil.versioneye;
 
-import java.io.IOException;
-
 /**
- * Mock Me API for unit testing.
+ * Mock authenticated user.
  * @author Sherif Waly (sherifwaly95@gmail.com)
  * @version $Id$
  * @since 1.0.0
- *
  */
-final class MkMe implements Me {
-
-    /**
-     * VersionEye server.
-     */
-    private MkServer server;
+public interface MkAuthenticated extends Authenticated {
     
     /**
-     * Mock Authenticated user.
+     * Set authenticated user's fullname.
+     * @param fullname String.
+     * @return MkAuthenticated this user.
      */
-    private Authenticated authenticated;
+    MkAuthenticated fullName(String fullname);
     
     /**
-     * Ctor.
-     * @param server VersionEye server storage.
-     * @param authenticated Authenticated user.
+     * Set authenticated user's username.
+     * @param username String.
+     * @return MkAuthenticated this user.
      */
-    MkMe(final MkServer server, final Authenticated authenticated) {
-        this.server = server;
-        this.authenticated = authenticated;
-    }
-    
-    @Override
-    public Authenticated about() throws IOException {
-        return this.authenticated;
-    }
-
-    @Override
-    public Comments comments() {
-        return null;
-    }
-
-    @Override
-    public Favorites favorites() {
-        return null;
-    }
-
+    MkAuthenticated username(String username);
+   
+    /**
+     * Set authenticated user's email.
+     * @param email String.
+     * @return MkAuthenticated this user.
+     */
+    MkAuthenticated email(String email);
+   
+    /**
+     * Set whether the user is admin or not.
+     * @param admin Boolean.
+     * @return MkAuthenticated this user.
+     */
+    MkAuthenticated admin(boolean admin);
+   
+    /**
+     * Set whether user is deleted or not.
+     * @param deleted Boolean.
+     * @return MkAuthenticated this user.
+     */
+    MkAuthenticated deleted(boolean deleted);
+   
+    /**
+     * Set the number of user's enterprise projects.
+     * @param enterpriseProjects Integer.
+     * @return MkAuthenticated this user.
+     */
+    MkAuthenticated enterpriseProjects(int enterpriseProjects);
+   
+    /**
+     * Set the user's rate limit.
+     * @param rateLimit Integer.
+     * @return MkAuthenticated this user.
+     */
+    MkAuthenticated rateLimit(int rateLimit);
+   
+    /**
+     * Set the user's computational limit.
+     * @param compLimit Integer.
+     * @return MkAuthenticated this user.
+     */
+    MkAuthenticated compLimit(int compLimit);
+   
+    /**
+     * Set whether user is active or not.
+     * @param active Boolean.
+     * @return MkAuthenticated this user.
+     */
+    MkAuthenticated active(boolean active);
 }
