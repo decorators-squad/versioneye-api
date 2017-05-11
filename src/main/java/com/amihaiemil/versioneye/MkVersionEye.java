@@ -43,6 +43,10 @@ import javax.json.JsonValue;
  *  Mocks for Users, Organizations Teams etc are needed,
  * @todo #57:1h/DEV Change ``post()`` method in ``Me`` by passing 
  *  a ``MkUser`` to the ``MkVersionEye`` ctor. (See #59 review)
+ * @todo #63:30min/DEV Refactor implementation of MkMe so that it uses
+ *  the user's username rather that the Authenticated user.
+ *  Pass Authenticated user to ``authenticate()`` method so that the
+ *  authenticated user won't be retained.
  */
 public final class MkVersionEye implements VersionEye {
 
@@ -86,7 +90,7 @@ public final class MkVersionEye implements VersionEye {
         this.server = server;
         this.authenticated = authenticated;
         this.username = authenticated.username();
-        this.addAuthenticatedUserToServer();
+        this.authenticate();
     }
     
     @Override
@@ -115,20 +119,20 @@ public final class MkVersionEye implements VersionEye {
     /**
      * Add authenticated user to the MkServer.
      */
-    private void addAuthenticatedUserToServer() {
-        JsonArray array = this.server.storage().build()
+    private void authenticate() {
+        JsonArray online = this.server.storage().build()
             .getJsonArray("authenticated");
-        if(array == null) {
-            array = Json.createArrayBuilder().build();
+        if(online == null) {
+            online = Json.createArrayBuilder().build();
         }
-        JsonArrayBuilder builder = Json.createArrayBuilder();
-        for(final JsonValue jsonValue: array) {
-            builder = builder.add(jsonValue);
+        final JsonArrayBuilder users = Json.createArrayBuilder();
+        for(final JsonValue user: online) {
+            users.add(user);
         }
-        builder.add(Json.createObjectBuilder().add(
+        users.add(Json.createObjectBuilder().add(
             this.username, this.authenticated.json())
         );
-        this.server.storage().add("authenticated", builder.build());
+        this.server.storage().add("authenticated", users.build());
     }
 
 }

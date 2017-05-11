@@ -34,7 +34,6 @@ import java.io.IOException;
  * @author Sherif Waly (sherifwaly95@gmail.com)
  * @version $Id$
  * @since 1.0.0
- *
  */
 final class MkMe implements Me {
 
