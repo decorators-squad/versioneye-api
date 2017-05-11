@@ -31,7 +31,6 @@ import java.io.IOException;
 
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -46,7 +45,6 @@ public final class MkMeTestCase {
      * MkMe can return Authenticated user.
      * @throws IOException if something goes wrong.
      */
-    @Ignore
     @Test
     public void returnsAuthenticatedUser() throws IOException {
         MkAuthenticated authenticated = new MkJsonAuthenticated();

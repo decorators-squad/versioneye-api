@@ -1,8 +1,9 @@
 package com.amihaiemil.versioneye;
 
-import javax.json.Json;
 import javax.json.JsonObject;
-import javax.json.JsonObjectBuilder;
+
+import com.amihaiemil.json.NfJsonObjectBuilder;
+import com.amihaiemil.json.NfJsonObjectBuilderImpl;
 
 /**
  * Mock VersionEye authenticated user.
@@ -15,13 +16,13 @@ public final class MkJsonAuthenticated implements MkAuthenticated {
     /**
      * Authenticated user json builder.
      */
-    private JsonObjectBuilder authenticated;
+    private NfJsonObjectBuilder authenticated;
     
     /**
      * Ctor.
      */
     MkJsonAuthenticated() {
-        this.authenticated = Json.createObjectBuilder();
+        this.authenticated = new NfJsonObjectBuilderImpl();
     }
     
     @Override

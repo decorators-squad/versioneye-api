@@ -29,6 +29,11 @@ package com.amihaiemil.versioneye;
 
 import java.io.IOException;
 
+import javax.json.Json;
+import javax.json.JsonArray;
+import javax.json.JsonArrayBuilder;
+import javax.json.JsonValue;
+
 /**
  * Mock VersionEye for unit testing.
  * @author Mihai Andronache (amihaiemil@gmail.com)
@@ -52,6 +57,17 @@ public final class MkVersionEye implements VersionEye {
     private Authenticated authenticated;
     
     /**
+     * Authenticated user's username.
+     */
+    private String username;
+    
+    /**
+     * Ctor.
+     */
+    public MkVersionEye() {
+        this.server = new MkJsonServer();
+    }
+    /**
      * Ctor.
      * @param authenticated Mock Authenticated User.
      */
@@ -69,6 +85,8 @@ public final class MkVersionEye implements VersionEye {
     ) {
         this.server = server;
         this.authenticated = authenticated;
+        this.username = authenticated.username();
+        this.addAuthenticatedUserToServer();
     }
     
     @Override
@@ -88,7 +106,29 @@ public final class MkVersionEye implements VersionEye {
 
     @Override
     public Me me() {
+        if(this.authenticated == null) {
+            throw new IllegalStateException("No Authenticated User.");
+        }
         return new MkMe(this.server, this.authenticated);
+    }
+    
+    /**
+     * Add authenticated user to the MkServer.
+     */
+    private void addAuthenticatedUserToServer() {
+        JsonArray array = this.server.storage().build()
+            .getJsonArray("authenticated");
+        if(array == null) {
+            array = Json.createArrayBuilder().build();
+        }
+        JsonArrayBuilder builder = Json.createArrayBuilder();
+        for(final JsonValue jsonValue: array) {
+            builder = builder.add(jsonValue);
+        }
+        builder.add(Json.createObjectBuilder().add(
+            this.username, this.authenticated.json())
+        );
+        this.server.storage().add("authenticated", builder.build());
     }
 
 }

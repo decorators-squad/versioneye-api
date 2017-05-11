@@ -49,7 +49,7 @@ public final class MkServicesTestCase {
     @Test
     public void pingOk() throws IOException {
         final Services services = 
-            new MkVersionEye(new MkJsonAuthenticated()).services();
+            new MkVersionEye().services();
         final JsonObject ping = services.ping();
         MatcherAssert.assertThat(
             ping.getBoolean("success"), Matchers.is(true)

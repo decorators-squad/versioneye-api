@@ -28,7 +28,9 @@
 package com.amihaiemil.versioneye;
 
 import javax.json.Json;
-import javax.json.JsonObjectBuilder;
+
+import com.amihaiemil.json.NfJsonObjectBuilder;
+import com.amihaiemil.json.NfJsonObjectBuilderImpl;
 
 /**
  * Mock VersionEye server storage with Json. See {@link MkServer}
@@ -42,13 +44,13 @@ public final class MkJsonServer implements MkServer {
     /**
      * Storage.
      */
-    private JsonObjectBuilder storage;
+    private NfJsonObjectBuilder storage;
     
     /**
      * Ctor.
      */
     public MkJsonServer() {
-        this.storage = Json.createObjectBuilder();
+        this.storage = new NfJsonObjectBuilderImpl();
         MkJsonServer.initServer(this.storage);
     }
     
@@ -57,12 +59,12 @@ public final class MkJsonServer implements MkServer {
      * @param storage JsonObjectBuilder which holds all the mock VersionEye
      * data.
      */
-    public MkJsonServer(final JsonObjectBuilder storage) {
+    public MkJsonServer(final NfJsonObjectBuilder storage) {
         this.storage = storage;
     }
     
     @Override
-    public JsonObjectBuilder storage() {
+    public NfJsonObjectBuilder storage() {
         return this.storage;
     }
 
@@ -70,7 +72,7 @@ public final class MkJsonServer implements MkServer {
      * Init the versioneye mock server.
      * @param storage Json storage.
      */
-    private static void initServer(final JsonObjectBuilder storage) {
+    private static void initServer(final NfJsonObjectBuilder storage) {
         storage.add(
             "ping",
             Json.createObjectBuilder()
