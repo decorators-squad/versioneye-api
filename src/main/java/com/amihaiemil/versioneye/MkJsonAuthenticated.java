@@ -47,7 +47,7 @@ public final class MkJsonAuthenticated implements MkAuthenticated {
 
     @Override
     public boolean deleted() {
-        return this.authenticated.build().getBoolean("delete_user");
+        return this.authenticated.build().getBoolean("deleted_user");
     }
 
     @Override

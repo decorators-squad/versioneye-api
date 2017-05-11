@@ -57,10 +57,38 @@ public final class MkMeTestCase {
             .rateLimit(50)
             .compLimit(50)
             .active(true);
-        final Me meApi = new MkVersionEye(authenticated).me();
+        Authenticated fetchedAuthenticated = 
+            new MkVersionEye(authenticated).me().about();
         MatcherAssert.assertThat(
-            meApi.about().json(),
+            fetchedAuthenticated.json(),
             Matchers.is(authenticated.json())
+        );
+        MatcherAssert.assertThat(
+            fetchedAuthenticated.username(), Matchers.is("SherifWaly")
+        );
+        MatcherAssert.assertThat(
+            fetchedAuthenticated.fullName(), Matchers.is("Sherif Waly")
+        );
+        MatcherAssert.assertThat(
+            fetchedAuthenticated.email(), Matchers.is("sherifwaly95@gmail.com")
+        );
+        MatcherAssert.assertThat(
+            fetchedAuthenticated.admin(), Matchers.is(false)
+        );
+        MatcherAssert.assertThat(
+            fetchedAuthenticated.deleted(), Matchers.is(false)
+        );
+        MatcherAssert.assertThat(
+            fetchedAuthenticated.enterpriseProjects(), Matchers.is(1)
+        );
+        MatcherAssert.assertThat(
+            fetchedAuthenticated.rateLimit(), Matchers.is(50)
+        );
+        MatcherAssert.assertThat(
+            fetchedAuthenticated.compLimit(), Matchers.is(50)
+        );
+        MatcherAssert.assertThat(
+            fetchedAuthenticated.active(), Matchers.is(true)
         );
     }
 }
