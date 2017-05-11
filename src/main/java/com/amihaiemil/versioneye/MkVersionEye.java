@@ -47,18 +47,28 @@ public final class MkVersionEye implements VersionEye {
     private MkServer server;
     
     /**
-     * Ctor.
+     * Mock Authenticated user.
      */
-    public MkVersionEye() {
-        this(new MkJsonServer());
+    private Authenticated authenticated;
+    
+    /**
+     * Ctor.
+     * @param authenticated Mock Authenticated User.
+     */
+    public MkVersionEye(final Authenticated authenticated) {
+        this(new MkJsonServer(), authenticated);
     }
     
     /**
      * Ctor.
      * @param server VersionEye server storage. See {@link MkServer}
+     * @param authenticated Mock Authenticated User.
      */
-    public MkVersionEye(final MkServer server) {
+    public MkVersionEye(
+        final MkServer server, final Authenticated authenticated
+    ) {
         this.server = server;
+        this.authenticated = authenticated;
     }
     
     @Override
@@ -78,7 +88,7 @@ public final class MkVersionEye implements VersionEye {
 
     @Override
     public Me me() {
-        return new MkMe(this.server);
+        return new MkMe(this.server, this.authenticated);
     }
 
 }

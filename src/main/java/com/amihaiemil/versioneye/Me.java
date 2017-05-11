@@ -29,7 +29,6 @@ package com.amihaiemil.versioneye;
 
 import java.io.IOException;
 
-import javax.json.JsonObject;
 
 /**
  * Me API.
@@ -59,10 +58,4 @@ public interface Me {
      * @return Favorites
      */
     Favorites favorites();
-    
-    /**
-     * Post authenticated user to the server.
-     * @param authenticated Authenticated user.
-     */
-    void post(JsonObject authenticated);
 }
