@@ -25,16 +25,14 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-package com.amihaiemil.json;
+package com.amihaiemil.versioneye;
 
 import javax.json.Json;
 import javax.json.JsonObject;
-
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
-
-import com.amihaiemil.versioneye.NfJsonObjectBuilderImpl;
+import com.amihaiemil.json.NfJsonObjectBuilder;
 
 /**
  * Unit tests for {@link NfJsonObjectBuilderImpl}.
