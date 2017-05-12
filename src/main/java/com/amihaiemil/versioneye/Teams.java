@@ -44,4 +44,10 @@ public interface Teams {
      * @throws IOException If something goes wrong with the HTTP request.
      */
     List<Team> fetch() throws IOException;
+    
+    /**
+     * The teams' organization.
+     * @return Organization.
+     */
+    Organization organization();
 }

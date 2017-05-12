@@ -51,23 +51,28 @@ final class RtOrganization implements Organization {
     private Request req;
     
     /**
+     * API entry point.
+     */
+    private Request entry;
+    
+    /**
      * Ctor.
      * @param organization Json organization as returned by API. 
-     * @param entry HTTP request.
+     * @param req HTTP request for Organization.
+     * @param entry Initial HTTP request, entry point of the API.
      */
-    RtOrganization(final JsonObject organization, final Request entry) {
+    RtOrganization(
+        final JsonObject organization, final Request req,
+        final Request entry
+    ) {
         this.organization = organization;
-        this.req = entry.uri().path(organization.getString("name")).back();
+        this.req = req.uri().path(organization.getString("name")).back();
+        this.entry = entry;
     }
 
     @Override
     public Teams teams() {
-        return new RtTeams(this.req, this.organization.getString("api_key"));
-    }
-
-    @Override
-    public Projects projects() {
-        return null;
+        return new RtTeams(this.entry, this.req, this);
     }
 
     @Override
@@ -99,4 +104,5 @@ final class RtOrganization implements Organization {
     public JsonObject json() {
         return this.organization;
     }
+
 }

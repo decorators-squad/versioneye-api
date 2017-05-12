@@ -51,6 +51,12 @@ public interface VersionEye {
     Users users();
     
     /**
+     * Organizations api.
+     * @return Organizations.
+     */
+    Organizations organizations();
+    
+    /**
      * Me api.
      * @return Me.
      * @checkstyle MethodName (3 lines).

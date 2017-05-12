@@ -28,79 +28,53 @@
 package com.amihaiemil.versioneye;
 
 import java.io.IOException;
+import java.util.List;
 
 import com.jcabi.http.Request;
-import com.jcabi.http.request.JdkRequest;
-import com.jcabi.http.wire.TrustedWire;
 
 /**
- * OOP wrapper for the VersionEye API.
+ * Real implementation of {@link Projects}.
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
+ * @todo #38:30min/DEV Implement and unit test method fetch().
+ *
  */
-public final class RtVersionEye implements VersionEye {
+final class RtProjects implements Projects {
 
     /**
-     * Default HTTP request.
+     * HTTP request for /projects.
      */
-    private static final Request DEFAULT = new JdkRequest(
-        "https://www.versioneye.com/api/v2"
-    ).header("Accept", "application/json");
+    private Request req;
     
     /**
-     * HTTP request.
+     * The team responsible for these projects.
      */
-    private Request entry;
-
+    private Team team;
+    
     /**
      * Ctor.
+     * @param req Request for /projects.
+     * @param team Team responsible for these projects;
      */
-    public RtVersionEye() {
-        this(RtVersionEye.DEFAULT);
-    }
-
-    /**
-     * Ctor.
-     * @param token Api token.
-     */
-    public RtVersionEye(final String token) {
-        this(RtVersionEye.DEFAULT.header("Cookie", "api_key=" + token));
-    }
-
-    /**
-     * Ctor.
-     * @param req HTTP Request. (see {@link Request})
-     */
-    public RtVersionEye(final Request req) {
-        this.entry = req;
+    RtProjects(final Request req, final Team team) {
+        this.req = req.uri()
+            .path("/projects")
+            .queryParam("orga_name", team.organization().name())
+            .queryParam("team_name", team.name())
+            .queryParam("api_key", team.organization().apiKey())
+            .back();
+        this.team = team;
     }
     
     @Override
-    public Services services() {
-        return new RtServices(this.entry);
+    public List<Project> fetch() throws IOException {
+        return null;
     }
 
     @Override
-    public Users users() {
-        return new RtUsers(this.entry);
-    }
-    
-    @Override
-    public VersionEye trusted() throws IOException {
-        return new RtVersionEye(
-            this.entry.through(TrustedWire.class)
-        );
+    public Team team() {
+        return this.team;
     }
 
-    @Override
-    public Me me() {
-        return new RtMe(this.entry);
-    }
-
-    @Override
-    public Organizations organizations() {
-        return new RtOrganizations(this.entry);
-    }
-   
 }
