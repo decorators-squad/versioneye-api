@@ -77,7 +77,7 @@ public final class MkVersionEye implements VersionEye {
     /**
      * Ctor.
      * @param server VersionEye server storage. See {@link MkServer}
-     * @param authenticated Mock Authenticated User.
+     * @param user Mock Authenticated User.
      */
     public MkVersionEye(
         final MkServer server, final Authenticated user
@@ -109,6 +109,7 @@ public final class MkVersionEye implements VersionEye {
     
     /**
      * Add authenticated user to the MkServer.
+     * @param authenticated The user to authenticate.
      */
     private void authenticate(final Authenticated authenticated) {
         JsonArray online = this.server.storage().build()

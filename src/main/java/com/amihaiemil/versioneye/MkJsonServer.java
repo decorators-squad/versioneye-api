@@ -64,15 +64,14 @@ public final class MkJsonServer implements MkServer {
      * @param storage Json storage.
      */
     private static void initServer(final NfJsonObjectBuilder storage) {
-        storage.add(
-            "ping",
-            Json.createObjectBuilder()
-                .add("success", true)
-                .add("message", "pong")
-                .build()
-        ).add(
-            "authenticated",
-            Json.createArrayBuilder().build()
-        );
+        storage
+            .add(
+                "ping",
+                Json.createObjectBuilder()
+                    .add("success", true)
+                    .add("message", "pong")
+                    .build()
+            )
+            .add("authenticated", Json.createArrayBuilder().build());
     }
 }

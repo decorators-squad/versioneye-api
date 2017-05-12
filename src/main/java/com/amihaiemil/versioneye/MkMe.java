@@ -67,10 +67,12 @@ final class MkMe implements Me {
         for(int idx = 0; idx < online.size(); idx++) {
             final JsonObject user = online.getJsonObject(idx);
             if (user.getJsonObject(this.username) != null) {
-                return new MkJsonAuthenticated(user.getJsonObject(this.username));
+                return new MkJsonAuthenticated(
+                    user.getJsonObject(this.username)
+                );
             }
         }
-        throw new IllegalStateException (
+        throw new IllegalStateException(
             "User " + this.username + " is not logged in!"
         );
     }
