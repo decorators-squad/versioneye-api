@@ -39,10 +39,10 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonValue;
 
-import com.amihaiemil.json.NfJsonObjectBuilder;
+import com.amihaiemil.json.Storage;
 
 /**
- * Implementation of {@link NfJsonObjectBuilder}.
+ * Implementation of {@link Storage}.
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @todo #68:15min/DEV write a synchronized decorator for this, to
@@ -51,7 +51,7 @@ import com.amihaiemil.json.NfJsonObjectBuilder;
  * @since 1.0.0
  *
  */
-final class NfJsonObjectBuilderImpl implements NfJsonObjectBuilder {
+final class MkStorage implements Storage {
 
     /**
      * Json key:value pairs added to this builder.
@@ -59,49 +59,49 @@ final class NfJsonObjectBuilderImpl implements NfJsonObjectBuilder {
     private Map<String, Object> values = new LinkedHashMap<>();
 
     @Override
-    public NfJsonObjectBuilder add(final String name, final JsonValue value) {
+    public Storage add(final String name, final JsonValue value) {
         this.values.put(name, value);
         return this;
     }
 
     @Override
-    public NfJsonObjectBuilder add(final String name, final String value) {
+    public Storage add(final String name, final String value) {
         this.values.put(name, value);
         return this;
     }
 
     @Override
-    public NfJsonObjectBuilder add(final String name, final BigInteger value) {
+    public Storage add(final String name, final BigInteger value) {
         this.values.put(name, value);
         return this;
     }
 
     @Override
-    public NfJsonObjectBuilder add(final String name, final BigDecimal value) {
+    public Storage add(final String name, final BigDecimal value) {
         this.values.put(name, value);
         return this;
     }
 
     @Override
-    public NfJsonObjectBuilder add(final String name, final int value) {
+    public Storage add(final String name, final int value) {
         this.values.put(name, value);
         return this;
     }
 
     @Override
-    public NfJsonObjectBuilder add(final String name, final long value) {
+    public Storage add(final String name, final long value) {
         this.values.put(name, value);
         return this;
     }
 
     @Override
-    public NfJsonObjectBuilder add(final String name, final double value) {
+    public Storage add(final String name, final double value) {
         this.values.put(name, value);
         return this;
     }
 
     @Override
-    public NfJsonObjectBuilder add(final String name, final boolean value) {
+    public Storage add(final String name, final boolean value) {
         if(value) {
             this.values.put(name, JsonValue.TRUE);
         } else {
@@ -111,13 +111,13 @@ final class NfJsonObjectBuilderImpl implements NfJsonObjectBuilder {
     }
 
     @Override
-    public NfJsonObjectBuilder addNull(final String name) {
+    public Storage addNull(final String name) {
         this.values.put(name, JsonValue.NULL);
         return this;
     }
 
     @Override
-    public NfJsonObjectBuilder add(
+    public Storage add(
         final String name, final JsonObjectBuilder builder
     ) {
         this.values.put(name, builder.build());
@@ -125,7 +125,7 @@ final class NfJsonObjectBuilderImpl implements NfJsonObjectBuilder {
     }
 
     @Override
-    public NfJsonObjectBuilder add(
+    public Storage add(
         final String name, final JsonArrayBuilder builder
     ) {
         this.values.put(name, builder.build());

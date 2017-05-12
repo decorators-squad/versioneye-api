@@ -29,7 +29,7 @@ package com.amihaiemil.versioneye;
 
 import javax.json.Json;
 
-import com.amihaiemil.json.NfJsonObjectBuilder;
+import com.amihaiemil.json.Storage;
 
 /**
  * Mock VersionEye server storage with Json. See {@link MkServer}
@@ -43,18 +43,18 @@ public final class MkJsonServer implements MkServer {
     /**
      * Storage.
      */
-    private NfJsonObjectBuilder storage;
+    private Storage storage;
     
     /**
      * Ctor.
      */
     public MkJsonServer() {
-        this.storage = new NfJsonObjectBuilderImpl();
+        this.storage = new SyncStorage(new MkStorage());
         MkJsonServer.initServer(this.storage);
     }
     
     @Override
-    public NfJsonObjectBuilder storage() {
+    public Storage storage() {
         return this.storage;
     }
 
@@ -62,7 +62,7 @@ public final class MkJsonServer implements MkServer {
      * Give the versioneye server a default, initial state.
      * @param storage Json storage.
      */
-    private static void initServer(final NfJsonObjectBuilder storage) {
+    private static void initServer(final Storage storage) {
         storage
             .add(
                 "ping",

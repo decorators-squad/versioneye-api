@@ -2,7 +2,7 @@ package com.amihaiemil.versioneye;
 
 import javax.json.JsonObject;
 
-import com.amihaiemil.json.NfJsonObjectBuilder;
+import com.amihaiemil.json.Storage;
 
 /**
  * Mock VersionEye authenticated user.
@@ -15,13 +15,13 @@ public final class MkJsonAuthenticated implements MkAuthenticated {
     /**
      * Authenticated user json builder.
      */
-    private NfJsonObjectBuilder authenticated;
+    private Storage authenticated;
     
     /**
      * Ctor.
      */
     public MkJsonAuthenticated() {
-        this.authenticated = new NfJsonObjectBuilderImpl();
+        this.authenticated = new SyncStorage(new MkStorage());
     }
     
     /**
@@ -29,7 +29,7 @@ public final class MkJsonAuthenticated implements MkAuthenticated {
      * @param user User as plain JsonObject.
      */
     MkJsonAuthenticated(final JsonObject user) {
-        this.authenticated = new NfJsonObjectBuilderImpl()
+        this.authenticated = new SyncStorage(new MkStorage())
             .add("username", user.getString("username", ""))
             .add("fullname", user.getString("fullname", ""))
             .add("email", user.getString("email", ""))

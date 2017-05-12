@@ -27,7 +27,7 @@
  */
 package com.amihaiemil.versioneye;
 
-import com.amihaiemil.json.NfJsonObjectBuilder;
+import com.amihaiemil.json.Storage;
 
 /**
  * Mock VersionEye server storage. An instance of this class should be passed
@@ -44,5 +44,5 @@ public interface MkServer {
      * VersionEye storage.
      * @return NfJsonObjectBuilder.
      */
-    NfJsonObjectBuilder storage();
+    Storage storage();
 }

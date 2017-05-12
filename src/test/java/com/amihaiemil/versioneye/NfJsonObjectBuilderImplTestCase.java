@@ -32,10 +32,10 @@ import javax.json.JsonObject;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
-import com.amihaiemil.json.NfJsonObjectBuilder;
+import com.amihaiemil.json.Storage;
 
 /**
- * Unit tests for {@link NfJsonObjectBuilderImpl}.
+ * Unit tests for {@link MkStorage}.
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
@@ -48,7 +48,7 @@ public final class NfJsonObjectBuilderImplTestCase {
      */
     @Test
     public void doesNotFlushAfterBuild() {
-        final NfJsonObjectBuilder builder = new NfJsonObjectBuilderImpl()
+        final Storage builder = new MkStorage()
             .add("name", "Mihai")
             .add("age", 23)
             .add("developer", true)
@@ -70,7 +70,7 @@ public final class NfJsonObjectBuilderImplTestCase {
      */
     @Test
     public void buildSimpleJsonObject() {
-        final NfJsonObjectBuilder builder = new NfJsonObjectBuilderImpl();
+        final Storage builder = new MkStorage();
         final JsonObject contributor = builder
             .add("name", "Mihai")
             .add("age", 23)
@@ -97,7 +97,7 @@ public final class NfJsonObjectBuilderImplTestCase {
     @Test
     public void buildeEmptyJsonObject() {
         MatcherAssert.assertThat(
-            new NfJsonObjectBuilderImpl().build().toString(),
+            new MkStorage().build().toString(),
             Matchers.equalTo("{}")
         );
     }
@@ -108,7 +108,7 @@ public final class NfJsonObjectBuilderImplTestCase {
      */
     @Test
     public void buildComplexJsonObject() {
-        final NfJsonObjectBuilder builder = new NfJsonObjectBuilderImpl();
+        final Storage builder = new MkStorage();
         final JsonObject project = builder
             .add("name", "charles-rest")
             .add(

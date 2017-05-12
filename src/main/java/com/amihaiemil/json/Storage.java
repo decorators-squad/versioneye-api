@@ -49,7 +49,7 @@ import javax.json.JsonValue;
  * @version $Id$
  * @since 1.0.0
  */
-public interface NfJsonObjectBuilder {
+public interface Storage {
 
     /**
      * Adds a name/{@code JsonValue} pair to the JSON object associated with
@@ -61,7 +61,7 @@ public interface NfJsonObjectBuilder {
      * @return This object builder
      * @throws NullPointerException if the specified name or value is null
      */
-    NfJsonObjectBuilder add(final String name, final JsonValue value);
+    Storage add(final String name, final JsonValue value);
 
     /**
      * Adds a name/{@code JsonString} pair to the JSON object associated with
@@ -73,7 +73,7 @@ public interface NfJsonObjectBuilder {
      * @return This object builder
      * @throws NullPointerException if the specified name or value is null
      */
-    NfJsonObjectBuilder add(final String name, final String value);
+    Storage add(final String name, final String value);
 
     /**
      * Adds a name/{@code JsonNumber} pair to the JSON object associated with
@@ -87,7 +87,7 @@ public interface NfJsonObjectBuilder {
      *
      * @see JsonNumber
      */
-    NfJsonObjectBuilder add(final String name, final BigInteger value);
+    Storage add(final String name, final BigInteger value);
 
     /**
      * Adds a name/{@code JsonNumber} pair to the JSON object associated with
@@ -101,7 +101,7 @@ public interface NfJsonObjectBuilder {
      *
      * @see JsonNumber
      */
-    NfJsonObjectBuilder add(final String name, final BigDecimal value);
+    Storage add(final String name, final BigDecimal value);
 
     /**
      * Adds a name/{@code JsonNumber} pair to the JSON object associated with
@@ -115,7 +115,7 @@ public interface NfJsonObjectBuilder {
      *
      * @see JsonNumber
      */
-    NfJsonObjectBuilder add(final String name, final int value);
+    Storage add(final String name, final int value);
 
     /**
      * Adds a name/{@code JsonNumber} pair to the JSON object associated with
@@ -129,7 +129,7 @@ public interface NfJsonObjectBuilder {
      *
      * @see JsonNumber
      */
-    NfJsonObjectBuilder add(final String name, final long value);
+    Storage add(final String name, final long value);
 
     /**
      * Adds a name/{@code JsonNumber} pair to the JSON object associated with
@@ -145,7 +145,7 @@ public interface NfJsonObjectBuilder {
      *
      * @see JsonNumber
      */
-    NfJsonObjectBuilder add(final String name, final double value);
+    Storage add(final String name, final double value);
 
     /**
      * Adds a name/{@code JsonValue#TRUE} or name/{@code JsonValue#FALSE} pair
@@ -158,7 +158,7 @@ public interface NfJsonObjectBuilder {
      * @return This object builder
      * @throws NullPointerException if the specified name is null
      */
-    NfJsonObjectBuilder add(final String name, final boolean value);
+    Storage add(final String name, final boolean value);
 
     /**
      * Adds a name/{@code JsonValue#NULL} pair to the JSON object associated
@@ -170,7 +170,7 @@ public interface NfJsonObjectBuilder {
      * @return This object builder
      * @throws NullPointerException if the specified name is null
      */
-    NfJsonObjectBuilder addNull(final String name);
+    Storage addNull(final String name);
 
     /**
      * Adds a name/{@code JsonObject} pair to the JSON object associated
@@ -184,7 +184,7 @@ public interface NfJsonObjectBuilder {
      * @return This object builder
      * @throws NullPointerException if the specified name or builder is null
      */
-    NfJsonObjectBuilder add(final String name, final JsonObjectBuilder builder);
+    Storage add(final String name, final JsonObjectBuilder builder);
 
     /**
      * Adds a name/{@code JsonArray} pair to the JSON object associated with
@@ -198,7 +198,7 @@ public interface NfJsonObjectBuilder {
      * @return This object builder
      * @throws NullPointerException if the specified name or builder is null
      */
-    NfJsonObjectBuilder add(final String name, final JsonArrayBuilder builder);
+    Storage add(final String name, final JsonArrayBuilder builder);
 
     /**
      * Returns the JSON object associated with this object builder. 
