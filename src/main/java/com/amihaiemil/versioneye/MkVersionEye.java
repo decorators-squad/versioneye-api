@@ -39,10 +39,6 @@ import javax.json.JsonValue;
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
- * @todo #13:30min/DEV Continue implementing the mock API.
- *  Mocks for Users, Organizations Teams etc are needed,
- * @todo #57:1h/DEV Change ``post()`` method in ``Me`` by passing 
- *  a ``MkUser`` to the ``MkVersionEye`` ctor. (See #59 review)
  */
 public final class MkVersionEye implements VersionEye {
 
