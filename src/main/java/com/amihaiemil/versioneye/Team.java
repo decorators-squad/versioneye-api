@@ -113,6 +113,18 @@ public interface Team {
     boolean sunday();
     
     /**
+     * This team's projects.
+     * @return Projects.
+     */
+    Projects projects();
+    
+    /**
+     * This team's organization.
+     * @return Organization.
+     */
+    Organization organization();
+    
+    /**
      * Members of this team.
      * @return List of UserData.
      */

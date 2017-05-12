@@ -146,7 +146,8 @@ public final class RtOrganizationsTestCase {
         MatcherAssert.assertThat(
             container.take().uri().toString(),
             Matchers.equalTo(
-                "/organisations/sherifwaly_orga?api_key=88870f2710dba853a326"
+                "/organisations/sherifwaly_orga/"
+                + "teams?api_key=88870f2710dba853a326"
             )
         );
         MatcherAssert.assertThat(teams.size(), Matchers.is(2));

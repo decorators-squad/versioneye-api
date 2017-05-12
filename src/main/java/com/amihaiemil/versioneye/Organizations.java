@@ -55,4 +55,5 @@ public interface Organizations {
      *  making the HTTP call.
      */
     Organization organization(String organizationName) throws IOException;
+    
 }

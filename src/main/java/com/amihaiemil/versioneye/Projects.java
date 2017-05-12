@@ -27,15 +27,27 @@
  */
 package com.amihaiemil.versioneye;
 
+import java.io.IOException;
+import java.util.List;
+
 /**
- * An organization's projects.
+ * A team's projects.
  * @author Sherif Waly (sherifwaly95@gmail.com)
  * @version $Id$
  * @since 1.0.0
- * @todo #27:30min/DEV Provide RtProjects implementation and unit tests.
- *  The class should work with a given request and organization name.
- * 
  */
 public interface Projects {
-
+    
+    /**
+     * Fetch the projects.
+     * @return List of Project.
+     * @throws IOException If something goes wrong with the HTTP call.
+     */
+    List<Project> fetch() throws IOException;
+    
+    /**
+     * The team responsible for these projects.
+     * @return Team
+     */
+    Team team();
 }

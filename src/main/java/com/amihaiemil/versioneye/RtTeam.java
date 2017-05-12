@@ -29,9 +29,9 @@ package com.amihaiemil.versioneye;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.json.JsonArray;
 import javax.json.JsonObject;
+import com.jcabi.http.Request;
 
 /**
  * VersionEye Team backed by a JsonObject.
@@ -39,19 +39,36 @@ import javax.json.JsonObject;
  * @version $Id$
  * @since 1.0.0
  */
-final class JsonTeam implements Team {
+final class RtTeam implements Team {
 
     /**
-     * Team.
+     * This team as Json.
      */
     private JsonObject team;
     
     /**
+     * This team's organization.
+     */
+    private Organization orga;
+    
+    /**
+     * Initial HTTP request, entry point of the API.
+     */
+    private Request entry;
+
+    /**
      * Ctor.
      * @param team Given team.
+     * @param orga This team's organization.
+     * @param entry HTTP Request.
      */
-    JsonTeam(final JsonObject team) {
+    RtTeam(
+        final JsonObject team, final Organization orga,
+        final Request entry
+    ) {
         this.team = team;
+        this.entry = entry;
+        this.orga = orga;
     }
     
     @Override
@@ -137,6 +154,16 @@ final class JsonTeam implements Team {
     @Override
     public JsonObject json() {
         return this.team;
+    }
+
+    @Override
+    public Projects projects() {
+        return new RtProjects(this.entry, this);
+    }
+
+    @Override
+    public Organization organization() {
+        return this.orga;
     }
 
 }

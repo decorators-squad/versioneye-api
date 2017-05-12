@@ -44,12 +44,6 @@ public interface Organization {
     Teams teams();
     
     /**
-     * The organization's projects.
-     * @return Projects.
-     */
-    Projects projects();
-
-    /**
      * Organization name.
      * @return String organization name.
      */

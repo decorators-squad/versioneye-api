@@ -118,5 +118,9 @@ public final class MkVersionEye implements VersionEye {
         );
         this.server.storage().add("authenticated", users.build());
     }
+    @Override
+    public Organizations organizations() {
+        return null;
+    }
 
 }

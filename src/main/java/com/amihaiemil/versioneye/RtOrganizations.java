@@ -47,15 +47,21 @@ import com.jcabi.http.response.RestResponse;
 final class RtOrganizations implements Organizations {
 
     /**
-     * HTTP request.
+     * HTTP request for organizations.
      */
     private Request req;
+    
+    /**
+     * Initial HTTP request, the API's entry point.
+     */
+    private Request entry;
 
     /**
      * Ctor.
      * @param entry HTTP Request.
      */
     RtOrganizations(final Request entry) {
+        this.entry = entry;
         this.req = entry.uri().path("/organisations").back();
     }
     
@@ -86,16 +92,18 @@ final class RtOrganizations implements Organizations {
      *  making the HTTP call.
      */
     private List<Organization> fetchOrgs() throws IOException {
-        final JsonArray array = this.req.fetch()
+        final JsonArray orgs = this.req.fetch()
             .as(RestResponse.class)
             .assertStatus(HttpURLConnection.HTTP_OK)
             .as(JsonResponse.class)
             .json()
             .readArray();
         final List<Organization> organizations = new ArrayList<>();
-        for(int idx=0; idx<array.size(); idx++) {
+        for(int idx=0; idx<orgs.size(); idx++) {
             organizations.add(
-                new RtOrganization(array.getJsonObject(idx), this.req)
+                new RtOrganization(
+                    orgs.getJsonObject(idx), this.req, this.entry
+                )
             );
         }
         return organizations;

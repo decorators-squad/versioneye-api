@@ -45,17 +45,30 @@ import com.jcabi.http.response.RestResponse;
 final class RtTeams implements Teams {
 
     /**
-     * HTTP request.
+     * Initial HTTP request, entry point of the API.
+     */
+    private Request entry;
+    
+    /**
+     * HTTP request for Teams endpoint.
      */
     private Request req;
     
     /**
-     * Ctor.
-     * @param entry HTTP request.
-     * @param orgKey The organization's api_key
+     * These teams' organization.
      */
-    RtTeams(final Request entry, final String orgKey) {
-        this.req = entry.uri().queryParam("api_key", orgKey).back();
+    private Organization orga;
+    
+    /**
+     * Ctor.
+     * @param req HTTP request for Teams.
+     * @param entry Original API entry point.
+     * @param orga The parent organization.
+     */
+    RtTeams(final Request entry, final Request req, final Organization orga) {
+        this.entry = entry;
+        this.req = req.uri().path("/teams")
+            .queryParam("api_key", orga.apiKey()).back();
     }
     
     @Override
@@ -69,10 +82,15 @@ final class RtTeams implements Teams {
         final List<Team> teams = new ArrayList<>();
         for(int idx=0; idx<array.size(); idx++) {
             teams.add(
-                new JsonTeam(array.getJsonObject(idx))
+                new RtTeam(array.getJsonObject(idx), this.orga, this.entry)
             );
         }
         return teams;
+    }
+
+    @Override
+    public Organization organization() {
+        return this.orga;
     }
 
 }
