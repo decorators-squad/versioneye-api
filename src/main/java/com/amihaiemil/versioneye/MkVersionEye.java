@@ -40,7 +40,8 @@ import javax.json.JsonValue;
  * @version $Id$
  * @since 1.0.0
  * @todo #13:30min/DEV Continue implementing the mock API.
- *  Mocks for Users, Organizations Teams etc are needed,
+ *  Mocks for Users, Organizations Teams etc are needed. This puzzle
+ *  was readded after being removed by mistake.
  */
 public final class MkVersionEye implements VersionEye {
 
