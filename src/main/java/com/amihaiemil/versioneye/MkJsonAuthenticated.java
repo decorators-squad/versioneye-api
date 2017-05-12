@@ -3,7 +3,6 @@ package com.amihaiemil.versioneye;
 import javax.json.JsonObject;
 
 import com.amihaiemil.json.NfJsonObjectBuilder;
-import com.amihaiemil.json.NfJsonObjectBuilderImpl;
 
 /**
  * Mock VersionEye authenticated user.

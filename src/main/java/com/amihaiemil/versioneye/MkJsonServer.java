@@ -30,7 +30,6 @@ package com.amihaiemil.versioneye;
 import javax.json.Json;
 
 import com.amihaiemil.json.NfJsonObjectBuilder;
-import com.amihaiemil.json.NfJsonObjectBuilderImpl;
 
 /**
  * Mock VersionEye server storage with Json. See {@link MkServer}

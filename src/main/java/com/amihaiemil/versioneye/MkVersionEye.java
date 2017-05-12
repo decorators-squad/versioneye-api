@@ -43,10 +43,6 @@ import javax.json.JsonValue;
  *  Mocks for Users, Organizations Teams etc are needed,
  * @todo #57:1h/DEV Change ``post()`` method in ``Me`` by passing 
  *  a ``MkUser`` to the ``MkVersionEye`` ctor. (See #59 review)
- * @todo #63:30min/DEV Refactor implementation of MkMe so that it uses
- *  the user's username rather that the Authenticated user.
- *  Pass Authenticated user to ``authenticate()`` method so that the
- *  authenticated user won't be retained.
  */
 public final class MkVersionEye implements VersionEye {
 

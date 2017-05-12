@@ -34,6 +34,8 @@ import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 
+import com.amihaiemil.versioneye.NfJsonObjectBuilderImpl;
+
 /**
  * Unit tests for {@link NfJsonObjectBuilderImpl}.
  * @author Mihai Andronache (amihaiemil@gmail.com)

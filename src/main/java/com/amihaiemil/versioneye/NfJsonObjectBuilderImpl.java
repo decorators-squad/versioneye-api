@@ -25,7 +25,7 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-package com.amihaiemil.json;
+package com.amihaiemil.versioneye;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -39,14 +39,19 @@ import javax.json.JsonObject;
 import javax.json.JsonObjectBuilder;
 import javax.json.JsonValue;
 
+import com.amihaiemil.json.NfJsonObjectBuilder;
+
 /**
  * Implementation of {@link NfJsonObjectBuilder}.
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
+ * @todo #68:15min/DEV write a synchronized decorator for this, to
+ *  make it thread-safe. We need it is used by MkServer, which may be used
+ *  by more instances of MkVersionEye at once.
  * @since 1.0.0
  *
  */
-public final class NfJsonObjectBuilderImpl implements NfJsonObjectBuilder {
+final class NfJsonObjectBuilderImpl implements NfJsonObjectBuilder {
 
     /**
      * Json key:value pairs added to this builder.
