@@ -54,22 +54,13 @@ public final class MkJsonServer implements MkServer {
         MkJsonServer.initServer(this.storage);
     }
     
-    /**
-     * Ctor.
-     * @param storage JsonObjectBuilder which holds all the mock VersionEye
-     * data.
-     */
-    public MkJsonServer(final NfJsonObjectBuilder storage) {
-        this.storage = storage;
-    }
-    
     @Override
     public NfJsonObjectBuilder storage() {
         return this.storage;
     }
 
     /**
-     * Init the versioneye mock server.
+     * Give the versioneye server a default, initial state.
      * @param storage Json storage.
      */
     private static void initServer(final NfJsonObjectBuilder storage) {
@@ -79,6 +70,9 @@ public final class MkJsonServer implements MkServer {
                 .add("success", true)
                 .add("message", "pong")
                 .build()
+        ).add(
+            "authenticated",
+            Json.createArrayBuilder().build()
         );
     }
 }

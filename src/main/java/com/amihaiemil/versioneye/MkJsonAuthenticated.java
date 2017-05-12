@@ -21,8 +21,25 @@ public final class MkJsonAuthenticated implements MkAuthenticated {
     /**
      * Ctor.
      */
-    MkJsonAuthenticated() {
+    public MkJsonAuthenticated() {
         this.authenticated = new NfJsonObjectBuilderImpl();
+    }
+    
+    /**
+     * Ctor. This is package protected, to be used only internally.
+     * @param user User as plain JsonObject.
+     */
+    MkJsonAuthenticated(final JsonObject user) {
+        this.authenticated = new NfJsonObjectBuilderImpl()
+            .add("username", user.getString("username", ""))
+            .add("fullname", user.getString("fullname", ""))
+            .add("email", user.getString("email", ""))
+            .add("admin", user.getBoolean("admin", false))
+            .add("deleted_user", user.getBoolean("deleted_user", false))
+            .add("enterprise_projects", user.getInt("enterprise_projects", 0))
+            .add("rate_limit", user.getInt("rate_limit", 0))
+            .add("comp_limit", user.getInt("comp_limit", 0))
+            .add("active", user.getBoolean("active", false));
     }
     
     @Override

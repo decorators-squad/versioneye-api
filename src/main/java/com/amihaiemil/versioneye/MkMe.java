@@ -29,6 +29,9 @@ package com.amihaiemil.versioneye;
 
 import java.io.IOException;
 
+import javax.json.JsonArray;
+import javax.json.JsonObject;
+
 /**
  * Mock Me API for unit testing.
  * @author Sherif Waly (sherifwaly95@gmail.com)
@@ -43,23 +46,33 @@ final class MkMe implements Me {
     private MkServer server;
     
     /**
-     * Mock Authenticated user.
+     * Authenticated user.
      */
-    private Authenticated authenticated;
+    private String username;
     
     /**
      * Ctor.
      * @param server VersionEye server storage.
-     * @param authenticated Authenticated user.
+     * @param username The authenticated user's name.
      */
-    MkMe(final MkServer server, final Authenticated authenticated) {
+    MkMe(final MkServer server, final String username) {
         this.server = server;
-        this.authenticated = authenticated;
+        this.username = username;
     }
     
     @Override
     public Authenticated about() throws IOException {
-        return this.authenticated;
+        final JsonArray online = this.server.storage().build()
+            .getJsonArray("authenticated");
+        for(int idx = 0; idx < online.size(); idx++) {
+            final JsonObject user = online.getJsonObject(idx);
+            if (user.getJsonObject(this.username) != null) {
+                return new MkJsonAuthenticated(user.getJsonObject(this.username));
+            }
+        }
+        throw new IllegalStateException (
+            "User " + this.username + " is not logged in!"
+        );
     }
 
     @Override

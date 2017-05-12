@@ -56,11 +56,6 @@ public final class MkVersionEye implements VersionEye {
     private MkServer server;
     
     /**
-     * Mock Authenticated user.
-     */
-    private Authenticated authenticated;
-    
-    /**
      * Authenticated user's username.
      */
     private String username;
@@ -85,12 +80,11 @@ public final class MkVersionEye implements VersionEye {
      * @param authenticated Mock Authenticated User.
      */
     public MkVersionEye(
-        final MkServer server, final Authenticated authenticated
+        final MkServer server, final Authenticated user
     ) {
         this.server = server;
-        this.authenticated = authenticated;
-        this.username = authenticated.username();
-        this.authenticate();
+        this.username = user.username();
+        this.authenticate(user);
     }
     
     @Override
@@ -110,27 +104,21 @@ public final class MkVersionEye implements VersionEye {
 
     @Override
     public Me me() {
-        if(this.authenticated == null) {
-            throw new IllegalStateException("No Authenticated User.");
-        }
-        return new MkMe(this.server, this.authenticated);
+        return new MkMe(this.server, this.username);
     }
     
     /**
      * Add authenticated user to the MkServer.
      */
-    private void authenticate() {
+    private void authenticate(final Authenticated authenticated) {
         JsonArray online = this.server.storage().build()
             .getJsonArray("authenticated");
-        if(online == null) {
-            online = Json.createArrayBuilder().build();
-        }
         final JsonArrayBuilder users = Json.createArrayBuilder();
         for(final JsonValue user: online) {
             users.add(user);
         }
         users.add(Json.createObjectBuilder().add(
-            this.username, this.authenticated.json())
+            this.username, authenticated.json())
         );
         this.server.storage().add("authenticated", users.build());
     }
