@@ -67,9 +67,9 @@ public final class RtFavoritesTestCase {
                 this.readResource("favoritespage1.json")
             )
         ).start(); 
-        final Favorites favorites = new RtFavorites(
+        final Favorites favorites = new RtVersionEye(
             new JdkRequest(container.home())
-        );
+        ).me().favorites();
         
         final List<Favorite> fetched = favorites.fetch(1);
         
@@ -112,7 +112,7 @@ public final class RtFavoritesTestCase {
         
         MatcherAssert.assertThat(
             container.take().uri().toString(),
-            Matchers.equalTo("/favorites?page=1")
+            Matchers.equalTo("/me/favorites?page=1")
         );
     }
     
@@ -128,9 +128,9 @@ public final class RtFavoritesTestCase {
                 this.readResource("favoritespage1.json")
             )
         ).start();
-        final Favorites favorites = new RtFavorites(
+        final Favorites favorites = new RtVersionEye(
             new JdkRequest(container.home())
-        );
+        ).me().favorites();
    
         UserData userData = favorites.userData();
         MatcherAssert.assertThat(

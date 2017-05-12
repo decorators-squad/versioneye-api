@@ -32,85 +32,49 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.util.List;
+
 import org.apache.commons.io.IOUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+
 import com.jcabi.http.mock.MkAnswer;
 import com.jcabi.http.mock.MkContainer;
 import com.jcabi.http.mock.MkGrizzlyContainer;
 import com.jcabi.http.request.JdkRequest;
 
 /**
- * Unit tests for {@link RtComments}.
- * @author Mihai Andronche (amihaiemil@gmail.com)
+ * Unit tests for {@link RtMe}.
+ * @author Sherif Waly (sherifwaly95@gmail.com)
  * @version $Id$
  * @since 1.0.0
  */
 @SuppressWarnings("resource")
-public final class RtCommentsTestCase {
-    
+public final class RtMeTestCase {
+
     /**
-     * RtComments can fetch a user's comments.
+     * RtMe can return Authenticated user.
      * @throws IOException If something goes wrong.
      */
     @Test
-    public void fetchesComments() throws IOException {
+    public void returnsAuthenticatedUser() throws IOException {
         final MkContainer container = new MkGrizzlyContainer().next(
             new MkAnswer.Simple(
                 HttpURLConnection.HTTP_OK,
-                this.readResource("commentspage1.json")
+                this.readResource("authenticated.json")
             )
         ).start();
-        final Comments comments = new RtVersionEye(
-            new JdkRequest(container.home())
-        ).me().comments();
         
-        final List<Comment> fetched = comments.fetch(1);
-        MatcherAssert.assertThat(fetched.size(), Matchers.is(2));
+        final Authenticated authenticated = new RtVersionEye(
+            new JdkRequest(container.home())
+        ).me().about();
+        
         MatcherAssert.assertThat(
-            fetched.get(0).id(),
-            Matchers.equalTo("58f9b08ed797b2000e28d24e232323")
+            authenticated.username(), Matchers.is("SherifWaly")
         );
         MatcherAssert.assertThat(
             container.take().uri().toString(),
-            Matchers.equalTo("/me/comments?page=1")
-        );
-    }
-    
-    /**
-     * RtComments can return paging.
-     * @throws IOException If something goes wrong.
-     */
-    @Test
-    public void returnsPaging() throws IOException {
-        final MkContainer container = new MkGrizzlyContainer().next(
-            new MkAnswer.Simple(
-                HttpURLConnection.HTTP_OK,
-                this.readResource("commentspage1.json")
-            )
-        ).start();
-        final Comments comments = new RtComments(
-            new JdkRequest(container.home())
-        );
-        
-        Paging paging = comments.paging(1);
-        MatcherAssert.assertThat(
-            paging.currentPage(),
-            Matchers.is(1)
-        );
-        MatcherAssert.assertThat(
-            paging.itemsPerPage(),
-            Matchers.is(2)
-        );
-        MatcherAssert.assertThat(
-            paging.totalPages(),
-            Matchers.is(3)
-        );
-        MatcherAssert.assertThat(
-            paging.totalEntries(),
-            Matchers.is(6)
+            Matchers.equalTo("/me")
         );
     }
     

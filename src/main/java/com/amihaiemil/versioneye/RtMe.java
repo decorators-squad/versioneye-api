@@ -67,25 +67,13 @@ final class RtMe implements Me {
         );
     }
 
-    /**
-     * Comments.
-     * @todo #11:30min/DEV Implement and unit test this method after we have
-     *  a working implementation of Comments in place.
-     * @return Comments.
-     */
     @Override
     public Comments comments() {
         return new RtComments(this.req);
     }
     
-    /**
-     * Favorites.
-     * @todo #11:30min/DEV Implement and unit test this method after we have
-     *  a working implementation of Favorites in place.
-     * @return Favorites.
-     */
     @Override
     public Favorites favorites() {
-        return null;
+        return new RtFavorites(this.req);
     }
 }

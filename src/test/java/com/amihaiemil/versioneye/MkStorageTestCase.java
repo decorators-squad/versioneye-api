@@ -41,10 +41,10 @@ import com.amihaiemil.json.Storage;
  * @since 1.0.0
  *
  */
-public final class NfJsonObjectBuilderImplTestCase {
+public final class MkStorageTestCase {
 
     /**
-     * NfJsonObjectBuilderImpl can build the same object multiple times.
+     * MkStorage can build the same object multiple times.
      */
     @Test
     public void doesNotFlushAfterBuild() {
@@ -65,7 +65,7 @@ public final class NfJsonObjectBuilderImplTestCase {
     }
     
     /**
-     * NfJsonObjectBuilderImpl can build a simple JsonObject, with no
+     * MkStorage can build a simple JsonObject, with no
      * other structures (other json objects) in it.
      */
     @Test
@@ -92,7 +92,7 @@ public final class NfJsonObjectBuilderImplTestCase {
     }
     
     /**
-     * NfJsonObjectBuilderImpl can build an empty JsonObject.
+     * MkStorage can build an empty JsonObject.
      */
     @Test
     public void buildeEmptyJsonObject() {
@@ -103,7 +103,7 @@ public final class NfJsonObjectBuilderImplTestCase {
     }
     
     /**
-     * NfJsonObjectBuilderImpl can build a comples JsonObject, with
+     * MkStorage can build a comples JsonObject, with
      * other structures (other json objects) in it.
      */
     @Test

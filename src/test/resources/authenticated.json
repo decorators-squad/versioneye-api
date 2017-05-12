@@ -1,0 +1,15 @@
+{
+  "fullname": "Sherif Waly",
+  "username": "SherifWaly",
+  "email": "sherifwaly95@gmail.com",
+  "admin": false,
+  "deleted_user": false,
+  "notifications": {
+    "new": 0,
+    "total": 0
+  },
+  "enterprise_projects": 1,
+  "rate_limit": 50,
+  "comp_limit": 50,
+  "active": true
+}
