@@ -45,9 +45,6 @@ import com.amihaiemil.json.Storage;
  * Implementation of {@link Storage}.
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
- * @todo #68:15min/DEV write a synchronized decorator for this, to
- *  make it thread-safe. We need it is used by MkServer, which may be used
- *  by more instances of MkVersionEye at once.
  * @since 1.0.0
  *
  */
