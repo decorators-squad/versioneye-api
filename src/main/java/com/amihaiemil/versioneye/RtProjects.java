@@ -28,9 +28,15 @@
 package com.amihaiemil.versioneye;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.json.JsonArray;
+
 import com.jcabi.http.Request;
+import com.jcabi.http.response.JsonResponse;
+import com.jcabi.http.response.RestResponse;
 
 /**
  * Real implementation of {@link Projects}.
@@ -60,8 +66,6 @@ final class RtProjects implements Projects {
     RtProjects(final Request req, final Team team) {
         this.req = req.uri()
             .path("/projects")
-            .queryParam("orga_name", team.organization().name())
-            .queryParam("team_name", team.name())
             .queryParam("api_key", team.organization().apiKey())
             .back();
         this.team = team;
@@ -69,7 +73,21 @@ final class RtProjects implements Projects {
     
     @Override
     public List<Project> fetch() throws IOException {
-        return null;
+        final List<Project> projects = new ArrayList<>();
+        final JsonArray fetched = this.req.uri()
+            .queryParam("orga_name", this.team.organization().name())
+            .queryParam("team_name", this.team.name()).back()
+            .fetch().as(RestResponse.class)
+            .assertStatus(HttpURLConnection.HTTP_OK)
+            .as(JsonResponse.class)
+            .json()
+            .readArray();
+        for(int idx = 0; idx<fetched.size(); idx++) {
+            projects.add(
+                new RtProject(this.req, this.team, fetched.getJsonObject(idx))
+            );
+        }
+        return projects;
     }
 
     @Override

@@ -69,6 +69,7 @@ final class RtTeams implements Teams {
         this.entry = entry;
         this.req = req.uri().path("/teams")
             .queryParam("api_key", orga.apiKey()).back();
+        this.orga = orga;
     }
     
     @Override

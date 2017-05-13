@@ -39,7 +39,7 @@ import java.util.List;
 public interface Projects {
     
     /**
-     * Fetch the projects.
+     * Fetch the projects of a team.
      * @return List of Project.
      * @throws IOException If something goes wrong with the HTTP call.
      */
