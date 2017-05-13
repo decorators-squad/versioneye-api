@@ -43,8 +43,6 @@ import com.jcabi.http.response.RestResponse;
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
- * @todo #38:30min/DEV Implement and unit test method fetch().
- *
  */
 final class RtProjects implements Projects {
 
