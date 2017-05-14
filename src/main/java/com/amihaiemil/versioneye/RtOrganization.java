@@ -36,7 +36,6 @@ import com.jcabi.http.Request;
  * @author Sherif Waly (sheifwaly95@gmail.com)
  * @version $Id$
  * @since 1.0.0
- * @todo #37:30min/DEV implement and test `projects()` method.
  */
 final class RtOrganization implements Organization {
 
