@@ -28,53 +28,44 @@
 package com.amihaiemil.versioneye;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
- * VersionEye server.
+ * VersionEye Security API. It only offers search after the programming
+ * language. If you are interested to check if a certain project has
+ * vulnerabilities, you can do that via <b>Project#vulnerabilities()</b>.
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
+ * @see {@link Project}
  *
  */
-public interface VersionEye {
+public interface Security {
 
     /**
-     * Services api.
-     * @return Services.
+     * Fetch the vulnerabilities from a given page.
+     * @param language Programming language.
+     * @param page Page number.
+     * @return List of vulnerabilities.
+     * @throws IOException If there is something wrong with the HTTP call.
      */
-    Services services();
-    
+    List<Vulnerability> language(
+        final String language, final int page
+    ) throws IOException;
+
     /**
-     * Users api.
-     * @return Users.
+     * Fetch informations about a given page.
+     * @param page Page number.
+     * @return Paging.
+     * @throws IOException If there is something wrong with the HTTP call.
      */
-    Users users();
-    
+    Paging paging(final int page) throws IOException;
+
     /**
-     * Organizations api.
-     * @return Organizations.
+     * Paginated vulnerabilities.
+     * @param language Programming language.
+     * @return Page which can be iterated,
+     *  each element representing a page of comments.
      */
-    Organizations organizations();
-    
-    /**
-     * Me api.
-     * @return Me.
-     * @checkstyle MethodName (3 lines).
-     */
-    Me me();
-    
-    /**
-     * VersionEye with trusted wire.
-     * @return VersionEye.
-     * @throws IOException If something goes wrong with the HTTP call.
-     * @see http://http.jcabi.com/pkix-validator.html
-     * @todo #29:30min/DEV Add more tests to check that HTTP reached server.
-     */
-    VersionEye trusted() throws IOException;
-    
-    /**
-     * Security api.
-     * @return Security.
-     */
-    Security security();
+    Page<Vulnerability> paginated(final String language);
 }

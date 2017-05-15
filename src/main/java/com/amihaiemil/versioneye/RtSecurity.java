@@ -28,84 +28,76 @@
 package com.amihaiemil.versioneye;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.json.JsonArray;
 
 import com.jcabi.http.Request;
-import com.jcabi.http.request.JdkRequest;
-import com.jcabi.http.wire.TrustedWire;
+import com.jcabi.http.response.JsonResponse;
+import com.jcabi.http.response.RestResponse;
 
 /**
- * OOP wrapper for the VersionEye API.
+ * Real implementation of {@link Security}.
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
+ *
  */
-public final class RtVersionEye implements VersionEye {
+final class RtSecurity implements Security {
 
-    /**
-     * Default HTTP request.
-     */
-    private static final Request DEFAULT = new JdkRequest(
-        "https://www.versioneye.com/api/v2"
-    ).header("Accept", "application/json");
-    
     /**
      * HTTP request.
      */
-    private Request entry;
-
-    /**
-     * Ctor.
-     */
-    public RtVersionEye() {
-        this(RtVersionEye.DEFAULT);
-    }
-
-    /**
-     * Ctor.
-     * @param token Api token.
-     */
-    public RtVersionEye(final String token) {
-        this(RtVersionEye.DEFAULT.header("Cookie", "api_key=" + token));
-    }
-
-    /**
-     * Ctor.
-     * @param req HTTP Request. (see {@link Request})
-     */
-    public RtVersionEye(final Request req) {
-        this.entry = req;
-    }
+    private Request req;
     
-    @Override
-    public Services services() {
-        return new RtServices(this.entry);
+    /**
+     * Ctor.
+     * @param entry HTTP Request.
+     */
+    RtSecurity(final Request entry) {
+        this.req = entry.uri().path("/security").back();
     }
 
     @Override
-    public Users users() {
-        return new RtUsers(this.entry);
+    public List<Vulnerability> language(final String language, final int page)
+            throws IOException {
+        final JsonArray results = this.req.uri()
+            .queryParam("language", language)
+            .queryParam("page", String.valueOf(page)).back().fetch()
+            .as(RestResponse.class)
+            .assertStatus(HttpURLConnection.HTTP_OK)
+            .as(JsonResponse.class)
+            .json()
+            .readObject()
+            .getJsonArray("results");
+        final List<Vulnerability> vulnerabilities = new ArrayList<>();
+        for(int idx=0; idx<results.size(); idx++) {
+            vulnerabilities.add(
+                new RtVulnerability(results.getJsonObject(idx))
+            );
+        }
+        return vulnerabilities;
     }
-    
+
     @Override
-    public VersionEye trusted() throws IOException {
-        return new RtVersionEye(
-            this.entry.through(TrustedWire.class)
+    public Paging paging(final int page) throws IOException {
+        return new JsonPaging(
+            this.req.uri()
+                .queryParam("page", String.valueOf(page)).back().fetch()
+                .as(RestResponse.class)
+                .assertStatus(HttpURLConnection.HTTP_OK)
+                .as(JsonResponse.class)
+                .json()
+                .readObject()
+                .getJsonObject("paging")
         );
     }
 
     @Override
-    public Me me() {
-        return new RtMe(this.entry);
+    public Page<Vulnerability> paginated(final String language) {
+        return new VulnerabilitiesPage(this, language);
     }
 
-    @Override
-    public Organizations organizations() {
-        return new RtOrganizations(this.entry);
-    }
-
-    @Override
-    public Security security() {
-        return new RtSecurity(this.entry);
-    }
-   
 }

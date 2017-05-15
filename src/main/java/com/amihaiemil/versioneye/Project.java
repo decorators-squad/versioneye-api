@@ -36,6 +36,8 @@ import javax.json.JsonObject;
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
+ * @todo #83:30min/DEV Implement a way of fetching the vulnerabilities for a
+ *  given project.
  */
 public interface Project {
     

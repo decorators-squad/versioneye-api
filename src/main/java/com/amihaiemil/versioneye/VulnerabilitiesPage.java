@@ -32,18 +32,25 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * A page of Comments.
+ * A page of vulnerabilities.
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
+ * @todo #83:30min/DEV Unit test this class, similar to how
+ *  CommentsPage and FavoritesPage are tested.
  *
  */
-final class CommentsPage implements Page<Comment> {
+final class VulnerabilitiesPage implements Page<Vulnerability> {
 
     /**
-     * Comments.
+     * Vulnerabilities.
      */
-    private Comments comments;
+    private Security vulnerabilities;
+    
+    /**
+     * Programming language of the vulnerable projects.
+     */
+    private String language;
     
     /**
      * Number of this page.
@@ -52,46 +59,57 @@ final class CommentsPage implements Page<Comment> {
     
     /**
      * Ctor.
-     * @param comments Comments from this page.
+     * @param vulnerabilities Vulnerabilities from this page.
+     * @param language Programming language of the vulnerable projects.
      */
-    CommentsPage(final Comments comments) {
-        this(comments, 1);
+    VulnerabilitiesPage(final Security vulnerabilities, final String language) {
+        this(vulnerabilities, language,  1);
     }
     
     /**
      * Ctor.
-     * @param comments Comments from this page.
+     * @param vulnerabilities Vulnerabilities from this page.
+     * @param language Programming language of the vulnerable projects.
      * @param number Number of this page.
      */
-    CommentsPage(final Comments comments, final int number) {
-        this.comments = comments;
+    VulnerabilitiesPage(
+        final Security vulnerabilities, final String language, final int number
+    ) {
+        this.vulnerabilities = vulnerabilities;
+        this.language = language;
         this.number = number;
     }
     
     @Override
-    public List<Comment> fetch() throws IOException {
-        return this.comments.fetch(this.number);
+    public List<Vulnerability> fetch() throws IOException {
+        return this.vulnerabilities.language(this.language, this.number);
     }
 
     @Override
     public Paging paging() throws IOException {
-        return this.comments.paging(this.number);
+        return this.vulnerabilities.paging(this.number);
     }
 
     @Override
-    public Iterator<Page<Comment>> iterator() {
-        return new CommentsPageIt(this.comments);
+    public Iterator<Page<Vulnerability>> iterator() {
+        return new VulnerabilityPageIt(this.vulnerabilities, this.language);
     }
 
     /**
      * Iterator over the comments pages.
      */
-    private final class CommentsPageIt implements Iterator<Page<Comment>> {
+    private final class VulnerabilityPageIt
+        implements Iterator<Page<Vulnerability>> {
         
         /**
-         * Comments.
+         * Vulnerabilities.
          */
-        private Comments comments;
+        private Security vulnerabilities;
+        
+        /**
+         * Programming language of the vulnerable projects.
+         */
+        private String language;
         
         /**
          * Number of this page.
@@ -100,29 +118,32 @@ final class CommentsPage implements Page<Comment> {
         
         /**
          * Ctor.
-         * @param comments Comments from this page.
+         * @param vulnerabilities Vulnerabilities from this page.
+         * @param language Programming language of the vulnerable projects.
          */
-        CommentsPageIt(final Comments comments) {
-            this.comments = comments;
+        VulnerabilityPageIt(
+            final Security vulnerabilities, final String language
+        ) {
+            this.vulnerabilities = vulnerabilities;
         }
         
         @Override
         public boolean hasNext() {
             try {
-                final Paging paging = this.comments.paging(this.number);
+                final Paging paging = this.vulnerabilities.paging(this.number);
                 return paging.currentPage() <= paging.totalPages();
             } catch (final IOException ex) {
                 throw new IllegalStateException(
                     "IOException occured when checking "
-                    + "comments page number " + this.number, ex
+                    + "vulnerabilities page number " + this.number, ex
                 );
             }
         }
 
         @Override
-        public Page<Comment> next() {
-            final Page<Comment> next = new CommentsPage(
-                this.comments, this.number
+        public Page<Vulnerability> next() {
+            final Page<Vulnerability> next = new VulnerabilitiesPage(
+                this.vulnerabilities, this.language, this.number
             );
             this.number++;
             return next;
@@ -131,10 +152,9 @@ final class CommentsPage implements Page<Comment> {
         @Override
         public void remove() {
             throw new UnsupportedOperationException(
-                "Cannot remove a page of comments!"
+                "Cannot remove a page of vulnerabilities!"
             );        
         }
 
     }
-
 }
