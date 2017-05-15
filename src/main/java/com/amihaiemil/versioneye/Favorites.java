@@ -57,7 +57,7 @@ public interface Favorites {
     /**
      * Paginated Favorites.
      * @return Page which can be iterated,
-     *  each element representing a page of comments..
+     *  each element representing a page of favorites.
      */
     Page<Favorite> paginated();
     
