@@ -57,7 +57,7 @@ public interface Comments {
     /**
      * Paginated comments.
      * @return Page which can be iterated,
-     *  each element representing a page of comments..
+     *  each element representing a page of comments.
      */
     Page<Comment> paginated();
     
