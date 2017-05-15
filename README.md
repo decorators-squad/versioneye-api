@@ -14,8 +14,7 @@ Json is manipulated using javax.json API with the Glassfish [implementation](htt
 For unit-testing, a [mock version](https://github.com/decorators-squad/versioneye-api/issues/13) is offered, which holds a JsonBuilder behind, instead of making real HTTP requests.
 
 ## Usage
-
-Like outlined above, there is one single entry point and the usage is fluent. Everyone should be able to start using this library in a matter of minutes:
+There is one single entry point and the usage is fluent. Everyone should be able to start using this library in a matter of minutes:
 1. Pinging:
 
 ```java
