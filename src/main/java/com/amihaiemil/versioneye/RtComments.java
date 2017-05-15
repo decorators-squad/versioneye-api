@@ -31,7 +31,9 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.json.JsonArray;
+
 import com.jcabi.http.Request;
 import com.jcabi.http.response.JsonResponse;
 import com.jcabi.http.response.RestResponse;
@@ -89,5 +91,10 @@ final class RtComments implements Comments {
                 .readObject()
                 .getJsonObject("paging")
         );
+    }
+
+    @Override
+    public Page<Comment> paginated() {
+        return new CommentsPage(this);
     }
 }

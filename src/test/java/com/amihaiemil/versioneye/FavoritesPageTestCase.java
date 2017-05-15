@@ -64,8 +64,8 @@ public final class FavoritesPageTestCase {
         final VersionEye versionEye = new RtVersionEye(
             new JdkRequest(container.home())
         );
-        List<Favorite> first = 
-            versionEye.users().user("SherifWaly").favorites().fetch();
+        List<Favorite> first = versionEye.users().user("SherifWaly")
+            .favorites().paginated().fetch();
         MatcherAssert.assertThat(first.size(), Matchers.is(2));
         MatcherAssert.assertThat(
             first.get(0).name(),
@@ -94,7 +94,7 @@ public final class FavoritesPageTestCase {
         );
         int pages = 0;
         for (final Page<Favorite> page
-            : versionEye.users().user("SherifWaly").favorites()
+            : versionEye.users().user("SherifWaly").favorites().paginated()
         ){
             MatcherAssert.assertThat(
                 page.fetch().size(), Matchers.is(2)

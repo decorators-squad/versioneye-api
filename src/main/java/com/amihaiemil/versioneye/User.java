@@ -47,13 +47,13 @@ public interface User {
     
     /**
      * This user's comments.
-     * @return Page of Comments
+     * @return Comments.
      */
-    Page<Comment> comments();
+    Comments comments();
     
     /**
      * This user's favorites.
-     * @return Page of Favorites.
+     * @return Favorites.
      */
-    Page<Favorite> favorites();
+    Favorites favorites();
 }

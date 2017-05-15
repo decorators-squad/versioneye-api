@@ -106,4 +106,9 @@ final class RtFavorites implements Favorites {
         );
     }
 
+    @Override
+    public Page<Favorite> paginated() {
+        return new FavoritesPage(this);
+    }
+
 }

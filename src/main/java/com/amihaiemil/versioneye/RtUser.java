@@ -70,13 +70,13 @@ class RtUser implements User {
     }
     
     @Override
-    public Page<Comment> comments() {
-        return new CommentsPage(new RtComments(this.req));
+    public Comments comments() {
+        return new RtComments(this.req);
     }
 
     @Override
-    public Page<Favorite> favorites() {
-        return new FavoritesPage(new RtFavorites(this.req));
+    public Favorites favorites() {
+        return new RtFavorites(this.req);
     }
 
 }

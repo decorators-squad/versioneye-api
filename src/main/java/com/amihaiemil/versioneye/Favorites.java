@@ -31,13 +31,12 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * A user's favorites. This isn't the public endpoint, since it isn't
- * paginated. The public one will be {@link FavoritesPage}.
+ * A user's favorites.
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
  */
-interface Favorites {
+public interface Favorites {
     
     /**
      * Fetch the list of favorites from a given page.
@@ -54,6 +53,13 @@ interface Favorites {
      * @throws IOException If there is something wrong with the HTTP call.
      */
     Paging paging(final int page) throws IOException;
+    
+    /**
+     * Paginated Favorites.
+     * @return Page which can be iterated,
+     *  each element representing a page of comments..
+     */
+    Page<Favorite> paginated();
     
     /**
      * Fetch the user data.

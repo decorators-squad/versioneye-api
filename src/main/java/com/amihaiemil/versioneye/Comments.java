@@ -31,13 +31,12 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * A user's comments. This isn't the public endpoint, since it isn't
- * paginated. The public one will be {@link CommentsPage}.
+ * A user's comments.
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
  */
-interface Comments {
+public interface Comments {
     
     /**
      * Fetch the comments from a given page.
@@ -54,4 +53,12 @@ interface Comments {
      * @throws IOException If there is something wrong with the HTTP call.
      */
     Paging paging(final int page) throws IOException;
+    
+    /**
+     * Paginated comments.
+     * @return Page which can be iterated,
+     *  each element representing a page of comments..
+     */
+    Page<Comment> paginated();
+    
 }

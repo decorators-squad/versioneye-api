@@ -39,7 +39,7 @@ public final class CommentsPageTestCase {
             new JdkRequest(container.home())
         );
         List<Comment> first = versionEye.users().user("amihaiemil").comments()
-            .fetch();
+            .paginated().fetch();
         MatcherAssert.assertThat(first.size(), Matchers.is(2));
         MatcherAssert.assertThat(
             first.get(0).id(),
@@ -68,7 +68,7 @@ public final class CommentsPageTestCase {
         );
         int pages = 0;
         for (final Page<Comment> page
-            : versionEye.users().user("amihaiemil").comments()
+            : versionEye.users().user("amihaiemil").comments().paginated()
         ){
             MatcherAssert.assertThat(
                 page.fetch().size(), Matchers.is(2)
