@@ -31,41 +31,40 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * VersionEye Security API. It only offers search after the programming
- * language. If you are interested to check if a certain project has
- * vulnerabilities, you can do that via <b>Project#vulnerabilities()</b>.
- * @author Mihai Andronache (amihaiemil@gmail.com)
+ * VersionEye Github API. 
+ * @author Sherif Waly (sherifwaly95@gmail.com)
  * @version $Id$
  * @since 1.0.0
- * @see {@link Project}
- *
  */
-public interface Security {
+public interface Github {
 
     /**
-     * Fetch the vulnerabilities from a given page.
-     * @param language Programming language.
+     * Fetch the repositories from a given page.
      * @param page Page number.
-     * @return List of vulnerabilities.
+     * @return List of Repository.
      * @throws IOException If there is something wrong with the HTTP call.
      */
-    List<Vulnerability> language(
-        final String language, final int page
-    ) throws IOException;
-
+    List<Repository> fetch(final int page) throws IOException;
+    
     /**
-     * Fetch informations about a given page.
+     * Fetch informations about given page.
      * @param page Page number.
      * @return Paging.
      * @throws IOException If there is something wrong with the HTTP call.
      */
     Paging paging(final int page) throws IOException;
-
+    
     /**
-     * Paginated vulnerabilities.
-     * @param language Programming language.
+     * Paginated repositories.
      * @return Page which can be iterated,
-     *  each element representing a page of vulnerabilities.
+     *  each element representing a page of repositories.
      */
-    Page<Vulnerability> paginated(final String language);
+    Page<Repository> paginated();
+    
+    /**
+     * Re-imports all github repositories.
+     * @return String "running" or "done".
+     * @throws IOException If there is something wrong with the HTTP call.
+     */
+    String sync() throws IOException;
 }

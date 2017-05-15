@@ -27,45 +27,27 @@
  */
 package com.amihaiemil.versioneye;
 
-import java.io.IOException;
-import java.util.List;
+import javax.json.JsonObject;
 
 /**
- * VersionEye Security API. It only offers search after the programming
- * language. If you are interested to check if a certain project has
- * vulnerabilities, you can do that via <b>Project#vulnerabilities()</b>.
- * @author Mihai Andronache (amihaiemil@gmail.com)
+ * Real implementation of {@link Repository}.
+ * @author Sherif Waly (sherifwaly95@gmai.com)
  * @version $Id$
  * @since 1.0.0
- * @see {@link Project}
  *
  */
-public interface Security {
+final class RtRepository implements Repository {
 
     /**
-     * Fetch the vulnerabilities from a given page.
-     * @param language Programming language.
-     * @param page Page number.
-     * @return List of vulnerabilities.
-     * @throws IOException If there is something wrong with the HTTP call.
+     * This repository as a JsonObject.
      */
-    List<Vulnerability> language(
-        final String language, final int page
-    ) throws IOException;
-
+    private JsonObject repository;
+    
     /**
-     * Fetch informations about a given page.
-     * @param page Page number.
-     * @return Paging.
-     * @throws IOException If there is something wrong with the HTTP call.
+     * Ctor.
+     * @param repository Json comment as it is returned by the API.
      */
-    Paging paging(final int page) throws IOException;
-
-    /**
-     * Paginated vulnerabilities.
-     * @param language Programming language.
-     * @return Page which can be iterated,
-     *  each element representing a page of vulnerabilities.
-     */
-    Page<Vulnerability> paginated(final String language);
+    RtRepository(final JsonObject repository) {
+        this.repository = repository;
+    }
 }
