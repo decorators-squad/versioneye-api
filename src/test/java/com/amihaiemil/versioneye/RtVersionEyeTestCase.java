@@ -27,9 +27,19 @@
  */
 package com.amihaiemil.versioneye;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
+
+import com.jcabi.http.mock.MkAnswer;
+import com.jcabi.http.mock.MkContainer;
+import com.jcabi.http.mock.MkGrizzlyContainer;
+import com.jcabi.http.mock.MkQuery;
+import com.jcabi.http.request.JdkRequest;
+import com.jcabi.http.wire.TrustedWire;
 
 /**
  * Unit tests for {@link RtVersionEye}.
@@ -38,6 +48,7 @@ import org.junit.Test;
  * @since 1.0.0
  *
  */
+@SuppressWarnings("resource")
 public final class RtVersionEyeTestCase {
     
     /**
@@ -61,6 +72,37 @@ public final class RtVersionEyeTestCase {
         MatcherAssert.assertThat(users, Matchers.notNullValue());
         MatcherAssert.assertThat(
             users, Matchers.instanceOf(RtUsers.class)
+        );
+    }
+    
+    /**
+     * RtVersionEye works with {@link TrustedWire}.
+     * @throws IOException If something goes wrong.
+     */
+    @Test
+    public void rtVersionEyeTrustsServer() throws IOException {
+        final MkContainer container = new MkGrizzlyContainer().next(
+            new MkAnswer.Simple(
+                HttpURLConnection.HTTP_OK,
+                "{\"success\":true, \"message\":\"pong\"}"
+            )
+        ).next(
+            new MkAnswer.Simple(
+                HttpURLConnection.HTTP_OK,
+               "{\"success\":true, \"message\":\"pong\"}"
+            )
+        ).start();
+        final VersionEye versionEye = new RtVersionEye(
+            new JdkRequest(container.home())
+        );
+        MatcherAssert.assertThat(
+            versionEye.services().ping(),
+            Matchers.equalTo(versionEye.trusted().services().ping())
+        );
+        final MkQuery notTrusted = container.take();
+        final MkQuery trusted = container.take();
+        MatcherAssert.assertThat(
+            notTrusted.uri(), Matchers.equalTo(trusted.uri())
         );
     }
 }
