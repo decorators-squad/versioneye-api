@@ -45,7 +45,7 @@ final class RepositoriesPage implements Page<Repository> {
     /**
      * Repositories.
      */
-    private Github repositories;
+    private Repositories repositories;
     
     /**
      * Number of this page.
@@ -56,7 +56,7 @@ final class RepositoriesPage implements Page<Repository> {
      * Ctor.
      * @param repositories Repositories from this page.
      */
-    RepositoriesPage(final Github repositories) {
+    RepositoriesPage(final Repositories repositories) {
         this(repositories,  1);
     }
     
@@ -66,7 +66,7 @@ final class RepositoriesPage implements Page<Repository> {
      * @param number Number of this page.
      */
     RepositoriesPage(
-        final Github repositories, final int number) {
+        final Repositories repositories, final int number) {
         this.repositories = repositories;
         this.number = number;
     }
@@ -95,7 +95,7 @@ final class RepositoriesPage implements Page<Repository> {
         /**
          * Repositories.
          */
-        private Github repositories;
+        private Repositories repositories;
         
         /**
          * Number of this page.
@@ -106,7 +106,7 @@ final class RepositoriesPage implements Page<Repository> {
          * Ctor.
          * @param repositories Repositories from this page.
          */
-        RepositoryPageIt(final Github repositories) {
+        RepositoryPageIt(final Repositories repositories) {
             this.repositories = repositories;
         }
         

@@ -28,28 +28,71 @@
 package com.amihaiemil.versioneye;
 
 import java.io.IOException;
+import java.util.List;
 
 /**
- * VersionEye Github API. 
+ * Github repositories.
  * @author Sherif Waly (sherifwaly95@gmail.com)
  * @version $Id$
  * @since 1.0.0
- * @todo #81:30min/DEV Complete Github API methods and move fetch/paging to a
- *  repositories interface. You can also filter repositories
- *  by orga_name, prog. language, etc.
  */
-public interface Github {
-
-    /**
-     * Re-imports all github repositories.
-     * @return String "running" or "done".
-     * @throws IOException If there is something wrong with the HTTP call.
-     */
-    String sync() throws IOException;
+public interface Repositories {
     
     /**
-     * The Github repositories.
-     * @return Repositories.
+     * Fetch the repositories from a given page.
+     * @param page Page number.
+     * @return List of Repository.
+     * @throws IOException If there is something wrong with the HTTP call.
      */
-    Repositories repositories();
+    List<Repository> fetch(final int page) throws IOException;
+    
+    /**
+     * Fetch informations about given page.
+     * @param page Page number.
+     * @return Paging.
+     * @throws IOException If there is something wrong with the HTTP call.
+     */
+    Paging paging(final int page) throws IOException;
+    
+    /**
+     * Paginated repositories.
+     * @return Page which can be iterated,
+     *  each element representing a page of repositories.
+     */
+    Page<Repository> paginated();
+    
+    /**
+     * Filter by language.
+     * @param language String
+     * @return Repositories this repositories.
+     */
+    Repositories language(String language);
+    
+    /**
+     * Filter by privacy.
+     * @param isPrivate Boolean
+     * @return Repositories this repositories.
+     */
+    Repositories isPrivate(boolean isPrivate);
+    
+    /**
+     * Filter by organization name.
+     * @param organizationName String
+     * @return Repositories this repositories.
+     */
+    Repositories organizationName(String organizationName);
+    
+    /**
+     * Filter by organization type.
+     * @param organizationType String
+     * @return Repositories this repositories.
+     */
+    Repositories organizationType(String organizationType);
+    
+    /**
+     * Filter by only imported.
+     * @param onlyImported Boolean
+     * @return Repositories this repositories.
+     */
+    Repositories onlyImported(boolean onlyImported);
 }

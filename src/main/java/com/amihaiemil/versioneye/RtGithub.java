@@ -29,10 +29,6 @@ package com.amihaiemil.versioneye;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.json.JsonArray;
 
 import com.jcabi.http.Request;
 import com.jcabi.http.response.JsonResponse;
@@ -59,54 +55,21 @@ final class RtGithub implements Github {
     RtGithub(final Request entry) {
         this.req = entry.uri().path("/github").back();
     }
-    
-    @Override
-    public List<Repository> fetch(final int page) throws IOException {
-        final JsonArray results = this.req.uri()
-            .queryParam("page", String.valueOf(page)).back().fetch()
-            .as(RestResponse.class)
-            .assertStatus(HttpURLConnection.HTTP_OK)
-            .as(JsonResponse.class)
-            .json()
-            .readObject()
-            .getJsonArray("repos");
-        final List<Repository> repositories = new ArrayList<>();
-        for(int idx=0; idx<results.size(); idx++) {
-            repositories.add(
-                new RtRepository(results.getJsonObject(idx))
-            );
-        }
-        return repositories;
-    }
-
-    @Override
-    public Paging paging(final int page) throws IOException {
-        return new JsonPaging(
-            this.req.uri()
-                .queryParam("page", String.valueOf(page)).back().fetch()
-                .as(RestResponse.class)
-                .assertStatus(HttpURLConnection.HTTP_OK)
-                .as(JsonResponse.class)
-                .json()
-                .readObject()
-                .getJsonObject("paging")
-        );
-    }
-
-    @Override
-    public Page<Repository> paginated() {
-        return new RepositoriesPage(this);
-    }
 
     @Override
     public String sync() throws IOException {
-        return this.req.uri().path("sync").back().fetch()
+        return this.req.uri().path("/sync").back().fetch()
             .as(RestResponse.class)
             .assertStatus(HttpURLConnection.HTTP_OK)
             .as(JsonResponse.class)
             .json()
             .readObject()
             .getString("status");
+    }
+
+    @Override
+    public Repositories repositories() {
+        return new RtRepositories(this.req);
     }
 
 }

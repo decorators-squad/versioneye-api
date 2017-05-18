@@ -1,0 +1,164 @@
+{
+  "repos": [
+    {
+      "name": "Compiler",
+      "fullname": "SabraTech/Compiler",
+      "language": "c++",
+      "owner_login": "SabraTech",
+      "owner_type": "team",
+      "description": "A Syntax Directed Translation Scheme to convert Java code to Java bytecode.",
+      "private": false,
+      "fork": false,
+      "branches": null
+    },
+    {
+      "name": "OnlineBookStore",
+      "fullname": "sherif98/OnlineBookStore",
+      "language": "java",
+      "owner_login": "sherif98",
+      "owner_type": "team",
+      "description": "Database system to support the operations of a simplified online bookstore.",
+      "private": false,
+      "fork": false,
+      "branches": null
+    },
+    {
+      "name": "camel",
+      "fullname": "SherifWaly/camel",
+      "language": "java",
+      "owner_login": "SherifWaly",
+      "owner_type": "user",
+      "description": "YAML for Java. A user-friendly OOP library.",
+      "private": false,
+      "fork": true,
+      "branches": null
+    },
+    {
+      "name": "charles",
+      "fullname": "SherifWaly/charles",
+      "language": "java",
+      "owner_login": "SherifWaly",
+      "owner_type": "user",
+      "description": "Java web crawling library",
+      "private": false,
+      "fork": true,
+      "branches": null
+    },
+    {
+      "name": "charles-rest",
+      "fullname": "SherifWaly/charles-rest",
+      "language": "java",
+      "owner_login": "SherifWaly",
+      "owner_type": "user",
+      "description": "Github chatbot and web-content indexer/searcher",
+      "private": false,
+      "fork": true,
+      "branches": null
+    },
+    {
+      "name": "Data-Structures",
+      "fullname": "SherifWaly/Data-Structures",
+      "language": "java",
+      "owner_login": "SherifWaly",
+      "owner_type": "user",
+      "description": null,
+      "private": false,
+      "fork": false,
+      "branches": null
+    },
+    {
+      "name": "google-interview-university",
+      "fullname": "SherifWaly/google-interview-university",
+      "language": "",
+      "owner_login": "SherifWaly",
+      "owner_type": "user",
+      "description": "A complete computer science study plan to become a software engineer.",
+      "private": false,
+      "fork": true,
+      "branches": null
+    },
+    {
+      "name": "Machine-Learning",
+      "fullname": "SherifWaly/Machine-Learning",
+      "language": "jupyter notebook",
+      "owner_login": "SherifWaly",
+      "owner_type": "user",
+      "description": null,
+      "private": false,
+      "fork": false,
+      "branches": null
+    },
+    {
+      "name": "Paint",
+      "fullname": "SherifWaly/Paint",
+      "language": "java",
+      "owner_login": "SherifWaly",
+      "owner_type": "user",
+      "description": "Paint application with many features ",
+      "private": false,
+      "fork": false,
+      "branches": null
+    },
+    {
+      "name": "Qt-image-processor",
+      "fullname": "SherifWaly/Qt-image-processor",
+      "language": "c++",
+      "owner_login": "SherifWaly",
+      "owner_type": "user",
+      "description": null,
+      "private": false,
+      "fork": false,
+      "branches": null
+    },
+    {
+      "name": "SIC-XE-assembler",
+      "fullname": "SherifWaly/SIC-XE-assembler",
+      "language": "c++",
+      "owner_login": "SherifWaly",
+      "owner_type": "user",
+      "description": "A 2 pass assembler producing object code for the absolute loader used in the SIC/XE programming.",
+      "private": false,
+      "fork": false,
+      "branches": null
+    },
+    {
+      "name": "SignalFlowGraph",
+      "fullname": "SherifWaly/SignalFlowGraph",
+      "language": "java",
+      "owner_login": "SherifWaly",
+      "owner_type": "user",
+      "description": "GUI application to draw signal flow graphs and find transfer function of linear control systems using Mason's formula.",
+      "private": false,
+      "fork": false,
+      "branches": null
+    },
+    {
+      "name": "Strings-",
+      "fullname": "SherifWaly/Strings-",
+      "language": "c++",
+      "owner_login": "SherifWaly",
+      "owner_type": "user",
+      "description": "Implementation for several string algorithms",
+      "private": false,
+      "fork": false,
+      "branches": null
+    },
+    {
+      "name": "versioneye-api",
+      "fullname": "SherifWaly/versioneye-api",
+      "language": "java",
+      "owner_login": "SherifWaly",
+      "owner_type": "user",
+      "description": "Elegant OOP wrapper over the VersionEye API ",
+      "private": false,
+      "fork": true,
+      "branches": null
+    }
+  ],
+  "paging": {
+    "current_page": 1,
+    "per_page": 30,
+    "total_pages": 1,
+    "total_entries": 14
+  }
+}
