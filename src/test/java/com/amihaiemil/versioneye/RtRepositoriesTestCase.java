@@ -21,9 +21,10 @@ import com.jcabi.http.request.JdkRequest;
  * @author Sherif Waly (sherifwaly95@gmail.com)
  * @version $Id$
  * @since 1.0.0
+ * @todo #89:15min/DEV Add more unit tests for RtRepositories.
  */
 @SuppressWarnings("resource")
-public final class RtRepositotiesTestCase {
+public final class RtRepositoriesTestCase {
 
     /**
      * RtRepositories can fetch repositories.

@@ -34,9 +34,7 @@ import java.io.IOException;
  * @author Sherif Waly (sherifwaly95@gmail.com)
  * @version $Id$
  * @since 1.0.0
- * @todo #81:30min/DEV Complete Github API methods and move fetch/paging to a
- *  repositories interface. You can also filter repositories
- *  by orga_name, prog. language, etc.
+ * @todo #89:30min/DEV Complete Github API methods.
  */
 public interface Github {
 
