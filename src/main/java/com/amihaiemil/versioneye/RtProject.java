@@ -27,12 +27,16 @@
  */
 package com.amihaiemil.versioneye;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.json.JsonArray;
 import javax.json.JsonObject;
+
 import com.jcabi.http.Request;
+import com.jcabi.http.response.RestResponse;
 
 /**
  * Real implementation of {@link Project}.
@@ -64,7 +68,7 @@ final class RtProject implements Project {
      * @param project This project as Json.
      */
     RtProject(final Request req, final Team team, final JsonObject project){
-        this.req = req;
+        this.req = req.uri().path(project.getString("ids", "")).back();
         this.team = team;
         this.project = project;
     }
@@ -77,6 +81,12 @@ final class RtProject implements Project {
     @Override
     public Organization organization() {
         return this.team.organization();
+    }
+
+    @Override
+    public void delete() throws IOException {
+        this.req.method("DELETE").fetch().as(RestResponse.class)
+            .assertStatus(HttpURLConnection.HTTP_NO_CONTENT);
     }
 
     @Override

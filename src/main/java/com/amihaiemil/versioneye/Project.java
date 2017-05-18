@@ -27,6 +27,7 @@
  */
 package com.amihaiemil.versioneye;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.json.JsonObject;
@@ -154,4 +155,10 @@ public interface Project {
      * @return Organization.
      */
     Organization organization();
+    
+    /**
+     * Delete this project from VersionEye.
+     * @throws IOException If something goes wrong with the HTTP call.
+     */
+    void delete() throws IOException;
 }

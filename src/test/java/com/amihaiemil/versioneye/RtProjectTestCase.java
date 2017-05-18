@@ -27,13 +27,23 @@
  */
 package com.amihaiemil.versioneye;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+
 import javax.json.Json;
 import javax.json.JsonObject;
+
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.mockito.Mockito;
+
+import com.jcabi.http.mock.MkAnswer;
+import com.jcabi.http.mock.MkContainer;
+import com.jcabi.http.mock.MkGrizzlyContainer;
+import com.jcabi.http.mock.MkQuery;
 import com.jcabi.http.request.FakeRequest;
+import com.jcabi.http.request.JdkRequest;
 
 /**
  * Unit tests for {@link RtProject}.
@@ -42,6 +52,7 @@ import com.jcabi.http.request.FakeRequest;
  * @since 1.0.0
  *
  */
+@SuppressWarnings("resource")
 public final class RtProjectTestCase {
     
     /**
@@ -267,6 +278,30 @@ public final class RtProjectTestCase {
         MatcherAssert.assertThat(
             project.json(),
             Matchers.equalTo(json)
+        );
+    }
+
+    /**
+     * RtProject can delete the project from the VersionEye server.
+     * @throws IOException If something goes wrong.
+     */
+    @Test
+    public void deletesProject() throws IOException {
+        final MkContainer container = new MkGrizzlyContainer().next(
+            new MkAnswer.Simple(HttpURLConnection.HTTP_NO_CONTENT)
+        ).start();
+        final Project project = new RtProject(
+            new JdkRequest(container.home()),
+            Mockito.mock(Team.class),
+            Json.createObjectBuilder().add("ids", "project123").build()
+        );
+        project.delete();
+        final MkQuery request = container.take();
+        MatcherAssert.assertThat(
+            request.method(), Matchers.equalTo("DELETE")
+        );
+        MatcherAssert.assertThat(
+            request.uri().toString(), Matchers.equalTo("/project123")
         );
     }
 }

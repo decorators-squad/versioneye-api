@@ -53,6 +53,7 @@ import com.jcabi.http.request.JdkRequest;
  * @since 1.0.0
  *
  */
+@SuppressWarnings("resource")
 public final class RtProjectsTestCase {
     
     /**
@@ -60,7 +61,6 @@ public final class RtProjectsTestCase {
      * @throws IOException If something goes wrong with the HTTP call.
      */
     @Test
-    @SuppressWarnings("resource")
     public void fetchesTeamsProjects() throws IOException {
         final MkContainer container = new MkGrizzlyContainer().next(
             new MkAnswer.Simple(
