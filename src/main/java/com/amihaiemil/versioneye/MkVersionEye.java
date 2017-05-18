@@ -94,7 +94,7 @@ public final class MkVersionEye implements VersionEye {
 
     @Override
     public VersionEye trusted() throws IOException {
-        return null;
+        return this;
     }
 
     @Override
