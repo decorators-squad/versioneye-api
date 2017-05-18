@@ -27,6 +27,7 @@
  */
 package com.amihaiemil.versioneye;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -161,4 +162,16 @@ public interface Project {
      * @throws IOException If something goes wrong with the HTTP call.
      */
     void delete() throws IOException;
+    
+    /**
+     * Update this project with the specified project file.<br><br>
+     * <b>Warning</b> This method will not work until this the ticket
+     * https://github.com/jcabi/jcabi-http/issues/164 is resolved and a new
+     * version of jcabi-http is released.
+     * @param projectFile The file describing this project (e.g. Maven pom.xml).
+     * @throws IOException If something goes wrong with the HTTP call.
+     * @return The updated Project.
+     */
+    @Deprecated
+    Project update(File projectFile) throws IOException;
 }

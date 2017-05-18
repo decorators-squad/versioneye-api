@@ -27,15 +27,15 @@
  */
 package com.amihaiemil.versioneye;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.json.JsonArray;
 import javax.json.JsonObject;
-
 import com.jcabi.http.Request;
+import com.jcabi.http.response.JsonResponse;
 import com.jcabi.http.response.RestResponse;
 
 /**
@@ -68,7 +68,7 @@ final class RtProject implements Project {
      * @param project This project as Json.
      */
     RtProject(final Request req, final Team team, final JsonObject project){
-        this.req = req.uri().path(project.getString("ids", "")).back();
+        this.req = req;
         this.team = team;
         this.project = project;
     }
@@ -85,8 +85,23 @@ final class RtProject implements Project {
 
     @Override
     public void delete() throws IOException {
-        this.req.method("DELETE").fetch().as(RestResponse.class)
+        this.req.uri().path(this.project.getString("ids", ""))
+            .back().method("DELETE").fetch().as(RestResponse.class)
             .assertStatus(HttpURLConnection.HTTP_NO_CONTENT);
+    }
+
+    @Override
+    public Project update(final File projectFile) throws IOException {
+        return new RtProject(
+            this.req, this.team,
+            this.req.uri().path(this.project.getString("ids", "")).back()
+                .method("POST").multipartBody()
+                .formParam("project_file", projectFile).back()
+                .fetch().as(RestResponse.class)
+                .assertStatus(HttpURLConnection.HTTP_CREATED)
+                .as(JsonResponse.class)
+                .json().readObject()
+        );
     }
 
     @Override

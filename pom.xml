@@ -39,7 +39,7 @@
 		<dependency>
 			<groupId>com.jcabi</groupId>
 			<artifactId>jcabi-http</artifactId>
-			<version>1.16</version>
+			<version>1.17</version>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
