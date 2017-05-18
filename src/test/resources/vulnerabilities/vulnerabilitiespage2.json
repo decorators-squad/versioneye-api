@@ -1,0 +1,90 @@
+{
+  "results": [
+    {
+      "language": "Java",
+      "prod_key": "org.apache.struts/struts2-el",
+      "name_id": "2013-2135",
+      "author": null,
+      "summary": "Apache Struts 2 arbitrary OGNL code execution via double evaluation",
+      "description": null,
+      "platform": null,
+      "osvdb": null,
+      "cve": "CVE-2013-2135",
+      "cvss_v2": null,
+      "publish_date": null,
+      "framework": null,
+      "affected_versions_string": "<=2.3.14.2,2",
+      "affected_versions": [],
+      "patched_versions_string": ">=2.3.14.3,2.3.14",
+      "unaffected_versions_string": null,
+      "links": {
+        "http://struts::apache::org/docs/s2-015::html": "http://struts.apache.org/docs/s2-015.html"
+      }
+    },
+    {
+      "language": "Java",
+      "prod_key": "org.springframework/spring-webmvc",
+      "name_id": "2014-3625",
+      "author": null,
+      "summary": "Spring Framework: directory traversal flaw",
+      "description": "Some URLs were not sanitized correctly before use allowing an attacker to obtain any file on the file system that was also accessible to process in which the Spring web application was running.\n",
+      "platform": null,
+      "osvdb": null,
+      "cve": "CVE-2014-3625",
+      "cvss_v2": "5.0",
+      "publish_date": null,
+      "framework": null,
+      "affected_versions_string": "<=3.2.11.RELEASE,3.2 && <=4.0.7.RELEASE,4.0 && <=4.1.1.RELEASE,4.1",
+      "affected_versions": [
+        "3.2.0.M1",
+        "3.2.0.BUILD",
+        "3.2.0.M2",
+        "3.2.0.RC1",
+        "3.2.0.RC2",
+        "3.2.0.RELEASE",
+        "3.2.1.RELEASE",
+        "3.2.2.RELEASE",
+        "3.2.3.RELEASE",
+        "3.2.4.RELEASE",
+        "3.2.5.RELEASE",
+        "3.2.6.RELEASE",
+        "3.2.7.RELEASE",
+        "3.2.8.RELEASE",
+        "3.2.9.RELEASE",
+        "3.2.10.RELEASE",
+        "3.2.11.RELEASE",
+        "4.0.0.M1",
+        "4.0.0.RELEASE",
+        "4.0.1.RELEASE",
+        "4.0.2.RELEASE",
+        "4.0.3.RELEASE",
+        "4.0.4.RELEASE",
+        "4.0.5.RELEASE",
+        "4.0.6.RELEASE",
+        "4.0.7.RELEASE",
+        "4.0.0.M3",
+        "4.0.0.M2",
+        "4.0.0.RC2",
+        "4.0.0.RC1",
+        "4.1.0.RELEASE",
+        "4.1.1.RELEASE",
+        "4.1.0.RC2",
+        "4.1.0.RC1"
+      ],
+      "patched_versions_string": ">=3.2.12.RELEASE,3.2 && >=4.0.8.RELEASE,4.0 && >=4.1.2.RELEASE,4.1",
+      "unaffected_versions_string": null,
+      "links": {
+        "CVE-2014-3625": "https://bugzilla.redhat.com/CVE-2014-3625",
+        "cve-2014-3625": "http://www.pivotal.io/security/cve-2014-3625",
+        "https://jira::spring::io/browse/SPR-12354": "https://jira.spring.io/browse/SPR-12354"
+      }
+    }
+  ],
+  "paging": {
+    "current_page": 2,
+    "per_page": 2,
+    "total_pages": 2,
+    "total_entries": 4
+
+  }
+}

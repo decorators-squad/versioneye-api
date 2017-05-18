@@ -33,30 +33,27 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.util.List;
-
 import org.apache.commons.io.IOUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.Test;
-
 import com.jcabi.http.mock.MkAnswer;
 import com.jcabi.http.mock.MkContainer;
 import com.jcabi.http.mock.MkGrizzlyContainer;
 import com.jcabi.http.request.JdkRequest;
 
 /**
- * Unit tests for {@link CommentsPage}. A user's comments from versioneye
- * are well paginated and can be iterated.
+ * Unit tests for {@link VulnerabilitiesPage}.
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
  *
  */
 @SuppressWarnings("resource")
-public final class CommentsPageTestCase {
-    
+public final class VulnerabilitiesPageTestCase {
+
     /**
-     * CommentsPage can return the first page of comments.
+     * VulnerabilitiesPage can return the first page of comments.
      * @throws Exception If something goes wrong.
      */
     @Test
@@ -65,26 +62,18 @@ public final class CommentsPageTestCase {
         final VersionEye versionEye = new RtVersionEye(
             new JdkRequest(container.home())
         );
-        List<Comment> first = versionEye.users().user("amihaiemil").comments()
-            .paginated().fetch();
+        List<Vulnerability> first = versionEye.security().paginated("Java")
+            .fetch();
         MatcherAssert.assertThat(first.size(), Matchers.is(2));
         MatcherAssert.assertThat(
-            first.get(0).id(),
-            Matchers.equalTo("58f9b08ed797b2000e28d24e232323")
-        );
-        MatcherAssert.assertThat(
-            first.get(1).id(),
-            Matchers.equalTo("yurtuyrtuuyeprwiefwefpn")
-        );
-        MatcherAssert.assertThat(
             container.take().uri().toString(),
-            Matchers.equalTo("/users/amihaiemil/comments?page=1")
+            Matchers.equalTo("/security?language=Java&page=1")
         );
         
     }
     
     /**
-     * CommentsPage can iterate over all the comments.
+     * VulnerabilitiesPage can iterate over all the comments.
      * @throws Exception If something goes wrong.
      */
     @Test
@@ -94,38 +83,34 @@ public final class CommentsPageTestCase {
             new JdkRequest(container.home())
         );
         int pages = 0;
-        for (final Page<Comment> page
-            : versionEye.users().user("amihaiemil").comments().paginated()
+        for (final Page<Vulnerability> page
+            : versionEye.security().paginated("Java")
         ){
             MatcherAssert.assertThat(
                 page.fetch().size(), Matchers.is(2)
             );
             pages++;
         }
-        MatcherAssert.assertThat(pages, Matchers.is(3));
+        MatcherAssert.assertThat(pages, Matchers.is(2));
         MatcherAssert.assertThat(
             container.take().uri().toString(),
-            Matchers.equalTo("/users/amihaiemil/comments?page=1")
+            Matchers.equalTo("/security?page=1")
         );
         MatcherAssert.assertThat(
             container.take().uri().toString(),
-            Matchers.equalTo("/users/amihaiemil/comments?page=1")
+            Matchers.equalTo("/security?language=Java&page=1")
         );
         MatcherAssert.assertThat(
             container.take().uri().toString(),
-            Matchers.equalTo("/users/amihaiemil/comments?page=2")
+            Matchers.equalTo("/security?page=2")
         );
         MatcherAssert.assertThat(
             container.take().uri().toString(),
-            Matchers.equalTo("/users/amihaiemil/comments?page=2")
+            Matchers.equalTo("/security?language=Java&page=2")
         );
         MatcherAssert.assertThat(
             container.take().uri().toString(),
-            Matchers.equalTo("/users/amihaiemil/comments?page=3")
-        );
-        MatcherAssert.assertThat(
-            container.take().uri().toString(),
-            Matchers.equalTo("/users/amihaiemil/comments?page=3")
+            Matchers.equalTo("/security?page=3")
         );
     }
     
@@ -135,41 +120,26 @@ public final class CommentsPageTestCase {
      * @throws IOException If something goes wrong.
      */
     private MkContainer mockVersionEyeComments() throws IOException {
+        final String firstPage = this.readResource(
+            "vulnerabilities/vulnerabilitiespage1.json"
+        );
+        final String secondPage = this.readResource(
+            "vulnerabilities/vulnerabilitiespage2.json"
+        );
+        final String thirdPage = this.readResource(
+            "vulnerabilities/vulnerabilitiespage3.json"
+        );
+        
         return new MkGrizzlyContainer().next(
-            new MkAnswer.Simple(
-                HttpURLConnection.HTTP_OK,
-                this.readResource("commentspage1.json")
-            )
+            new MkAnswer.Simple(HttpURLConnection.HTTP_OK, firstPage)
         ).next(
-            new MkAnswer.Simple(
-                HttpURLConnection.HTTP_OK,
-                this.readResource("commentspage1.json")
-            )
+            new MkAnswer.Simple(HttpURLConnection.HTTP_OK, firstPage)
         ).next(
-            new MkAnswer.Simple(
-                HttpURLConnection.HTTP_OK,
-                this.readResource("commentspage2.json")
-            )
+            new MkAnswer.Simple(HttpURLConnection.HTTP_OK, secondPage)
         ).next(
-            new MkAnswer.Simple(
-                HttpURLConnection.HTTP_OK,
-                this.readResource("commentspage2.json")
-            )
+            new MkAnswer.Simple(HttpURLConnection.HTTP_OK, secondPage)
         ).next(
-             new MkAnswer.Simple(
-                HttpURLConnection.HTTP_OK,
-                this.readResource("commentspage3.json")
-            )
-        ).next(
-            new MkAnswer.Simple(
-                HttpURLConnection.HTTP_OK,
-                this.readResource("commentspage3.json")
-             )
-        ).next(
-            new MkAnswer.Simple(
-                HttpURLConnection.HTTP_OK,
-                this.readResource("commentspage4.json")
-            )
+            new MkAnswer.Simple(HttpURLConnection.HTTP_OK, thirdPage)
         );
     }
     

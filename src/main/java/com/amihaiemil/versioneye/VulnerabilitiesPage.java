@@ -36,9 +36,6 @@ import java.util.List;
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
- * @todo #83:30min/DEV Unit test this class, similar to how
- *  CommentsPage and FavoritesPage are tested.
- *
  */
 final class VulnerabilitiesPage implements Page<Vulnerability> {
 
@@ -125,6 +122,7 @@ final class VulnerabilitiesPage implements Page<Vulnerability> {
             final Security vulnerabilities, final String language
         ) {
             this.vulnerabilities = vulnerabilities;
+            this.language = language;
         }
         
         @Override

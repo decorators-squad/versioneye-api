@@ -1,0 +1,54 @@
+{
+  "results": [
+    {
+      "language": "Java",
+      "prod_key": "org.jruby/jruby",
+      "name_id": "2013-0269",
+      "author": null,
+      "summary": "rubygem-json: Denial of Service and SQL Injection",
+      "description": null,
+      "platform": null,
+      "osvdb": null,
+      "cve": "CVE-2013-0269",
+      "cvss_v2": "7.5",
+      "publish_date": null,
+      "framework": null,
+      "affected_versions_string": "==1.7.2",
+      "affected_versions": [
+        "1.7.2"
+      ],
+      "patched_versions_string": "",
+      "unaffected_versions_string": null,
+      "links": {
+        "CVE-2013-0269": "https://bugzilla.redhat.com/show_bug.cgi?id=CVE-2013-0269"
+      }
+    },
+    {
+      "language": "Java",
+      "prod_key": "org.jruby/jruby",
+      "name_id": "2013-1821",
+      "author": null,
+      "summary": "ruby: entity expansion DoS vulnerability in REXML",
+      "description": null,
+      "platform": null,
+      "osvdb": null,
+      "cve": "CVE-2013-1821",
+      "cvss_v2": "4.3",
+      "publish_date": null,
+      "framework": null,
+      "affected_versions_string": "==1.7.2",
+      "affected_versions": [
+        "1.7.2"
+      ],
+      "patched_versions_string": "",
+      "unaffected_versions_string": null,
+      "links": {}
+    }
+  ],
+  "paging": {
+    "current_page": 1,
+    "per_page": 2,
+    "total_pages": 2,
+    "total_entries": 4
+  }
+}
