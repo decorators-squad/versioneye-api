@@ -28,46 +28,26 @@
 package com.amihaiemil.versioneye;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * VersionEye Github API. 
  * @author Sherif Waly (sherifwaly95@gmail.com)
  * @version $Id$
  * @since 1.0.0
- * @todo #81:30min/DEV Complete Github API methods and move fetch/paging to a
- *  repositories interface. You can also filter repositories
- *  by orga_name, prog. language, etc.
+ * @todo #89:30min/DEV Complete Github API methods.
  */
 public interface Github {
 
-    /**
-     * Fetch the repositories from a given page.
-     * @param page Page number.
-     * @return List of Repository.
-     * @throws IOException If there is something wrong with the HTTP call.
-     */
-    List<Repository> fetch(final int page) throws IOException;
-    
-    /**
-     * Fetch informations about given page.
-     * @param page Page number.
-     * @return Paging.
-     * @throws IOException If there is something wrong with the HTTP call.
-     */
-    Paging paging(final int page) throws IOException;
-    
-    /**
-     * Paginated repositories.
-     * @return Page which can be iterated,
-     *  each element representing a page of repositories.
-     */
-    Page<Repository> paginated();
-    
     /**
      * Re-imports all github repositories.
      * @return String "running" or "done".
      * @throws IOException If there is something wrong with the HTTP call.
      */
     String sync() throws IOException;
+    
+    /**
+     * The Github repositories.
+     * @return Repositories.
+     */
+    Repositories repositories();
 }

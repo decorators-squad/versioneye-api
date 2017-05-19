@@ -28,48 +28,71 @@
 package com.amihaiemil.versioneye;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
-
-import com.jcabi.http.Request;
-import com.jcabi.http.response.JsonResponse;
-import com.jcabi.http.response.RestResponse;
+import java.util.List;
 
 /**
- * Real implementation of {@link Github}.
+ * Github repositories.
  * @author Sherif Waly (sherifwaly95@gmail.com)
  * @version $Id$
  * @since 1.0.0
- * @todo #81:30min/DEV Unit test this class.
  */
-final class RtGithub implements Github {
-
-    /**
-     * HTTP request.
-     */
-    private Request req;
+public interface Repositories {
     
     /**
-     * Ctor.
-     * @param entry HTTP request.
+     * Fetch the repositories from a given page.
+     * @param page Page number.
+     * @return List of Repository.
+     * @throws IOException If there is something wrong with the HTTP call.
      */
-    RtGithub(final Request entry) {
-        this.req = entry.uri().path("/github").back();
-    }
-
-    @Override
-    public String sync() throws IOException {
-        return this.req.uri().path("/sync").back().fetch()
-            .as(RestResponse.class)
-            .assertStatus(HttpURLConnection.HTTP_OK)
-            .as(JsonResponse.class)
-            .json()
-            .readObject()
-            .getString("status");
-    }
-
-    @Override
-    public Repositories repositories() {
-        return new RtRepositories(this.req);
-    }
-
+    List<Repository> fetch(final int page) throws IOException;
+    
+    /**
+     * Fetch informations about given page.
+     * @param page Page number.
+     * @return Paging.
+     * @throws IOException If there is something wrong with the HTTP call.
+     */
+    Paging paging(final int page) throws IOException;
+    
+    /**
+     * Paginated repositories.
+     * @return Page which can be iterated,
+     *  each element representing a page of repositories.
+     */
+    Page<Repository> paginated();
+    
+    /**
+     * Filter by language.
+     * @param language String
+     * @return Repositories this repositories.
+     */
+    Repositories language(String language);
+    
+    /**
+     * Filter by privacy.
+     * @param isPrivate Boolean
+     * @return Repositories this repositories.
+     */
+    Repositories isPrivate(boolean isPrivate);
+    
+    /**
+     * Filter by organization name.
+     * @param organizationName String
+     * @return Repositories this repositories.
+     */
+    Repositories organizationName(String organizationName);
+    
+    /**
+     * Filter by organization type.
+     * @param organizationType String
+     * @return Repositories this repositories.
+     */
+    Repositories organizationType(String organizationType);
+    
+    /**
+     * Filter by only imported.
+     * @param onlyImported Boolean
+     * @return Repositories this repositories.
+     */
+    Repositories onlyImported(boolean onlyImported);
 }
