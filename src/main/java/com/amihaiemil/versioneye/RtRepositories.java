@@ -43,6 +43,8 @@ import com.jcabi.http.response.RestResponse;
  * @author Sherif Waly (sherifwaly95@gmail.com)
  * @version $Id$
  * @since 1.0.0
+ * @todo #89:30min/DEV Refactor code to make the class immutable 
+ *  and add more unit tests.
  */
 final class RtRepositories implements Repositories {
 
