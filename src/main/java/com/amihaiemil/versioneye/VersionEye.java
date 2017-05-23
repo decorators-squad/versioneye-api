@@ -72,6 +72,12 @@ public interface VersionEye {
     VersionEye trusted() throws IOException;
     
     /**
+     * Github api.
+     * @return Github.
+     */
+    Github github();
+    
+    /**
      * Security api.
      * @return Security.
      */

@@ -104,6 +104,11 @@ public final class RtVersionEye implements VersionEye {
     }
 
     @Override
+    public Github github() {
+        return new RtGithub(this.entry);
+    }
+    
+    @Override
     public Security security() {
         return new RtSecurity(this.entry);
     }

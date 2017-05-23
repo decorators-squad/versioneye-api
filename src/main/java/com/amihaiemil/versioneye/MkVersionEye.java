@@ -125,6 +125,11 @@ public final class MkVersionEye implements VersionEye {
     }
 
     @Override
+    public Github github() {
+        return null;
+    }
+    
+    @Override
     public Security security() {
         return null;
     }

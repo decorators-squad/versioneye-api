@@ -43,8 +43,6 @@ import com.jcabi.http.response.RestResponse;
  * @author Sherif Waly (sherifwaly95@gmail.com)
  * @version $Id$
  * @since 1.0.0
- * @todo #89:30min/DEV Refactor code to make the class immutable 
- *  and add more unit tests.
  */
 final class RtRepositories implements Repositories {
 
@@ -101,41 +99,44 @@ final class RtRepositories implements Repositories {
 
     @Override
     public Repositories language(final String language) {
-        this.req = this.req.uri()
-            .queryParam("lang", language)
-            .back();
-        return this;
+        return new RtRepositories(
+            this.req.uri().queryParam("lang", language).back()
+        );
     }
 
     @Override
     public Repositories isPrivate(final boolean isPrivate) {
-        this.req = this.req.uri()
-            .queryParam("private", String.valueOf(isPrivate))
-            .back();
-        return this;
+        return new RtRepositories(
+            this.req.uri()
+                .queryParam("private", String.valueOf(isPrivate))
+                .back()
+        );
     }
 
     @Override
     public Repositories organizationName(final String organizationName) {
-        this.req = this.req.uri()
-            .queryParam("orga_name", organizationName)
-            .back();
-        return this;
+        return new RtRepositories(
+            this.req.uri()
+                .queryParam("orga_name", organizationName)
+                .back()
+        );
     }
 
     @Override
     public Repositories organizationType(final String organizationType) {
-        this.req = this.req.uri()
-            .queryParam("orga_type", organizationType)
-            .back();
-        return this;
+        return new RtRepositories(
+            this.req.uri()
+                .queryParam("orga_type", organizationType)
+                .back()
+        );
     }
 
     @Override
     public Repositories onlyImported(final boolean onlyImported) {
-        this.req = this.req.uri()
-            .queryParam("only_imported", String.valueOf(onlyImported))
-            .back();
-        return this;
+        return new RtRepositories(
+            this.req.uri()
+                .queryParam("only_imported", String.valueOf(onlyImported))
+                .back()
+        );
     }
 }
