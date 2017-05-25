@@ -27,6 +27,7 @@
  */
 package com.amihaiemil.versioneye;
 
+import java.util.List;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -66,11 +67,67 @@ public final class RtRepositoriesTestCase {
                 this.readResource("repositoriespage1.json")
             )
         ).start();  
+        
+        final List<Repository> repositories = 
+            new RtRepositories(new JdkRequest(container.home())).fetch(1);
   
         MatcherAssert.assertThat(
-            new RtRepositories(new JdkRequest(container.home()))
-                .fetch(1).size(),
+            repositories.size(),
             Matchers.is(14)
+        );
+        
+        Repository repository = repositories.get(2);
+        
+        MatcherAssert.assertThat(
+            repository.name(),
+            Matchers.is("camel")
+        );
+        MatcherAssert.assertThat(
+            repository.fullname(),
+            Matchers.is("SherifWaly/camel")
+        );
+        MatcherAssert.assertThat(
+            repository.language(),
+            Matchers.is("java")
+        );
+        MatcherAssert.assertThat(
+            repository.ownerLogin(),
+            Matchers.is("SherifWaly")
+        );
+        MatcherAssert.assertThat(
+            repository.ownerType(),
+            Matchers.is("user")
+        );
+        MatcherAssert.assertThat(
+            repository.description(),
+            Matchers.is("YAML for Java. A user-friendly OOP library.")
+        );
+        MatcherAssert.assertThat(
+            repository.isPrivate(),
+            Matchers.is(false)
+        );
+        MatcherAssert.assertThat(
+            repository.fork(),
+            Matchers.is(true)
+        );
+        MatcherAssert.assertThat(
+            repository.branches().size(),
+            Matchers.is(0)
+        );
+        
+        repository = repositories.get(11);
+        
+        MatcherAssert.assertThat(
+            repository.branches().size(),
+            Matchers.is(2)
+        );
+        MatcherAssert.assertThat(
+            repository.branches().get(0),
+            Matchers.is("TEST")
+        );
+        MatcherAssert.assertThat(
+            repository.json().getString("name"),
+            Matchers.is("SignalFlowGraph")
         );
     }
 

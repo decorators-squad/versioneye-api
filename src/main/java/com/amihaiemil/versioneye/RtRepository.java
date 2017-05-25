@@ -27,6 +27,10 @@
  */
 package com.amihaiemil.versioneye;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.json.JsonArray;
 import javax.json.JsonObject;
 
 /**
@@ -49,5 +53,64 @@ final class RtRepository implements Repository {
      */
     RtRepository(final JsonObject repository) {
         this.repository = repository;
+    }
+
+    @Override
+    public String name() {
+        return this.repository.getString("name");
+    }
+    
+    @Override
+    public String fullname() {
+        return this.repository.getString("fullname");
+    }
+
+    @Override
+    public String language() {
+        return this.repository.getString("language");
+    }
+
+    @Override
+    public String ownerLogin() {
+        return this.repository.getString("owner_login");
+    }
+
+    @Override
+    public String ownerType() {
+        return this.repository.getString("owner_type");
+    }
+
+    @Override
+    public String description() {
+        return this.repository.getString("description");
+    }
+
+    @Override
+    public boolean isPrivate() {
+        return this.repository.getBoolean("private");
+    }
+
+    @Override
+    public boolean fork() {
+        return this.repository.getBoolean("fork");
+    }
+
+    @Override
+    public List<String> branches() {
+        List<String> branches = new ArrayList<String>();
+        try {
+            final JsonArray jsonBranches =
+                this.repository.getJsonArray("branches");
+            for(int i = 0; i < jsonBranches.size(); i++) {
+                branches.add(jsonBranches.getString(i));
+            }
+        } catch(final ClassCastException castException) {
+        }
+        return branches;
+    }
+
+    @Override
+    public JsonObject json() {
+        return this.repository;
     }
 }

@@ -27,14 +27,75 @@
  */
 package com.amihaiemil.versioneye;
 
+import java.util.List;
+
+import javax.json.JsonObject;
+
 /**
  * Github repository.
  * @author Sherif Waly (sherifwaly95@gmail.com)
  * @version $Id$
  * @since 1.0.0
- * @todo #81:30min/DEV Complete implementations and unit tests for 
- *  RtRepository.
  */
 public interface Repository {
 
+    /**
+     * The repository's name.
+     * @return String
+     */
+    String name();
+    
+    /**
+     * The repository's fullname.
+     * @return String
+     */
+    String fullname();
+    
+    /**
+     * The repository's language.
+     * @return String
+     */
+    String language();
+    
+    /**
+     * The repository's owner login.
+     * @return String
+     */
+    String ownerLogin();
+    
+    /**
+     * The repository's owner type.
+     * @return String
+     */
+    String ownerType();
+    
+    /**
+     * The repository's description.
+     * @return String
+     */
+    String description();
+    
+    /**
+     * Whether repository is private or not.
+     * @return Boolean
+     */
+    boolean isPrivate();
+    
+    /**
+     * Whether repository is a fork or not?
+     * @return Boolean
+     */
+    boolean fork();
+    
+    /**
+     * The repository's branches.
+     * @return List of branches
+     */
+    List<String> branches();
+    
+    /**
+     * The repository as JsonObject.
+     * @return JsonObject
+     */
+    JsonObject json();
 }
