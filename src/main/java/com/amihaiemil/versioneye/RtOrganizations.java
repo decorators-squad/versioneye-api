@@ -52,17 +52,18 @@ final class RtOrganizations implements Organizations {
     private Request req;
     
     /**
-     * Initial HTTP request, the API's entry point.
+     * Original RtVersionEye.
      */
-    private Request entry;
+    private RtVersionEye versionEye;
 
     /**
      * Ctor.
-     * @param entry HTTP Request.
+     * @param versionEye The original RtVersionEye.
      */
-    RtOrganizations(final Request entry) {
-        this.entry = entry;
-        this.req = entry.uri().path("/organisations").back();
+    RtOrganizations(final RtVersionEye versionEye) {
+        this.versionEye = versionEye;
+        this.req = this.versionEye.request()
+            .uri().path("/organisations").back();
     }
     
     @Override
@@ -102,7 +103,7 @@ final class RtOrganizations implements Organizations {
         for(int idx=0; idx<orgs.size(); idx++) {
             organizations.add(
                 new RtOrganization(
-                    orgs.getJsonObject(idx), this.req, this.entry
+                    orgs.getJsonObject(idx), this.req, this.versionEye
                 )
             );
         }

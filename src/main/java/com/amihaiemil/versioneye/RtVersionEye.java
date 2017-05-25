@@ -38,6 +38,7 @@ import com.jcabi.http.wire.TrustedWire;
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
+ * @todo #103:30min/DEV Implement versionEye() method for Team, Projects, etc.
  */
 public final class RtVersionEye implements VersionEye {
 
@@ -100,7 +101,7 @@ public final class RtVersionEye implements VersionEye {
 
     @Override
     public Organizations organizations() {
-        return new RtOrganizations(this.entry);
+        return new RtOrganizations(this);
     }
 
     @Override
@@ -111,6 +112,14 @@ public final class RtVersionEye implements VersionEye {
     @Override
     public Security security() {
         return new RtSecurity(this.entry);
+    }
+    
+    /**
+     * Entry request.
+     * @return Request entry request.
+     */
+    Request request() {
+        return this.entry;
     }
    
 }

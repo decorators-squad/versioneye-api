@@ -43,7 +43,6 @@ import org.mockito.Mockito;
 import com.jcabi.http.mock.MkAnswer;
 import com.jcabi.http.mock.MkContainer;
 import com.jcabi.http.mock.MkGrizzlyContainer;
-import com.jcabi.http.request.FakeRequest;
 import com.jcabi.http.request.JdkRequest;
 
 /**
@@ -69,6 +68,9 @@ public final class RtProjectsTestCase {
             )
         ).start();
 
+        final RtVersionEye versionEye =
+            new RtVersionEye(new JdkRequest(container.home()));
+        
         final Organization fakeOrga = Mockito.mock(Organization.class);
         Mockito.when(fakeOrga.name()).thenReturn("amihaiemil_orga");
         Mockito.when(fakeOrga.apiKey()).thenReturn("123orgakey");
@@ -78,7 +80,7 @@ public final class RtProjectsTestCase {
         Mockito.when(fakeTeam.organization()).thenReturn(fakeOrga);
         
         final Projects projects = new RtProjects(
-            new JdkRequest(container.home()), fakeTeam
+            versionEye, fakeTeam
         );
         final List<Project> fetched = projects.fetch();
         MatcherAssert.assertThat(fetched.size(), Matchers.greaterThan(0));
@@ -109,7 +111,7 @@ public final class RtProjectsTestCase {
         Mockito.when(fakeTeam.organization()).thenReturn(fakeOrga);
         
         final Projects projects = new RtProjects(
-            new FakeRequest(), fakeTeam
+            new RtVersionEye(), fakeTeam
         );
         MatcherAssert.assertThat(
             projects.team().name(),

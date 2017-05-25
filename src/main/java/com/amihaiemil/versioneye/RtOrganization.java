@@ -50,28 +50,28 @@ final class RtOrganization implements Organization {
     private Request req;
     
     /**
-     * API entry point.
+     * Original RtVersionEye.
      */
-    private Request entry;
+    private RtVersionEye versionEye;
     
     /**
      * Ctor.
      * @param organization Json organization as returned by API. 
      * @param req HTTP request for Organization.
-     * @param entry Initial HTTP request, entry point of the API.
+     * @param versionEye The original RtVersionEye
      */
     RtOrganization(
         final JsonObject organization, final Request req,
-        final Request entry
+        final RtVersionEye versionEye
     ) {
         this.organization = organization;
         this.req = req.uri().path(organization.getString("name")).back();
-        this.entry = entry;
+        this.versionEye = versionEye;
     }
 
     @Override
     public Teams teams() {
-        return new RtTeams(this.entry, this.req, this);
+        return new RtTeams(this.versionEye, this.req, this);
     }
 
     @Override

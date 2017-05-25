@@ -58,11 +58,11 @@ final class RtProjects implements Projects {
     
     /**
      * Ctor.
-     * @param req Request for /projects.
+     * @param versionEye The original RtVersionEye.
      * @param team Team responsible for these projects;
      */
-    RtProjects(final Request req, final Team team) {
-        this.req = req.uri()
+    RtProjects(final RtVersionEye versionEye, final Team team) {
+        this.req = versionEye.request().uri()
             .path("/projects")
             .queryParam("api_key", team.organization().apiKey())
             .back();

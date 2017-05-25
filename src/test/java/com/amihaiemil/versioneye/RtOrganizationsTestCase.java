@@ -66,9 +66,9 @@ public final class RtOrganizationsTestCase {
                 this.readResource("organizations.json")
             )
         ).start(); 
-        final Organizations organizations = new RtOrganizations(
+        final Organizations organizations = new RtVersionEye(
             new JdkRequest(container.home())
-        );
+        ).organizations();
         
         final List<Organization> fetched = organizations.fetch();
         
@@ -135,9 +135,9 @@ public final class RtOrganizationsTestCase {
                 this.readResource("teams.json")
             )
         ).start(); 
-        final Organizations organizations = new RtOrganizations(
+        final Organizations organizations = new RtVersionEye(
             new JdkRequest(container.home())
-        );
+        ).organizations();
         final List<Team> teams = organizations.fetch().get(0).teams().fetch();
         MatcherAssert.assertThat(
             container.take().uri().toString(),
@@ -179,9 +179,9 @@ public final class RtOrganizationsTestCase {
                 this.readResource("organizations.json")
             )
         ).start(); 
-        final Organizations organizations = new RtOrganizations(
+        final Organizations organizations = new RtVersionEye(
             new JdkRequest(container.home())
-        );
+        ).organizations();
         
         MatcherAssert.assertThat(
             organizations.organization("sherifwaly_orga").apiKey(),
@@ -202,9 +202,9 @@ public final class RtOrganizationsTestCase {
                 this.readResource("organizations.json")
             )
         ).start(); 
-        final Organizations organizations = new RtOrganizations(
+        final Organizations organizations = new RtVersionEye(
             new JdkRequest(container.home())
-        );
+        ).organizations();
             
         organizations.organization("invalid_orga");
     }
