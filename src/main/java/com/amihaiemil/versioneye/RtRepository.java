@@ -105,7 +105,9 @@ final class RtRepository implements Repository {
                 branches.add(jsonBranches.getString(i));
             }
         } catch(final ClassCastException castException) {
-            throw new IllegalStateException();
+            throw new IllegalStateException(
+                "Github repository should have at least the master branch"
+            );
         }
         return branches;
     }
