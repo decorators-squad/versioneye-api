@@ -110,10 +110,6 @@ public final class RtRepositoriesTestCase {
             repository.fork(),
             Matchers.is(true)
         );
-        MatcherAssert.assertThat(
-            repository.branches().size(),
-            Matchers.is(0)
-        );
         
         repository = repositories.get(11);
         
@@ -131,6 +127,25 @@ public final class RtRepositoriesTestCase {
         );
     }
 
+    /**
+     * A repository with null branches throws IllegalStateException.
+     * @throws IOException If something happens wrong with request.
+     */
+    @Test(expected = IllegalStateException.class)
+    public void emptyBranchesThrowsException() throws IOException {
+        final MkContainer container = new MkGrizzlyContainer().next(
+            new MkAnswer.Simple(
+                HttpURLConnection.HTTP_OK,
+                this.readResource("repositoriespage1.json")
+            )
+        ).start();  
+            
+        final List<Repository> repositories = 
+            new RtRepositories(new JdkRequest(container.home())).fetch(1);
+            
+        repositories.get(2).branches();
+    }
+    
     /**
      * RtRepositories can add filters to the fetch request.
      * @throws IOException If something goes wrong.

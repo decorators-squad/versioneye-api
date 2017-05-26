@@ -105,6 +105,7 @@ final class RtRepository implements Repository {
                 branches.add(jsonBranches.getString(i));
             }
         } catch(final ClassCastException castException) {
+            throw new IllegalStateException();
         }
         return branches;
     }

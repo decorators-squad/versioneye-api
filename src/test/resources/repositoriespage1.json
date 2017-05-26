@@ -20,7 +20,9 @@
       "description": "Database system to support the operations of a simplified online bookstore.",
       "private": false,
       "fork": false,
-      "branches": null
+      "branches": [
+        "master"
+      ]
     },
     {
       "name": "camel",
@@ -86,7 +88,9 @@
       "description": null,
       "private": false,
       "fork": false,
-      "branches": null
+      "branches": [
+        "master"
+      ]
     },
     {
       "name": "Paint",
@@ -155,7 +159,11 @@
       "description": "Elegant OOP wrapper over the VersionEye API ",
       "private": false,
       "fork": true,
-      "branches": null
+      "branches": [
+        "68",
+        "master",
+        "#88"
+      ]
     }
   ],
   "paging": {
