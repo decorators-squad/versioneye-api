@@ -28,24 +28,30 @@
 package com.amihaiemil.versioneye;
 
 /**
- * Users API.
+ * User sign-up form.
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
- *
  */
-public interface Users {
+public interface NewUser extends UserData {
+
+    /**
+     * Specify the user's full name.
+     * @param fullName Given full name.
+     * @return SignUpForm.
+     */
+    NewUser fullName(final String fullName);
     
     /**
-     * Fetch a user.
-     * @param username String.
-     * @return A VersionEye user.
+     * Specify the user's username.
+     * @param username Given username.
+     * @return SignUpForm.
      */
-    User user(String username);
+    NewUser username(final String username);
     
     /**
-     * Create a new VersionEye account.
-     * @return NewUser for signup.
+     * Sign up.
+     * @return User.
      */
-    NewUser register();
+    User signUp();
 }

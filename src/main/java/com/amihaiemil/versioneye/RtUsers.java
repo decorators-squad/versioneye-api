@@ -56,4 +56,12 @@ final class RtUsers implements Users {
         return new RtUser(this.req, username);
     }
 
+    @Override
+    public NewUser register() {
+        throw new UnsupportedOperationException(
+            "Users#register() is only available in the mock version"
+            + "of the API yet"
+        );
+    }
+
 }

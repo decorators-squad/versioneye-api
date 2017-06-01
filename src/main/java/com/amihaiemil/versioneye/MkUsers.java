@@ -28,24 +28,35 @@
 package com.amihaiemil.versioneye;
 
 /**
- * Users API.
+ * Mock of VersionEye's Users API.
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
  *
  */
-public interface Users {
+final class MkUsers implements Users {
+
+    /**
+     * VersionEye server.
+     */
+    private MkServer server;
     
     /**
-     * Fetch a user.
-     * @param username String.
-     * @return A VersionEye user.
+     * Ctor.
+     * @param server VersionEye server storage.
      */
-    User user(String username);
-    
-    /**
-     * Create a new VersionEye account.
-     * @return NewUser for signup.
-     */
-    NewUser register();
+    MkUsers(final MkServer server) {
+        this.server = server;
+    }
+
+    @Override
+    public User user(final String username) {
+        return new MkUser(this.server, username);
+    }
+
+    @Override
+    public NewUser register() {
+        return new MkNewUser(this.server);
+    }
+
 }

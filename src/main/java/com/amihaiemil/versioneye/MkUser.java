@@ -1,3 +1,5 @@
+package com.amihaiemil.versioneye;
+
 /**
  * Copyright (c) 2017, Mihai Emil Andronache
  * All rights reserved.
@@ -25,24 +27,20 @@
  * OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
  * SUCH DAMAGE.
  */
-package com.amihaiemil.versioneye;
-
 import java.io.IOException;
 
 import javax.json.Json;
 import javax.json.JsonArray;
-import javax.json.JsonArrayBuilder;
-import javax.json.JsonValue;
+import javax.json.JsonObject;
 
 /**
- * Mock VersionEye for unit testing.
+ * A mock VersionEye user.
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
- * @todo #72:30min/DEV Continue implementing the mock API.
- *  Mocks for Organizations, Teams etc are needed.
+ *
  */
-public final class MkVersionEye implements VersionEye {
+final class MkUser implements User {
 
     /**
      * VersionEye server.
@@ -50,87 +48,72 @@ public final class MkVersionEye implements VersionEye {
     private MkServer server;
     
     /**
-     * Authenticated user's username.
+     * This user's username.
      */
     private String username;
     
     /**
      * Ctor.
+     * @param server VersionEye server storage.
+     * @param username The user's username.
      */
-    public MkVersionEye() {
-        this.server = new MkJsonServer();
-    }
-    
-    /**
-     * Ctor.
-     * @param authenticated Mock Authenticated User.
-     */
-    public MkVersionEye(final Authenticated authenticated) {
-        this(new MkJsonServer(), authenticated);
-    }
-    
-    /**
-     * Ctor.
-     * @param server VersionEye server storage. See {@link MkServer}
-     * @param user Mock Authenticated User.
-     */
-    public MkVersionEye(
-        final MkServer server, final Authenticated user
-    ) {
+    MkUser(final MkServer server, final String username) {
         this.server = server;
-        this.username = user.username();
-        this.authenticate(user);
-    }
-    
-    @Override
-    public Services services() {
-        return new MkServices(this.server);
+        this.username = username;
     }
 
     @Override
-    public Users users() {
-        return new MkUsers(this.server);
-    }
-
-    @Override
-    public VersionEye trusted() throws IOException {
-        return this;
-    }
-
-    @Override
-    public Me me() {
-        return new MkMe(this.server, this.username);
-    }
-    
-    /**
-     * Add authenticated user to the MkServer.
-     * @param authenticated The user to authenticate.
-     */
-    private void authenticate(final Authenticated authenticated) {
+    public UserData about() throws IOException {
+        UserData about = null;
         final JsonArray online = this.server.storage().build()
             .getJsonArray("authenticated");
-        final JsonArrayBuilder users = Json.createArrayBuilder();
-        for(final JsonValue user: online) {
-            users.add(user);
+        for(int idx = 0; idx < online.size(); idx++) {
+            final JsonObject authenticated = online.getJsonObject(idx);
+            if(authenticated.getJsonObject(this.username) != null) {
+                about =  new JsonUserData(
+                    Json.createObjectBuilder()
+                        .add(
+                            "fullname",
+                            authenticated.getJsonObject(this.username)
+                                .getString("fullname")
+                        ).add(
+                            "username",
+                            authenticated.getJsonObject(this.username)
+                                .getString("username")
+                        )
+                        .build()
+                );
+            }
         }
-        users.add(Json.createObjectBuilder().add(
-            this.username, authenticated.json())
-        );
-        this.server.storage().add("authenticated", users.build());
+        final JsonArray users = this.server.storage().build()
+            .getJsonArray("users");
+        for(int idx = 0; idx < users.size(); idx++) {
+            final JsonObject user = users.getJsonObject(idx);
+            if(user.getJsonObject(this.username) != null) {
+                about = new JsonUserData(
+                    user.getJsonObject(this.username)
+                );
+            }
+        }
+        if(about == null) {
+            throw new IllegalStateException(
+                "User " + this.username + " not found."
+                        + " You have to register it first, "
+                        + "or it has to be the authenticated user."
+            );
+        }
+        return about;
     }
 
     @Override
-    public Organizations organizations() {
+    public Comments comments() {
+        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public Github github() {
-        return null;
-    }
-    
-    @Override
-    public Security security() {
+    public Favorites favorites() {
+        // TODO Auto-generated method stub
         return null;
     }
 

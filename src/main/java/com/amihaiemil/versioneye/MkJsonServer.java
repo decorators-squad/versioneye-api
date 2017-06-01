@@ -71,6 +71,7 @@ public final class MkJsonServer implements MkServer {
                     .add("message", "pong")
                     .build()
             )
-            .add("authenticated", Json.createArrayBuilder().build());
+            .add("authenticated", Json.createArrayBuilder().build())
+            .add("users", Json.createArrayBuilder().build());
     }
 }
