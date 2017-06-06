@@ -34,7 +34,9 @@ import java.io.IOException;
  * @author Sherif Waly (sherifwaly95@gmail.com)
  * @version $Id$
  * @since 1.0.0
- * @todo #89:30min/DEV Complete Github API methods.
+ * @todo #101:30min/DEV Complete Github API methods. When possible,
+ *  think that you can implement those methods on a Project.
+ *  (e.g. see Project.hook()).
  */
 public interface Github {
 

@@ -55,5 +55,5 @@ public interface Teams {
      * Get the initial VersionEye instance.
      * @return VersionEye.
      */
-    VersionEye versionEye();
+    RtVersionEye versionEye();
 }

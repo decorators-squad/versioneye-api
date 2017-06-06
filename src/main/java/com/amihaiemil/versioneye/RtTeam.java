@@ -166,7 +166,7 @@ final class RtTeam implements Team {
     }
 
     @Override
-    public VersionEye versionEye() {
+    public RtVersionEye versionEye() {
         return this.versionEye;
     }
 

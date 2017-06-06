@@ -86,7 +86,7 @@ final class RtOrganizations implements Organizations {
     }
 
     @Override
-    public VersionEye versionEye() {
+    public RtVersionEye versionEye() {
         return this.versionEye;
     }
     

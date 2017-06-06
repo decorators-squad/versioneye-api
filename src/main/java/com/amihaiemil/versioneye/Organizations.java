@@ -60,6 +60,6 @@ public interface Organizations {
      * Get the original VersionEye instance.
      * @return VersionEye
      */
-    VersionEye versionEye();
+    RtVersionEye versionEye();
     
 }

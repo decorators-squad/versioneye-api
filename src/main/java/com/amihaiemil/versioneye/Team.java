@@ -128,7 +128,7 @@ public interface Team {
      * Get the initial VersionEye instance.
      * @return VersionEye.
      */
-    VersionEye versionEye();
+    RtVersionEye versionEye();
     
     /**
      * Members of this team.

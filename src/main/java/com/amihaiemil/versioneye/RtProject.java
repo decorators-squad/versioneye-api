@@ -194,4 +194,18 @@ final class RtProject implements Project {
         return this.project;
     }
 
+    @Override
+    public Project hook() throws IOException {
+        this.team.versionEye()
+            .request().uri()
+            .path("/github/hook/")
+            .path(this.projectId())
+            .back()
+            .method("POST")
+            .fetch()
+            .as(RestResponse.class)
+            .assertStatus(HttpURLConnection.HTTP_CREATED);
+        return this;
+    }
+
 }

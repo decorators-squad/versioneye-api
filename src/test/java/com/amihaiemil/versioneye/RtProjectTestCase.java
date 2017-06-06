@@ -304,4 +304,34 @@ public final class RtProjectTestCase {
             request.uri().toString(), Matchers.equalTo("/project123")
         );
     }
+    
+    /**
+     * RtProject can hook itself to Github.
+     * @throws IOException If something goes wrong.
+     */
+    @Test
+    public void hooksOnGithub() throws IOException {
+        final MkContainer container = new MkGrizzlyContainer().next(
+            new MkAnswer.Simple(HttpURLConnection.HTTP_CREATED)
+        ).start();
+        Team team = Mockito.mock(Team.class);
+        Mockito.when(team.versionEye())
+            .thenReturn(
+                new RtVersionEye(
+                    new JdkRequest(container.home())
+                )
+            );
+        final Project project = new RtProject(
+            new FakeRequest(), team,
+            Json.createObjectBuilder().add("ids", "id123").build()
+        );
+        MatcherAssert.assertThat(project.hook(), Matchers.is(project));
+        final MkQuery request = container.take();
+        MatcherAssert.assertThat(
+            request.method(), Matchers.equalTo("POST")
+        );
+        MatcherAssert.assertThat(
+            request.uri().toString(), Matchers.equalTo("/github/hook/id123")
+        );
+    }
 }

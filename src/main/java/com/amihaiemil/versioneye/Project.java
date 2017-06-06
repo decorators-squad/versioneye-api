@@ -174,4 +174,12 @@ public interface Project {
      */
     @Deprecated
     Project update(File projectFile) throws IOException;
+    
+    /**
+     * Create a Github webhook to re-parse this project at
+     * each git push.
+     * @return This Project.
+     * @throws IOException If something goes wrong with the HTTP call.
+     */
+    Project hook() throws IOException;
 }
