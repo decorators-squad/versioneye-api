@@ -85,6 +85,11 @@ final class RtOrganizations implements Organizations {
         ); 
     }
 
+    @Override
+    public VersionEye versionEye() {
+        return this.versionEye;
+    }
+    
     /**
      * Fetches the organizations that the authenticated user
      * has access to.

@@ -125,6 +125,12 @@ public interface Team {
     Organization organization();
     
     /**
+     * Get the initial VersionEye instance.
+     * @return VersionEye.
+     */
+    VersionEye versionEye();
+    
+    /**
      * Members of this team.
      * @return List of UserData.
      */

@@ -56,4 +56,10 @@ public interface Organizations {
      */
     Organization organization(String organizationName) throws IOException;
     
+    /**
+     * Get the original VersionEye instance.
+     * @return VersionEye
+     */
+    VersionEye versionEye();
+    
 }

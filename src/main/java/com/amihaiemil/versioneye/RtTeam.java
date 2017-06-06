@@ -165,4 +165,9 @@ final class RtTeam implements Team {
         return this.orga;
     }
 
+    @Override
+    public VersionEye versionEye() {
+        return this.versionEye;
+    }
+
 }

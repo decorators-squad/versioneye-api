@@ -50,4 +50,10 @@ public interface Teams {
      * @return Organization.
      */
     Organization organization();
+    
+    /**
+     * Get the initial VersionEye instance.
+     * @return VersionEye.
+     */
+    VersionEye versionEye();
 }
