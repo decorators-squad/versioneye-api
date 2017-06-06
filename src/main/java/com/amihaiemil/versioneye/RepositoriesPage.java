@@ -36,9 +36,6 @@ import java.util.List;
  * @author Sherif Waly (sherifwaly95@gmail.com)
  * @version $Id$
  * @since 1.0.0
- * @todo #81:30min/DEV Write some unit tests for this class.
- *  They should be simmilar to those for CommentsPage.
- *
  */
 final class RepositoriesPage implements Page<Repository> {
 
