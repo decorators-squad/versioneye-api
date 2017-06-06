@@ -196,7 +196,7 @@ final class RtProject implements Project {
 
     @Override
     public Project hook() throws IOException {
-        this.team.versionEye()
+        ((RtVersionEye) this.team.versionEye())
             .request().uri()
             .path("/github/hook/")
             .path(this.projectId())

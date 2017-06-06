@@ -103,7 +103,7 @@ final class RtTeams implements Teams {
     }
 
     @Override
-    public RtVersionEye versionEye() {
+    public VersionEye versionEye() {
         return this.versionEye;
     }
 
