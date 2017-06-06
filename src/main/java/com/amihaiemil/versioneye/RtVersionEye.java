@@ -38,7 +38,6 @@ import com.jcabi.http.wire.TrustedWire;
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
- * @todo #103:30min/DEV Implement versionEye() method for Team, Projects, etc.
  */
 public final class RtVersionEye implements VersionEye {
 
