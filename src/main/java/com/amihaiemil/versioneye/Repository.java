@@ -27,6 +27,7 @@
  */
 package com.amihaiemil.versioneye;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.json.JsonObject;
@@ -98,4 +99,11 @@ public interface Repository {
      * @return JsonObject
      */
     JsonObject json();
+    
+    /**
+     * Delete the Repository branch from VersionEye.
+     * @param branchName Repository's branch name.
+     * @throws IOException If something goes wrong with the HTTP call.
+     */
+    void delete(String branchName) throws IOException;
 }

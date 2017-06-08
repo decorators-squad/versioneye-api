@@ -27,11 +27,16 @@
  */
 package com.amihaiemil.versioneye;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.json.JsonArray;
 import javax.json.JsonObject;
+
+import com.jcabi.http.Request;
+import com.jcabi.http.response.RestResponse;
 
 /**
  * Real implementation of {@link Repository}.
@@ -48,11 +53,18 @@ final class RtRepository implements Repository {
     private JsonObject repository;
     
     /**
+     * HTTP request.
+     */
+    private Request req;
+    
+    /**
      * Ctor.
      * @param repository Json comment as it is returned by the API.
+     * @param entry HTTP request.
      */
-    RtRepository(final JsonObject repository) {
+    RtRepository(final JsonObject repository, final Request entry) {
         this.repository = repository;
+        this.req = entry;
     }
 
     @Override
@@ -115,5 +127,18 @@ final class RtRepository implements Repository {
     @Override
     public JsonObject json() {
         return this.repository;
+    }
+
+    @Override
+    public void delete(final String branchName) throws IOException {
+        String repoKey = this.fullname().replace('.', '~').replace('/', ':');
+        this.req.uri()
+            .path(repoKey)
+            .queryParam(
+                "branch",
+                branchName.replace('.', '~').replace('/', ':')
+            ).back()
+            .method("DELETE").fetch().as(RestResponse.class)
+            .assertStatus(HttpURLConnection.HTTP_OK);
     }
 }

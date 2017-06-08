@@ -72,7 +72,7 @@ final class RtRepositories implements Repositories {
         final List<Repository> repositories = new ArrayList<>();
         for(int idx=0; idx<results.size(); idx++) {
             repositories.add(
-                new RtRepository(results.getJsonObject(idx))
+                new RtRepository(results.getJsonObject(idx), this.req)
             );
         }
         return repositories;
@@ -137,6 +137,23 @@ final class RtRepositories implements Repositories {
             this.req.uri()
                 .queryParam("only_imported", String.valueOf(onlyImported))
                 .back()
+        );
+    }
+
+    @Override
+    public Repository repository(final String repositoryKey)
+        throws IOException {
+        return new RtRepository(
+            this.req.uri()
+            .path(repositoryKey.replace('.', '~').replace('/', ':'))
+            .back()
+            .fetch()
+            .as(RestResponse.class)
+            .assertStatus(HttpURLConnection.HTTP_OK)
+            .as(JsonResponse.class)
+            .json()
+            .readObject(),
+            this.req
         );
     }
 }

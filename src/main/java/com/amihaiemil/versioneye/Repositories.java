@@ -95,4 +95,12 @@ public interface Repositories {
      * @return Repositories this repositories.
      */
     Repositories onlyImported(boolean onlyImported);
+    
+    /**
+     * Get detailed information about a repository.
+     * @param repositoryKey Repository fullname.
+     * @return Repository.
+     * @throws IOException If there is something wrong with the HTTP call.
+     */
+    Repository repository(String repositoryKey) throws IOException;
 }
