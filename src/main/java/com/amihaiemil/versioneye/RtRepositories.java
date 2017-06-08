@@ -43,6 +43,9 @@ import com.jcabi.http.response.RestResponse;
  * @author Sherif Waly (sherifwaly95@gmail.com)
  * @version $Id$
  * @since 1.0.0
+ * @todo #112:30min/DEV Modify repository(repositoryKey) method to return
+ *  a correct repository as json returned is incompatible with Repository
+ *  one.
  */
 final class RtRepositories implements Repositories {
 
