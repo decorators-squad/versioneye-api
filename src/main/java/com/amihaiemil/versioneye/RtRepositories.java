@@ -44,7 +44,7 @@ import com.jcabi.http.response.RestResponse;
  * @version $Id$
  * @since 1.0.0
  * @todo #112:30min/DEV Modify repository(repositoryKey) method to return
- *  a correct repository as json returned is incompatible with Repository
+ *  a DetailedRepository as json returned is incompatible with Repository
  *  one.
  */
 final class RtRepositories implements Repositories {
@@ -148,14 +148,14 @@ final class RtRepositories implements Repositories {
         throws IOException {
         return new RtRepository(
             this.req.uri()
-            .path(repositoryKey.replace('.', '~').replace('/', ':'))
-            .back()
-            .fetch()
-            .as(RestResponse.class)
-            .assertStatus(HttpURLConnection.HTTP_OK)
-            .as(JsonResponse.class)
-            .json()
-            .readObject(),
+                .path(repositoryKey.replace('.', '~').replace('/', ':'))
+                .back()
+                .fetch()
+                .as(RestResponse.class)
+                .assertStatus(HttpURLConnection.HTTP_OK)
+                .as(JsonResponse.class)
+                .json()
+                .readObject(),
             this.req
         );
     }

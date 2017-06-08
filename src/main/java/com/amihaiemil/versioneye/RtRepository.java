@@ -130,14 +130,12 @@ final class RtRepository implements Repository {
     }
 
     @Override
-    public void delete(final String branchName) throws IOException {
+    public void delete(final String branch) throws IOException {
         String repoKey = this.fullname().replace('.', '~').replace('/', ':');
         this.req.uri()
             .path(repoKey)
-            .queryParam(
-                "branch",
-                branchName.replace('.', '~').replace('/', ':')
-            ).back()
+            .queryParam("branch", branch.replace('.', '~').replace('/', ':'))
+            .back()
             .method("DELETE").fetch().as(RestResponse.class)
             .assertStatus(HttpURLConnection.HTTP_OK);
     }

@@ -101,9 +101,9 @@ public interface Repository {
     JsonObject json();
     
     /**
-     * Delete the Repository branch from VersionEye.
-     * @param branchName Repository's branch name.
+     * Deletes the VersionEye project associated with this Github repository.
+     * @param branch Repository's branch name.
      * @throws IOException If something goes wrong with the HTTP call.
      */
-    void delete(String branchName) throws IOException;
+    void delete(String branch) throws IOException;
 }

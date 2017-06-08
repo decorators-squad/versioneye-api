@@ -50,20 +50,22 @@ import com.jcabi.http.request.JdkRequest;
  */
 
 @SuppressWarnings("resource")
-public final class ReRepositoryTestCase {
+public final class RtRepositoryTestCase {
 
     /**
      * RtRepository can delete the repository branch from
-     * the VersionEye server.
+     * the VersionEye server and modifies repository name by replacing
+     * '/' to ':' and '.' to '~'.
      * @throws IOException If something goes wrong.
      */
     @Test
-    public void deletesProjectBranch() throws IOException {
+    public void deletesProjectBranchAndModifiesRepositoryName()
+        throws IOException {
         final MkContainer container = new MkGrizzlyContainer().next(
             new MkAnswer.Simple(HttpURLConnection.HTTP_OK)
         ).start();
         final Repository repository = new RtRepository(
-            Json.createObjectBuilder().add("fullname", "repo").build(),
+            Json.createObjectBuilder().add("fullname", "repo/repo").build(),
             new JdkRequest(container.home())
         );
         repository.delete("master");
@@ -72,7 +74,8 @@ public final class ReRepositoryTestCase {
             request.method(), Matchers.equalTo("DELETE")
         );
         MatcherAssert.assertThat(
-            request.uri().toString(), Matchers.equalTo("/repo?branch=master")
+            request.uri().toString(),
+            Matchers.equalTo("/repo:repo?branch=master")
         );
     }
 }
