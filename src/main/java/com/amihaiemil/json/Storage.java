@@ -39,12 +39,8 @@ import javax.json.JsonValue;
  * JsonObjectBuilder <b>with no flush</b>. It works the same as other
  * javax.json providers' implementation (glassfish, resteasy etc) except
  * it doesn't flush when the build() method is called (you can call build()
- * multiple times and it will return the same JsonObject).<br><br>
+ * multiple times and it will return the same JsonObject).
  * 
- * It has the same API as {@link JsonObjectBuilder}, but it's named differently
- * so the classloader isn't confused when choosing the provided
- * JsonObjectBuilder implementation (which is still the one from glassfish,
- * used behind this).
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
