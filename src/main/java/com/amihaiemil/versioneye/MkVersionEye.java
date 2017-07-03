@@ -121,17 +121,23 @@ public final class MkVersionEye implements VersionEye {
 
     @Override
     public Organizations organizations() {
-        return null;
+        throw new UnsupportedOperationException(
+            "Mock Organizations API is not yet implemented."
+        );
     }
 
     @Override
     public Github github() {
-        return null;
+        throw new UnsupportedOperationException(
+            "Mock Github API is not yet implemented."
+        );
     }
     
     @Override
     public Security security() {
-        return null;
+        throw new UnsupportedOperationException(
+            "Mock Security API is not yet implemented."
+        );
     }
 
 }

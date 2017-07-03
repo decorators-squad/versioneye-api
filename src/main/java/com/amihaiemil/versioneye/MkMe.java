@@ -79,12 +79,16 @@ final class MkMe implements Me {
 
     @Override
     public Comments comments() {
-        return null;
+        throw new UnsupportedOperationException(
+            "Mock User Comments API is not yet implemented."
+        );
     }
 
     @Override
     public Favorites favorites() {
-        return null;
+        throw new UnsupportedOperationException(
+            "Mock User Favorites API is not yet implemented."
+        );
     }
 
 }

@@ -107,14 +107,16 @@ final class MkUser implements User {
 
     @Override
     public Comments comments() {
-        // TODO Auto-generated method stub
-        return null;
+        throw new UnsupportedOperationException(
+            "Mock User Comments API is not yet implemented."
+        );
     }
 
     @Override
     public Favorites favorites() {
-        // TODO Auto-generated method stub
-        return null;
+        throw new UnsupportedOperationException(
+            "Mock User Favorites API is not yet implemented."
+        );
     }
 
 }
