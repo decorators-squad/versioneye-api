@@ -45,7 +45,8 @@ public interface Github {
     String sync() throws IOException;
     
     /**
-     * The Github repositories.
+     * The Github repositories.<br>
+     * This endpoint shows all imported repositories from your Github account.
      * @return Repositories.
      */
     Repositories repositories();

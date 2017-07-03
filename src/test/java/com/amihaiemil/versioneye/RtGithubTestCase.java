@@ -30,45 +30,55 @@ package com.amihaiemil.versioneye;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 
-import com.jcabi.http.Request;
-import com.jcabi.http.response.JsonResponse;
-import com.jcabi.http.response.RestResponse;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.Test;
+
+import com.jcabi.http.mock.MkAnswer;
+import com.jcabi.http.mock.MkContainer;
+import com.jcabi.http.mock.MkGrizzlyContainer;
+import com.jcabi.http.request.JdkRequest;
 
 /**
- * Real implementation of {@link Github}.
- * @author Sherif Waly (sherifwaly95@gmail.com)
+ * Unit tests for {@link RtGithub}.
+ * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
  */
-final class RtGithub implements Github {
+public final class RtGithubTestCase {
 
     /**
-     * HTTP request.
+     * RtGithub can sync the user's Github repos.
+     * @throws IOException If something goes wrong.
      */
-    private Request req;
+    @Test
+    @SuppressWarnings("resource")
+    public void syncsGithub() throws IOException {
+        final MkContainer container = new MkGrizzlyContainer().next(
+            new MkAnswer.Simple(
+                HttpURLConnection.HTTP_OK, "{\"status\": \"running\"}"
+            )
+        ).start();
+        
+        final String status = new RtVersionEye(
+            new JdkRequest(container.home())
+        ).github().sync();
+        
+        MatcherAssert.assertThat(status, Matchers.is("running"));
+        MatcherAssert.assertThat(
+            container.take().uri().toString(), Matchers.equalTo("/github/sync")
+        );
+    }
     
     /**
-     * Ctor.
-     * @param entry HTTP request.
+     * RtGithub can return the user's repositories.
      */
-    RtGithub(final Request entry) {
-        this.req = entry.uri().path("/github").back();
+    @Test
+    public void returnsRepositories() {
+        final Repositories repos = new RtVersionEye().github().repositories();
+        MatcherAssert.assertThat(repos, Matchers.notNullValue());
+        MatcherAssert.assertThat(
+            repos, Matchers.instanceOf(RtRepositories.class)
+        );
     }
-
-    @Override
-    public String sync() throws IOException {
-        return this.req.uri().path("/sync").back().fetch()
-            .as(RestResponse.class)
-            .assertStatus(HttpURLConnection.HTTP_OK)
-            .as(JsonResponse.class)
-            .json()
-            .readObject()
-            .getString("status");
-    }
-
-    @Override
-    public Repositories repositories() {
-        return new RtRepositories(this.req);
-    }
-
 }
