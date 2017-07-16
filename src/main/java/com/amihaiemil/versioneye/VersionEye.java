@@ -79,7 +79,8 @@ public interface VersionEye {
     
     /**
      * Security api.
+     * @param language Programming language filter.
      * @return Security.
      */
-    Security security();
+    Security security(final String language);
 }

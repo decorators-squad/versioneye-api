@@ -33,25 +33,23 @@ import java.util.List;
 /**
  * VersionEye Security API. It only offers search after the programming
  * language. If you are interested to check if a certain project has
- * vulnerabilities, you can do that via <b>Project#vulnerabilities()</b>.
+ * vulnerabilities, you can do that via <b>Product#vulnerabilities()</b>.
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
- * @see {@link Project}
- *
+ * @todo #93:30min/DEV Implement a way of fetching the vulnerabilities for a
+ *  given Product. This is pending the implementation of the Products/Product
+ *  Search API.
  */
 public interface Security {
 
     /**
      * Fetch the vulnerabilities from a given page.
-     * @param language Programming language.
      * @param page Page number.
      * @return List of vulnerabilities.
      * @throws IOException If there is something wrong with the HTTP call.
      */
-    List<Vulnerability> language(
-        final String language, final int page
-    ) throws IOException;
+    List<Vulnerability> vulnerabilities(final int page) throws IOException;
 
     /**
      * Fetch informations about a given page.
@@ -63,9 +61,8 @@ public interface Security {
 
     /**
      * Paginated vulnerabilities.
-     * @param language Programming language.
      * @return Page which can be iterated,
      *  each element representing a page of vulnerabilities.
      */
-    Page<Vulnerability> paginated(final String language);
+    Page<Vulnerability> paginated();
 }

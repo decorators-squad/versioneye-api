@@ -51,21 +51,54 @@ final class RtSecurity implements Security {
      * HTTP request.
      */
     private Request req;
+
+    /**
+     * Programming language filter criterion.
+     */
+    private String language;
     
+    /**
+     * Product key.
+     */
+    private String prodKey;
+
     /**
      * Ctor.
      * @param entry HTTP Request.
+     * @param language Programming language filter criterion.
      */
-    RtSecurity(final Request entry) {
-        this.req = entry.uri().path("/security").back();
+    RtSecurity(final Request entry, final String language) {
+        this(entry, language, "");
     }
 
+    /**
+     * Ctor.
+     * @param entry HTTP Request.
+     * @param language Programming language filter criterion.
+     * @param prodKey Product key filter criterion.
+     */
+    RtSecurity(
+        final Request entry, final String language,
+        final String prodKey
+    ) {
+        this.req = entry.uri().path("/security").back();
+        this.language = language;
+        this.prodKey = prodKey;
+    }
+    
     @Override
-    public List<Vulnerability> language(final String language, final int page)
-            throws IOException {
-        final JsonArray results = this.req.uri()
-            .queryParam("language", language)
-            .queryParam("page", String.valueOf(page)).back().fetch()
+    public List<Vulnerability> vulnerabilities(final int page)
+        throws IOException {
+        Request request = this.req.uri()
+            .queryParam("language", this.language)
+            .queryParam("page", String.valueOf(page))
+            .back();
+        if(!this.prodKey.isEmpty()) {
+            request = request.uri()
+                .queryParam("prod_Key", this.prodKey)
+                .back();
+        }
+        final JsonArray results = request.fetch()
             .as(RestResponse.class)
             .assertStatus(HttpURLConnection.HTTP_OK)
             .as(JsonResponse.class)
@@ -75,7 +108,7 @@ final class RtSecurity implements Security {
         final List<Vulnerability> vulnerabilities = new ArrayList<>();
         for(int idx=0; idx<results.size(); idx++) {
             vulnerabilities.add(
-                new RtVulnerability(results.getJsonObject(idx))
+                new JsonVulnerability(results.getJsonObject(idx))
             );
         }
         return vulnerabilities;
@@ -96,8 +129,8 @@ final class RtSecurity implements Security {
     }
 
     @Override
-    public Page<Vulnerability> paginated(final String language) {
-        return new VulnerabilitiesPage(this, language);
+    public Page<Vulnerability> paginated() {
+        return new VulnerabilitiesPage(this);
     }
 
 }

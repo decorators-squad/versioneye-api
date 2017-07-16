@@ -109,8 +109,8 @@ public final class RtVersionEye implements VersionEye {
     }
     
     @Override
-    public Security security() {
-        return new RtSecurity(this.entry);
+    public Security security(final String language) {
+        return new RtSecurity(this.entry, language);
     }
     
     /**

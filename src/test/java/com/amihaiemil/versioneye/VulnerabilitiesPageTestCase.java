@@ -62,7 +62,7 @@ public final class VulnerabilitiesPageTestCase {
         final VersionEye versionEye = new RtVersionEye(
             new JdkRequest(container.home())
         );
-        List<Vulnerability> first = versionEye.security().paginated("Java")
+        List<Vulnerability> first = versionEye.security("Java").paginated()
             .fetch();
         MatcherAssert.assertThat(first.size(), Matchers.is(2));
         MatcherAssert.assertThat(
@@ -84,7 +84,7 @@ public final class VulnerabilitiesPageTestCase {
         );
         int pages = 0;
         for (final Page<Vulnerability> page
-            : versionEye.security().paginated("Java")
+            : versionEye.security("Java").paginated()
         ){
             MatcherAssert.assertThat(
                 page.fetch().size(), Matchers.is(2)

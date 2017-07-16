@@ -45,11 +45,6 @@ final class VulnerabilitiesPage implements Page<Vulnerability> {
     private Security vulnerabilities;
     
     /**
-     * Programming language of the vulnerable projects.
-     */
-    private String language;
-    
-    /**
      * Number of this page.
      */
     private int number;
@@ -57,29 +52,24 @@ final class VulnerabilitiesPage implements Page<Vulnerability> {
     /**
      * Ctor.
      * @param vulnerabilities Vulnerabilities from this page.
-     * @param language Programming language of the vulnerable projects.
      */
-    VulnerabilitiesPage(final Security vulnerabilities, final String language) {
-        this(vulnerabilities, language,  1);
+    VulnerabilitiesPage(final Security vulnerabilities) {
+        this(vulnerabilities,  1);
     }
     
     /**
      * Ctor.
      * @param vulnerabilities Vulnerabilities from this page.
-     * @param language Programming language of the vulnerable projects.
      * @param number Number of this page.
      */
-    VulnerabilitiesPage(
-        final Security vulnerabilities, final String language, final int number
-    ) {
+    VulnerabilitiesPage(final Security vulnerabilities, final int number) {
         this.vulnerabilities = vulnerabilities;
-        this.language = language;
         this.number = number;
     }
     
     @Override
     public List<Vulnerability> fetch() throws IOException {
-        return this.vulnerabilities.language(this.language, this.number);
+        return this.vulnerabilities.vulnerabilities(this.number);
     }
 
     @Override
@@ -89,7 +79,7 @@ final class VulnerabilitiesPage implements Page<Vulnerability> {
 
     @Override
     public Iterator<Page<Vulnerability>> iterator() {
-        return new VulnerabilityPageIt(this.vulnerabilities, this.language);
+        return new VulnerabilityPageIt(this.vulnerabilities);
     }
 
     /**
@@ -104,11 +94,6 @@ final class VulnerabilitiesPage implements Page<Vulnerability> {
         private Security vulnerabilities;
         
         /**
-         * Programming language of the vulnerable projects.
-         */
-        private String language;
-        
-        /**
          * Number of this page.
          */
         private int number = 1;  
@@ -116,13 +101,9 @@ final class VulnerabilitiesPage implements Page<Vulnerability> {
         /**
          * Ctor.
          * @param vulnerabilities Vulnerabilities from this page.
-         * @param language Programming language of the vulnerable projects.
          */
-        VulnerabilityPageIt(
-            final Security vulnerabilities, final String language
-        ) {
+        VulnerabilityPageIt(final Security vulnerabilities) {
             this.vulnerabilities = vulnerabilities;
-            this.language = language;
         }
         
         @Override
@@ -141,7 +122,7 @@ final class VulnerabilitiesPage implements Page<Vulnerability> {
         @Override
         public Page<Vulnerability> next() {
             final Page<Vulnerability> next = new VulnerabilitiesPage(
-                this.vulnerabilities, this.language, this.number
+                this.vulnerabilities, this.number
             );
             this.number++;
             return next;

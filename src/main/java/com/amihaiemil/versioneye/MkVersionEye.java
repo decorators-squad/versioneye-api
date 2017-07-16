@@ -134,7 +134,7 @@ public final class MkVersionEye implements VersionEye {
     }
     
     @Override
-    public Security security() {
+    public Security security(final String language) {
         throw new UnsupportedOperationException(
             "Mock Security API is not yet implemented."
         );
