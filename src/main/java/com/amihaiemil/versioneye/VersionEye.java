@@ -34,7 +34,7 @@ import java.io.IOException;
  * @author Mihai Andronache (amihaiemil@gmail.com)
  * @version $Id$
  * @since 1.0.0
- *
+ * @todo #93:30min/DEV Implement the Product/Products Search API.
  */
 public interface VersionEye {
 
