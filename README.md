@@ -8,6 +8,11 @@
 
 Elegant OOP wrapper over the VersionEye API
 
+### RIP VersionEye:
+
+Apparently VersionEye will shut down by the end of 2017: https://blog.versioneye.com/2017/10/19/versioneye-sunset-process/
+There is no point in continuing development here. This repository remains, however, as guidance/documentation for future Java REST clients.
+
 ## Design
 
 This library is 100% object oriented, based on interfaces and final classes. It has one single entry point, [RtVersionEye](https://github.com/decorators-squad/versioneye-api/blob/master/src/main/java/com/amihaiemil/versioneye/RtVersionEye.java), which is the only public class. Everything is encapsulated, wrapped in intuitive interfaces. The main goal is to offer a well organized, [user-friendly](http://www.baeldung.com/design-a-user-friendly-java-library) library that's easy to use.
